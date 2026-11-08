@@ -1202,15 +1202,20 @@ function applyRahhalUploadedImages(root=document){
     if(path&&img.getAttribute("src")!==path)img.setAttribute("src",path);
   });
 }
-fetch("/assets/rahhal-image-overrides.json",{cache:"no-store"})
- .then(r=>r.ok?r.json():{})
- .then(data=>{if(data&&typeof data==="object"&&!Array.isArray(data)){
+async function refreshRahhalUploadedImages(){
+ try{
+   const response=await fetch("/api/rahhal-images.php?t="+Date.now(),{cache:"no-store"});
+   if(!response.ok)return;
+   const data=await response.json();
+   if(!data||typeof data!=="object"||Array.isArray(data))return;
    for(const [name,path] of Object.entries(data)){
-     if(typeof path==="string"&&path.startsWith("/assets/uploads/")&&path.endsWith(".webp")&&!path.includes(".."))RAHHAL_UPLOADED_IMAGES[name]=path;
+     if(typeof path==="string"&&path.startsWith("/assets/uploads/")&&path.endsWith(".webp")&&!path.includes(".."))RAHHAL_UPLOADED_IMAGES[name.trim()]=path;
    }
    applyRahhalUploadedImages();
- }})
- .catch(()=>{});
+ }catch(error){console.warn("Rahhal images could not be refreshed",error);}
+}
+refreshRahhalUploadedImages();
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshRahhalUploadedImages();});
 function renderCards(target,data){
  const el=document.getElementById(target);el.innerHTML="";
  data.items.forEach(x=>el.innerHTML+=`<article class="card"><img loading="lazy" decoding="async" src="${RAHHAL_UPLOADED_IMAGES[x[0]]||x[1]}" alt="${x[0]}"><div class="card-body"><span class="tag">معلم مقترح</span><h4>${x[0]}</h4><p>تجربة مختارة ضمن خطة رحّال السياحية.</p><div class="meta"><span>⏱ ${x[2]}</span><span>☀ ${x[3]}</span><span>👨‍👩‍👧 مناسب للعائلات</span></div><div class="card-actions"><a target="_blank" href="${x[5]||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x[4])}`}">📍 الموقع</a><button class="ask" onclick="askPlace('${x[0]}')">اسألني</button></div></div></article>`);
