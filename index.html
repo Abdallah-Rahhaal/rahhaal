@@ -1191,9 +1191,29 @@ function initDynamicComparison(){
 }
 setTimeout(initDynamicComparison,0);
 
+// Photos uploaded from the private Rahhal image admin on Hostinger.
+const RAHHAL_UPLOADED_IMAGES={};
+function applyRahhalUploadedImages(root=document){
+  root.querySelectorAll(".card").forEach(card=>{
+    const title=card.querySelector(".card-body h4");
+    const img=card.querySelector("img");
+    if(!title||!img)return;
+    const path=RAHHAL_UPLOADED_IMAGES[title.textContent.trim()];
+    if(path&&img.getAttribute("src")!==path)img.setAttribute("src",path);
+  });
+}
+fetch("/assets/rahhal-image-overrides.json",{cache:"no-store"})
+ .then(r=>r.ok?r.json():{})
+ .then(data=>{if(data&&typeof data==="object"&&!Array.isArray(data)){
+   for(const [name,path] of Object.entries(data)){
+     if(typeof path==="string"&&/^\\/assets\\/uploads\\/[a-z]+\\/[a-f0-9]{24}\\.webp$/.test(path))RAHHAL_UPLOADED_IMAGES[name]=path;
+   }
+   applyRahhalUploadedImages();
+ }})
+ .catch(()=>{});
 function renderCards(target,data){
  const el=document.getElementById(target);el.innerHTML="";
- data.items.forEach(x=>el.innerHTML+=`<article class="card"><img src="${x[1]}" alt="${x[0]}"><div class="card-body"><span class="tag">معلم مقترح</span><h4>${x[0]}</h4><p>تجربة مختارة ضمن خطة رحّال السياحية.</p><div class="meta"><span>⏱ ${x[2]}</span><span>☀ ${x[3]}</span><span>👨‍👩‍👧 مناسب للعائلات</span></div><div class="card-actions"><a target="_blank" href="${x[5]||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x[4])}`}">📍 الموقع</a><button class="ask" onclick="askPlace('${x[0]}')">اسألني</button></div></div></article>`);
+ data.items.forEach(x=>el.innerHTML+=`<article class="card"><img loading="lazy" decoding="async" src="${RAHHAL_UPLOADED_IMAGES[x[0]]||x[1]}" alt="${x[0]}"><div class="card-body"><span class="tag">معلم مقترح</span><h4>${x[0]}</h4><p>تجربة مختارة ضمن خطة رحّال السياحية.</p><div class="meta"><span>⏱ ${x[2]}</span><span>☀ ${x[3]}</span><span>👨‍👩‍👧 مناسب للعائلات</span></div><div class="card-actions"><a target="_blank" href="${x[5]||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x[4])}`}">📍 الموقع</a><button class="ask" onclick="askPlace('${x[0]}')">اسألني</button></div></div></article>`);
 }
 function setCity(key){
  const d=cityData[key];document.getElementById("mapTitle").textContent=d.title;document.getElementById("mapText").textContent=d.text;
