@@ -1,0 +1,2219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رحّال | خطط رحلتك بذكاء</title>
+<meta name="description" content="رحّال — منصة سياحية عربية لاكتشاف الإمارات والسعودية، بناء خطط السفر، مقارنة المدن، معرفة الطقس، الفنادق والمعالم.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f1e8; --paper:#fffdf9; --ink:#122b35; --muted:#61747c;
+  --teal:#0f766e; --teal2:#14b8a6; --gold:#d9a441; --sand:#efe2cb;
+  --line:rgba(18,43,53,.1); --shadow:0 20px 60px rgba(18,43,53,.12);
+  --radius:28px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Tajawal",sans-serif;color:var(--ink);background:
+radial-gradient(circle at 8% 2%,rgba(20,184,166,.12),transparent 23%),
+radial-gradient(circle at 90% 8%,rgba(217,164,65,.12),transparent 24%),var(--paper)}
+a{text-decoration:none;color:inherit}
+button,input,select{font-family:inherit}
+img{width:100%;display:block}
+.container{width:min(1200px,92%);margin:auto}
+.nav{position:fixed;top:14px;left:0;right:0;z-index:100;width:min(1200px,92%);margin:auto;
+display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:20px;
+background:rgba(255,253,249,.9);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.8);box-shadow:0 14px 40px rgba(18,43,53,.08)}
+.brand{display:flex;align-items:center;gap:10px;font-size:1.35rem;font-weight:800}
+.logo{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;font-size:1.35rem}
+.navlinks{display:flex;gap:20px;color:#3e5962;font-size:.93rem}
+.nav-actions{display:flex;gap:9px;align-items:center}
+.visitor-counter{display:inline-flex;align-items:center;gap:8px;padding:10px 13px;border-radius:14px;background:#fff;border:1px solid var(--line);font-weight:800;white-space:nowrap;box-shadow:0 8px 22px rgba(18,43,53,.06);cursor:default}
+.visitor-counter .dot{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 5px rgba(34,197,94,.12)}
+.visitor-counter small{font-size:.72rem;color:var(--muted);font-weight:700}
+.visitor-counter strong{font-variant-numeric:tabular-nums}
+.language-wrap{position:relative}
+.language-btn{height:42px;padding:0 12px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);display:flex;align-items:center;gap:7px;font-weight:800;cursor:pointer}
+.language-menu{position:absolute;top:50px;left:0;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:7px;box-shadow:var(--shadow);display:none;z-index:130}
+.language-menu.open{display:grid}
+.language-option{border:0;background:transparent;color:var(--ink);text-align:start;padding:10px 11px;border-radius:11px;cursor:pointer;font-weight:700}
+.language-option:hover,.language-option.active{background:#e9faf7;color:var(--teal)}
+html[dir="ltr"] body{font-family:"Inter",sans-serif}
+html[dir="ltr"] .nav,html[dir="ltr"] .section-head,html[dir="ltr"] .footer{direction:ltr}
+html[dir="ltr"] .hero-wrap,html[dir="ltr"] .map-card,html[dir="ltr"] .planner-box,html[dir="ltr"] .feedback-box{direction:ltr}
+html[dir="ltr"] .language-menu{left:auto;right:0}
+html[dir="ltr"] .floating{left:auto;right:22px}
+html[dir="ltr"] .chat-message.bot{align-self:flex-start}
+html[dir="ltr"] .chat-message.user{align-self:flex-end}
+
+.pdf-btn{height:42px;padding:0 12px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);display:flex;align-items:center;gap:7px;font-weight:800;cursor:pointer}
+.pdf-options{display:grid;gap:12px;margin-top:18px}
+.pdf-option{display:flex;align-items:center;gap:12px;padding:15px;border:1px solid var(--line);border-radius:16px;background:#fff;cursor:pointer;text-align:start}
+.pdf-option:hover{border-color:var(--teal);background:#f0fdfa}
+.pdf-option-icon{width:45px;height:45px;border-radius:14px;background:#e9faf7;color:var(--teal);display:grid;place-items:center;font-size:1.25rem;flex:0 0 auto}
+.pdf-option strong{display:block;margin-bottom:4px}
+.pdf-option span{color:var(--muted);font-size:.84rem;line-height:1.5}
+.pdf-loading{display:none;align-items:center;gap:9px;margin-top:14px;color:var(--teal);font-weight:800}
+.pdf-loading.show{display:flex}
+.pdf-spinner{width:18px;height:18px;border-radius:50%;border:3px solid rgba(15,118,110,.2);border-top-color:var(--teal);animation:pdfspin .8s linear infinite}
+@keyframes pdfspin{to{transform:rotate(360deg)}}
+.pdf-export-mode .nav,.pdf-export-mode .floating,.pdf-export-mode .modal,.pdf-export-mode .hero-actions,.pdf-export-mode .card-actions,.pdf-export-mode button{display:none!important}
+.pdf-export-mode{background:#fff!important}
+.pdf-export-mode section{page-break-inside:avoid}
+.dark .pdf-btn,.dark .pdf-option{background:#19323a;color:#fff;border-color:rgba(255,255,255,.16)}
+.dark .pdf-option:hover{background:#0f766e}
+
+.icon-btn,.btn{border:0;cursor:pointer}
+.icon-btn{width:42px;height:42px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.btn{padding:13px 19px;border-radius:15px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn-primary{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;box-shadow:0 12px 26px rgba(15,118,110,.25)}
+.btn-light{background:#fff;border:1px solid var(--line)}
+.hero{min-height:100vh;display:grid;align-items:center;padding:120px 0 70px}
+.hero-wrap{display:grid;grid-template-columns:1.02fr .98fr;gap:48px;align-items:center}
+.badge{display:inline-flex;gap:8px;align-items:center;background:#e7faf7;color:var(--teal);padding:8px 13px;border-radius:999px;font-weight:700;font-size:.88rem}
+h1{font-size:clamp(3rem,6vw,6rem);line-height:.98;letter-spacing:-2px;margin:20px 0}
+.hero p{font-size:1.18rem;color:var(--muted);line-height:1.9;max-width:680px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.hero-media{position:relative;min-height:590px;border-radius:42px;overflow:hidden;box-shadow:var(--shadow);
+background:linear-gradient(to top,rgba(8,38,48,.72),rgba(8,38,48,.05)),url("https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1500&q=88") center/cover}
+.hero-overlay{position:absolute;inset:auto 24px 24px 24px;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-radius:24px;padding:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{padding:12px;border-left:1px solid var(--line)}.stat:last-child{border-left:0}.stat strong{display:block;font-size:1.15rem}.stat span{color:var(--muted);font-size:.83rem}
+section{padding:86px 0}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:30px}
+.section-head h2{font-size:clamp(2rem,4vw,3.2rem);margin:8px 0}.section-head p{color:var(--muted);max-width:680px;line-height:1.8;margin:0}
+.continent-filter{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 24px}
+.continent-btn{padding:11px 17px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:800;cursor:pointer;transition:.2s}
+.continent-btn:hover,.continent-btn.active{background:var(--ink);color:#fff;transform:translateY(-2px)}
+.country-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.country-card.is-hidden{display:none}
+.country-card .continent-label{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.16);backdrop-filter:blur(10px);font-size:.8rem;font-weight:800;margin-bottom:10px}
+
+.country-card{min-height:440px;border-radius:34px;overflow:hidden;position:relative;box-shadow:var(--shadow);cursor:pointer}
+.country-card:before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(7,30,39,.88),rgba(7,30,39,.05))}
+.country-card .content{position:absolute;bottom:0;padding:28px;color:#fff}.country-card h3{font-size:2.4rem;margin:0 0 8px}.country-card p{color:rgba(255,255,255,.8);line-height:1.7}
+.uae{background:url("https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1400&q=85") center/cover}
+.ksa{background:url("https://images.unsplash.com/photo-1578895101408-1a36b834405b?auto=format&fit=crop&w=1400&q=85") center/cover}
+.netherlands{background:url("https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&w=1400&q=85") center/cover}.belgium{background:url("https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&w=1400&q=85") center/cover}.japan{background:url("https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1400&q=85") center/cover}.mauritius{background:url("https://images.unsplash.com/photo-1589979481223-deb893043163?auto=format&fit=crop&w=1400&q=85") center/cover}.srilanka{background:url("https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1400&q=85") center/cover}
+.country-switch{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:25px}
+.pill{padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:#fff;font-weight:700;cursor:pointer}
+.pill.active{background:var(--ink);color:#fff}
+.country-panel{display:none}.country-panel.active{display:block}
+.country-empty{display:none;text-align:center;padding:35px;border:1px dashed var(--line);border-radius:24px;color:var(--muted)}
+.country-empty.show{display:block}
+.quick-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.quick{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 10px 30px rgba(18,43,53,.05)}
+.quick b{display:block;font-size:1.25rem;margin-bottom:5px}.quick span{color:var(--muted);font-size:.85rem}
+.map-card{margin-top:24px;background:linear-gradient(145deg,#fff,#faf6ef);border:1px solid var(--line);border-radius:34px;padding:24px;display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center}
+.map-visual{position:relative;min-height:520px;border-radius:28px;overflow:hidden;background:linear-gradient(145deg,#dff4f1,#eef7f6);border:1px solid var(--line)}
+.country-map{width:100%;height:100%;min-height:520px;display:block}
+.map-shape{fill:#f4ead7;stroke:#b8c8c7;stroke-width:2}
+.map-sea{fill:#cdebea}
+.map-route{fill:none;stroke:var(--teal);stroke-width:3;stroke-dasharray:8 7;opacity:.85}
+.map-marker{cursor:pointer;transition:.2s transform;transform-box:fill-box;transform-origin:center}
+.map-marker:hover{transform:scale(1.1)}
+.map-marker{cursor:pointer}.map-marker circle{fill:var(--teal);stroke:white;stroke-width:3}
+.map-marker text{font-family:"Tajawal",sans-serif;font-size:17px;font-weight:800;fill:var(--ink)}
+.map-distance{font-family:"Tajawal",sans-serif;font-size:14px;font-weight:700;fill:#45616a}
+.distance-panel{position:absolute;left:18px;top:18px;width:190px;padding:16px;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.85);border-radius:18px;box-shadow:0 12px 30px rgba(18,43,53,.12)}
+.distance-panel h4{margin:0 0 10px}
+.distance-item{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.87rem}
+.distance-item:last-child{border-bottom:0}
+.distance-note{font-size:.75rem;color:var(--muted);margin-top:8px;line-height:1.5}
+.map-info h3{font-size:2rem;margin:0 0 12px}.map-info p{line-height:1.8;color:var(--muted)}
+
+.google-route-map{position:relative;min-height:560px;border-radius:28px;overflow:hidden;border:1px solid var(--line);background:#e8f4f6}
+.google-route-map iframe{width:100%;height:560px;border:0;display:block}
+.google-map-badge{position:absolute;right:14px;top:14px;z-index:2;background:rgba(255,255,255,.95);border:1px solid rgba(255,255,255,.9);box-shadow:0 8px 28px rgba(18,43,53,.16);border-radius:14px;padding:9px 12px;font-size:.82rem;font-weight:800;color:#1f4f59}
+.route-controls{display:grid;gap:12px;margin:20px 0}
+.route-select{width:100%;padding:13px 14px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);font-family:inherit;font-weight:700}
+.route-actions{display:flex;gap:10px;flex-wrap:wrap}
+.route-actions .btn{flex:1;min-width:170px;justify-content:center}
+.route-stops{display:grid;gap:8px;margin:16px 0 4px;padding:0;list-style:none;counter-reset:route-stop}
+.route-stops li{counter-increment:route-stop;display:flex;align-items:center;gap:10px;background:#f6f9f9;border:1px solid var(--line);border-radius:13px;padding:10px 12px;color:var(--muted);font-size:.88rem}
+.route-stops li:before{content:counter(route-stop);width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:var(--teal);color:#fff;font-size:.75rem;font-weight:900;flex:0 0 25px}
+.route-hint{font-size:.78rem;line-height:1.7;color:var(--muted);margin:8px 0 0}
+.dark .google-map-badge{background:rgba(17,39,47,.94);color:#fff;border-color:rgba(255,255,255,.12)}
+.dark .route-select,.dark .route-stops li{background:#17323b;color:#eaf4f5;border-color:rgba(255,255,255,.12)}
+@media(max-width:850px){.google-route-map,.google-route-map iframe{min-height:460px;height:460px}.route-actions .btn{min-width:100%}}
+.city-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}
+.city-tab{padding:10px 16px;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:700;cursor:pointer}.city-tab.active{background:var(--teal);color:#fff}
+.landmarks{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:0 14px 40px rgba(18,43,53,.07);transition:.25s}.card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.card img{height:220px;object-fit:cover}.card-body{padding:20px}.tag{display:inline-flex;background:#e9faf7;color:var(--teal);padding:6px 10px;border-radius:999px;font-size:.78rem;font-weight:700}
+.card h4{font-size:1.32rem;margin:13px 0 8px}.card p{color:var(--muted);line-height:1.7;margin:0 0 15px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.meta span{background:#f6f7f7;border-radius:10px;padding:7px 9px;font-size:.8rem;color:#4e646b}
+.card-actions{display:flex;gap:8px}.card-actions a,.card-actions button{flex:1;padding:10px;border-radius:12px;border:1px solid var(--line);background:#fff;font-weight:700;cursor:pointer}.ask{background:var(--teal)!important;color:#fff!important}
+.planner{background:var(--bg)}
+.planner-box{background:#fff;border-radius:34px;border:1px solid var(--line);padding:28px;display:grid;grid-template-columns:.9fr 1.1fr;gap:24px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:grid;gap:7px}.field label{font-weight:700}.field input,.field select{padding:13px 14px;border-radius:13px;border:1px solid var(--line);background:#fff}
+.plan-output{background:linear-gradient(145deg,#0f766e,#164e63);color:#fff;border-radius:28px;padding:25px;min-height:100%}
+.timeline{display:grid;gap:12px}.time-item{display:grid;grid-template-columns:70px 1fr;gap:12px;align-items:start}.time{background:rgba(255,255,255,.14);padding:9px;border-radius:11px;text-align:center}.event{background:rgba(255,255,255,.1);padding:13px;border-radius:14px}.event b{display:block;margin-bottom:4px}.event span{color:rgba(255,255,255,.75);font-size:.88rem}
+
+/* Enhanced trip planner: real card places + Google Maps daily routes */
+.plan-day-route{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.plan-day-route a,.plan-day-route button{display:inline-flex;align-items:center;justify-content:center;padding:8px 11px;border-radius:10px;border:1px solid rgba(255,255,255,.28);background:#fff;color:#0f5961;text-decoration:none;font-weight:800;cursor:pointer}.plan-stops{display:grid;gap:8px;margin-top:10px}.plan-stop{display:grid;grid-template-columns:58px 1fr auto;gap:8px;align-items:center;background:rgba(255,255,255,.09);padding:9px;border-radius:11px}.plan-stop .stop-time{font-weight:800;color:#fff}.plan-stop .stop-name{color:#fff;font-size:.9rem}.plan-stop .stop-kind{font-size:.72rem;background:rgba(255,255,255,.14);padding:4px 7px;border-radius:999px;color:#fff}.plan-stop a{color:#fff;text-decoration:none;font-size:.78rem;font-weight:800}.planner-map-note{margin:10px 0 0;color:rgba(255,255,255,.78)!important;font-size:.8rem!important}.day-hotel{margin-top:8px;color:#fff!important;font-size:.82rem!important}.dark .plan-day-route a{background:#fff;color:#0f5961}
+
+.season-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.season{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px}.season h3{margin:10px 0}.season p{color:var(--muted);line-height:1.7}.meter{height:9px;background:#edf1f1;border-radius:99px;overflow:hidden;margin-top:12px}.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--teal2),var(--gold))}
+.weather-controls{display:flex;gap:12px;align-items:end;flex-wrap:wrap;margin:18px 0}.weather-controls label{font-weight:800}.weather-controls select{min-width:220px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink)}.weather-source{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0 4px}.weather-source a{padding:9px 13px;border:1px solid var(--line);border-radius:12px;font-weight:800}.weather-note{color:var(--muted);font-size:.92rem}.weather-table{margin-top:20px;overflow:auto}.weather-table table{width:100%;border-collapse:collapse;background:#fff;border-radius:20px;overflow:hidden}.weather-table th,.weather-table td{padding:12px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+.budget-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px}.budget-form,.budget-result{background:#fff;border:1px solid var(--line);border-radius:26px;padding:24px}.budget-result{background:linear-gradient(145deg,#fff,#f6efe4)}.cost{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px dashed var(--line)}.total{font-size:1.5rem;font-weight:800;color:var(--teal)}
+.hotel-country-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.hotel-country-filter button{padding:11px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:800;cursor:pointer}.hotel-country-filter button.active{background:var(--ink);color:#fff}.hotel-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.hotel-filter button{padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer}.hotel-filter button.active{background:var(--ink);color:#fff}
+.hotel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.hotel-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px}.hotel-card h4{margin:0 0 6px}.hotel-card p{color:var(--muted)}.price{font-weight:800;color:var(--teal)}.hotel-country{display:none}.hotel-country.active{display:grid}.hotel-map{display:inline-flex;margin-top:12px;padding:9px 12px;border-radius:12px;background:#eefaf8;color:var(--teal);font-weight:800;text-decoration:none}.dark .hotel-country-filter button{background:#19323a;color:#fff;border-color:rgba(255,255,255,.16)}.dark .hotel-country-filter button.active{background:#0f766e}.dark .hotel-map{background:#193f42;color:#a9eee4}
+.reels{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.reel{aspect-ratio:9/16;border-radius:24px;overflow:hidden;position:relative;background-size:cover;background-position:center;box-shadow:var(--shadow)}.reel:before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65),transparent)}.reel .play{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:2rem}.reel .caption{position:absolute;bottom:15px;right:15px;color:#fff;font-weight:700}
+.compare{overflow:auto}.compare table{width:100%;border-collapse:collapse;background:#fff;border-radius:24px;overflow:hidden}.compare th,.compare td{padding:15px;border-bottom:1px solid var(--line);text-align:center}
+
+.about-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:stretch}
+.about-visual{position:relative;min-height:500px;border-radius:34px;overflow:hidden;box-shadow:var(--shadow);background:#17333a}
+.about-visual-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.about-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(9,42,50,.84),rgba(9,42,50,.08) 58%,rgba(9,42,50,.02));pointer-events:none}
+.about-visual-content{z-index:2}
+.about-visual-content{position:absolute;inset:auto 24px 24px 24px;color:#fff}
+.about-visual-content h3{font-size:2.2rem;margin:0 0 10px;color:#fff!important}
+.about-visual-content p{color:rgba(255,255,255,.82);line-height:1.7;margin:0}
+.about-content{background:linear-gradient(145deg,#fff,#f7fbfa);border:1px solid var(--line);border-radius:34px;padding:32px;box-shadow:0 14px 42px rgba(18,43,53,.07)}
+.about-content h2{font-size:clamp(2rem,4vw,3.1rem);margin:10px 0 18px}
+.about-content p{color:var(--muted);line-height:2;margin:0 0 16px;font-size:1.04rem}
+.about-quote{margin:24px 0;padding:20px 22px;border-right:4px solid var(--teal);background:#eefaf8;border-radius:18px;font-weight:800;line-height:1.9}
+.about-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+.about-stat{padding:16px;border-radius:18px;background:#fff;border:1px solid var(--line);text-align:center}
+.about-stat b{display:block;font-size:1.35rem;color:var(--teal);margin-bottom:4px}
+.about-stat span{color:var(--muted);font-size:.82rem}
+.about-actions{display:flex;gap:12px;flex-wrap:wrap}
+.about-actions .btn{min-width:160px}
+html[dir="ltr"] .about-quote{border-right:0;border-left:4px solid var(--teal)}
+.dark .about-content,.dark .about-stat{background:#14282f}
+.dark .about-quote{background:#19323a;color:#fff}
+
+.feedback-box{display:grid;grid-template-columns:.85fr 1.15fr;gap:24px;align-items:center;background:linear-gradient(145deg,#ffffff,#f5faf9);border:1px solid var(--line);border-radius:34px;padding:30px;box-shadow:var(--shadow)}
+.feedback-art{min-height:320px;border-radius:26px;background:linear-gradient(145deg,rgba(15,118,110,.92),rgba(18,43,53,.94));display:grid;place-items:center;color:#fff;text-align:center;padding:25px}
+.feedback-art .emoji{font-size:5rem;margin-bottom:10px}
+.feedback-form{display:grid;gap:14px}
+.feedback-form textarea,.feedback-form input{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);resize:vertical;min-height:52px}
+.feedback-form textarea{min-height:150px}
+.feedback-form small{color:var(--muted);line-height:1.6}
+.feedback-success{display:none;color:var(--teal);font-weight:700}
+.cta{background:linear-gradient(135deg,rgba(15,118,110,.96),rgba(18,43,53,.97)),url("https://images.unsplash.com/photo-1546412414-e1885259563a?auto=format&fit=crop&w=1500&q=80") center/cover;color:#fff;border-radius:38px;padding:70px 24px;text-align:center;box-shadow:var(--shadow)}
+.cta h2{font-size:clamp(2.2rem,5vw,4rem);margin:0 0 14px;color:#fff!important}
+.cta p{color:rgba(255,255,255,.86);max-width:700px;margin:0 auto 22px;line-height:1.8}
+.cta .btn-light{background:#fff!important;color:var(--teal)!important;border-color:#fff!important;min-width:220px}
+.trip-request-form{max-width:900px;margin:26px auto 0;padding:22px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:24px;text-align:right;backdrop-filter:blur(8px)}.trip-request-form[hidden]{display:none!important}.trip-request-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}.trip-request-form label{display:block;color:#fff;font-weight:800;margin:0 0 6px}.trip-request-form input,.trip-request-form select,.trip-request-form textarea{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.35);border-radius:12px;padding:12px;background:#fff;color:#122b35;font:inherit}.trip-request-form textarea{min-height:90px;resize:vertical;margin-bottom:12px}.trip-request-form .btn{width:100%;margin-top:4px}.trip-request-form small{display:block;color:rgba(255,255,255,.82);margin-top:10px;text-align:center}.trip-request-status{display:none;margin-top:12px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.14);color:#fff;text-align:center;font-weight:800}@media(max-width:760px){.trip-request-grid{grid-template-columns:1fr}.trip-request-form{padding:16px}}
+
+footer{padding:35px 0;color:var(--muted)}.footer{display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px solid var(--line);padding-top:24px}
+.floating{position:fixed;bottom:22px;left:22px;z-index:90;display:flex;flex-direction:column;gap:10px}
+.float-btn{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;color:#fff;box-shadow:0 14px 34px rgba(0,0,0,.18);border:0;cursor:pointer;transition:.22s transform,.22s box-shadow}
+.float-btn:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,0,0,.22)}
+.wa{background:#25D366}
+.ai{background:linear-gradient(135deg,#25D366,#16b85b)}
+.wa-icon{width:27px;height:27px;display:block}
+.chat-modal-box{padding:0;overflow:hidden;width:min(430px,100%);max-height:min(720px,88vh);display:flex;flex-direction:column}
+.chat-head{background:linear-gradient(135deg,#0f766e,#164e63);color:#fff;padding:17px 18px;display:flex;align-items:center;justify-content:space-between}
+.chat-head h3{margin:0;color:#fff!important}.chat-head small{display:block;color:rgba(255,255,255,.75);margin-top:3px}
+.chat-body{padding:16px;background:#f2f5f4;min-height:330px;max-height:430px;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.chat-message{max-width:84%;padding:11px 13px;border-radius:16px;line-height:1.65;font-size:.94rem}
+.chat-message.bot{align-self:flex-start;background:#fff;border:1px solid var(--line)}
+.chat-message.user{align-self:flex-end;background:#dff7e6;color:#133b2c}
+.chat-status{font-size:.8rem;color:var(--muted);display:none}
+.chat-compose{display:grid;grid-template-columns:1fr auto;gap:8px;padding:12px;background:#fff;border-top:1px solid var(--line)}
+.chat-compose input{min-width:0;padding:13px 14px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.chat-send{width:48px;height:48px;border:0;border-radius:14px;background:var(--teal);color:#fff;cursor:pointer;font-size:1.1rem}
+.chat-note{padding:0 14px 12px;background:#fff;color:var(--muted);font-size:.72rem;line-height:1.5}
+.dark .chat-body{background:#102128}.dark .chat-message.bot{background:#19323a;color:#fff}.dark .chat-message.user{background:#0f766e;color:#fff}.dark .chat-compose,.dark .chat-note{background:#14282f}
+
+.modal{position:fixed;inset:0;background:rgba(3,18,24,.55);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}.modal.open{display:flex}.modal-box{background:#fff;border-radius:28px;padding:25px;width:min(520px,100%);box-shadow:var(--shadow)}.modal-head{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#f1f3f3;width:38px;height:38px;border-radius:12px;cursor:pointer}
+.dark{--paper:#102128;--bg:#0d1b21;--ink:#f7fbfc;--muted:#c2d0d4;--line:rgba(255,255,255,.15)}
+.dark body{background:#102128}
+.dark h1,.dark h2,.dark h3,.dark h4,.dark strong,.dark b,.dark .brand,.dark .section-head h2,.dark .map-info h3,.dark .card h4,.dark .hotel-card h4{color:#f7fbfc!important}
+.dark p,.dark span,.dark label,.dark .section-head p,.dark .card p,.dark .hotel-card p,.dark .distance-note{color:#c2d0d4}
+.dark .nav,.dark .quick,.dark .card,.dark .planner-box,.dark .budget-form,.dark .budget-result,.dark .hotel-card,.dark .season,.dark .weather-table table,.dark .compare table,.dark .modal-box,.dark .map-card,.dark .feedback-box{background:#14282f}
+.dark .btn-light,.dark .pill,.dark .city-tab,.dark .card-actions a,.dark .card-actions button,.dark input,.dark select,.dark textarea,.dark .hotel-filter button{background:#19323a;color:#fff;border-color:rgba(255,255,255,.16)}
+.dark .visitor-counter,.dark .language-btn,.dark .language-menu,.dark .continent-btn{background:#19323a;color:#fff;border-color:rgba(255,255,255,.16)}
+.dark .continent-btn.active,.dark .continent-btn:hover{background:#0f766e}
+.dark .language-option{color:#fff}.dark .language-option:hover,.dark .language-option.active{background:#0f766e;color:#fff}
+.dark .map-visual{background:linear-gradient(145deg,#18383e,#102b31)}
+.dark .map-shape{fill:#d9cdb9;stroke:#8da6a7}
+.dark .map-sea{fill:#173b43}
+.dark .map-marker text,.dark .map-distance{fill:#f7fbfc}
+.dark .distance-panel{background:rgba(20,40,47,.94);border-color:rgba(255,255,255,.12)}
+.dark .feedback-art{background:linear-gradient(145deg,#0c5c56,#102b35)}
+.dark .cta h2,.dark .cta p{color:#fff!important}
+@media(max-width:950px){
+.navlinks{display:none}.hero-wrap,.map-card,.planner-box,.budget-wrap,.feedback-box,.about-wrap{grid-template-columns:1fr}
+.quick-grid{grid-template-columns:repeat(3,1fr)}.country-grid{grid-template-columns:1fr 1fr}.landmarks,.hotel-grid{grid-template-columns:1fr 1fr}.reels{grid-template-columns:repeat(2,1fr)}
+.map-visual,.country-map{min-height:470px}.distance-panel{width:170px}
+}
+@media(max-width:640px){
+.container{width:min(94%,1200px)}section{padding:62px 0}.nav{top:7px;padding:10px 12px}.brand{font-size:1.1rem}.logo{width:38px;height:38px}
+.hero{padding-top:100px;min-height:auto}.hero-media{min-height:400px}.hero-overlay{grid-template-columns:1fr;inset:auto 14px 14px}.stat{border-left:0;border-bottom:1px solid var(--line)}
+.country-grid,.landmarks,.hotel-grid,.hotel-country,.season-grid,.quick-grid,.form-grid{grid-template-columns:1fr}
+.section-head,.footer{flex-direction:column;align-items:flex-start}.reels{grid-template-columns:1fr 1fr}
+.nav .btn-primary{display:none}.visitor-counter{padding:9px 10px}.visitor-counter small{display:none}.language-btn{padding:0 9px}.language-btn .language-label,.pdf-btn .pdf-label{display:none}.map-card{padding:14px}.map-visual,.country-map{min-height:430px}
+.distance-panel{position:static;width:auto;margin:12px;background:#fff}.map-visual{display:flex;flex-direction:column}.country-map{order:1}.distance-panel{order:2}
+.feedback-box{padding:18px}.feedback-art{min-height:220px}.about-content{padding:22px}.about-visual{min-height:380px}.about-visual-img{object-position:center}.about-stats{grid-template-columns:1fr 1fr}.cta{padding:52px 18px}.cta .btn-light{width:100%}
+.card-actions{flex-direction:column}.floating{left:14px;bottom:14px}.float-btn{width:52px;height:52px}
+}
+@media(max-width:420px){.reels{grid-template-columns:1fr}.hero h1{font-size:2.8rem}.country-card{min-height:340px}.country-map{min-height:370px}.city-tabs{gap:7px}.city-tab{flex:1}.quick{padding:15px}}
+
+@media print{
+  @page{size:A4;margin:10mm}
+  body{background:#fff!important;color:#122b35!important}
+  .nav,.floating,.modal,.hero-actions,.card-actions,.feedback-form button,.planner-box>div:first-child,.hotel-filter{display:none!important}
+  section{padding:26px 0!important;page-break-inside:auto}
+  .hero{min-height:auto!important;padding:20px 0!important}
+  .hero-wrap,.map-card,.planner-box,.budget-wrap,.feedback-box{grid-template-columns:1fr!important}
+  .hero-media{min-height:340px!important}
+  .card,.quick,.season,.hotel-card,.map-card,.planner-box,.budget-form,.budget-result,.feedback-box{box-shadow:none!important;break-inside:avoid}
+  .country-card{min-height:300px!important;break-inside:avoid}
+  .reels{grid-template-columns:repeat(4,1fr)!important}
+  .reel{break-inside:avoid}
+  .dark h1,.dark h2,.dark h3,.dark h4,.dark p,.dark span,.dark label,.dark strong,.dark b{color:#122b35!important}
+  .dark .card,.dark .quick,.dark .season,.dark .hotel-card,.dark .map-card,.dark .planner-box,.dark .budget-form,.dark .budget-result,.dark .feedback-box{background:#fff!important}
+}
+body.print-plan-only>*:not(#planner){display:none!important}
+body.print-plan-only #planner{display:block!important;padding:0!important}
+body.print-plan-only #planner .planner-box>div:first-child{display:none!important}
+body.print-plan-only #planner .planner-box{display:block!important;border:0!important;box-shadow:none!important}
+body.print-plan-only #planner .plan-output{background:#fff!important;color:#122b35!important;border:1px solid #ddd!important}
+body.print-plan-only #planner .plan-output *{color:#122b35!important}
+
+</style>
+<script src="config.js"></script>
+</head>
+<body>
+<nav class="nav">
+  <a href="#" class="brand"><span class="logo">ر</span><span>رحّال</span></a>
+  <div class="navlinks">
+    <a href="#about">عن رحّال</a><a href="#countries">الدول</a><a href="#map">الخريطة</a><a href="#planner">خطط الرحلات</a><a href="#weather">الطقس</a><a href="#hotels">الفنادق</a><a href="#reels">الريلز</a>
+  </div>
+  <div class="nav-actions">
+    <div class="visitor-counter" title="عدد الزوار الحقيقي للموقع">
+      <span class="dot"></span>
+      <div><strong id="visitorCount">—</strong> <small>زائر</small></div>
+    </div>
+    <div class="language-wrap">
+      <button class="language-btn" id="languageBtn" type="button" aria-label="تغيير اللغة">
+        <span>🌍</span><span class="language-label" id="languageLabel">العربية</span><span>⌄</span>
+      </button>
+      <div class="language-menu" id="languageMenu">
+        <button class="language-option active" type="button" data-lang="ar">🇦🇪 العربية</button>
+        <button class="language-option" type="button" data-lang="en">🇬🇧 English</button>
+      </div>
+    </div>
+    <button class="pdf-btn" id="pdfBtn" type="button" aria-label="تحميل PDF" title="تحميل PDF">
+      <span>⬇</span><span class="pdf-label" data-pdf-label>PDF</span>
+    </button>
+    <button class="icon-btn" id="darkBtn">◐</button>
+    <a class="btn btn-primary wa-general" href="#">خطّط رحلتك</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container hero-wrap">
+    <div>
+      <span class="badge">✦ مساعدك السياحي الشخصي • معلومات رحّال + بحث حديث</span>
+      <h1>رحلتك تبدأ<br><span style="color:var(--teal)">من هنا.</span></h1>
+      <p>اسأل رحّال عن أي شيء يتعلق بالسفر: يبني خط سيرك، يقترح الأنسب للعائلة والميزانية، وينبّهك إلى المخاطر وما يجب فعله أو تجنبه، مع الاستفادة من بيانات رحّال والمصادر الحديثة عند تفعيل البحث المباشر.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" id="heroAskAssistant" type="button">اسأل مساعد رحّال</button>
+        <button class="btn btn-light" id="openPlanner">جرّب مخطط الرحلة</button>
+      </div>
+    </div>
+    <div class="hero-media">
+      <div class="hero-overlay">
+        <div class="stat"><strong id="heroCitiesCount">0 مدينة</strong><span>مدن ومناطق مضافة</span></div>
+        <div class="stat"><strong id="heroContentCount">0 معلم • 0 فندق • 0 مسار</strong><span>محسوبة مباشرة من كروت رحّال</span></div>
+        <div class="stat"><strong>خطة ذكية</strong><span>حسب المدة والميزانية</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<section id="about">
+<div class="container">
+  <div class="about-wrap">
+    <div class="about-visual">
+      <img class="about-visual-img" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1400&q=88" alt="أدوات السفر وجواز سفر وخريطة وكاميرا" loading="lazy" onerror="this.src='assets/about-rahhal-travel.png'">
+      <div class="about-visual-content">
+        <span class="badge">✦ شغف السفر</span>
+        <h3>رحّال… هوية تعيش بالسفر</h3>
+        <p>شغف لا يتوقف عن البحث عن جمال العالم، متعة الاكتشاف، وثراء الثقافات.</p>
+      </div>
+    </div>
+
+    <div class="about-content">
+      <span class="badge">عن رحّال</span>
+      <h2>رحّال عاشق للسفر والترحال</h2>
+
+      <p>رحّال عاشق للسفر والترحال، أجد في كل وجهة جديدة متعة الاكتشاف وشغف المغامرة.</p>
+
+      <p>أتمتع بروح إيجابية تنبض بالحب للحياة، وأرى في كل لحظة فرصة للتعلم والابتسام، وأسعى لنشر الطاقة الجميلة أينما حللت.</p>
+
+      <p>وكلمة <strong>“رحّال”</strong> — بتشديد الراء — تعني <strong>كثير الأسفار</strong>، وهي صفة تعكس هويتي كمن لا يتوقف عن البحث عن جمال العالم وثراء ثقافاته.</p>
+
+      <div class="about-quote">“كل وجهة جديدة تحمل قصة، وكل رحلة تفتح بابًا لاكتشاف العالم من جديد.”</div>
+
+      <div class="about-stats">
+        <div class="about-stat"><b id="rahhalCountriesCount">0</b><span>دول حالية</span></div>
+        <div class="about-stat"><b id="rahhalExperiencesCount">0</b><span>تجربة سياحية</span></div>
+        <div class="about-stat"><b id="rahhalLanguagesCount">2</b><span>لغتان</span></div>
+        <div class="about-stat"><b>∞</b><span>شغف بالاكتشاف</span></div>
+      </div>
+
+      <div class="about-actions">
+        <a href="#planner" class="btn btn-primary">خطّط رحلتك</a>
+        <a href="#" class="btn btn-light wa-general">تواصل معي</a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="countries">
+<div class="container">
+  <div class="section-head"><div><span class="badge">الوجهات</span><h2>اختر الدولة التي تريد اكتشافها</h2></div><p>تم تصميم كل دولة بنفس الهيكل، بحيث يمكن إضافة دول جديدة لاحقًا بسهولة.</p></div>
+  <div class="continent-filter" aria-label="فلترة الدول حسب القارة">
+    <button class="continent-btn active" data-continent="all">كل القارات</button>
+    <button class="continent-btn" data-continent="asia">آسيا</button>
+    <button class="continent-btn" data-continent="africa">أفريقيا</button>
+    <button class="continent-btn" data-continent="europe">أوروبا</button>
+    <button class="continent-btn" data-continent="north-america">أمريكا الشمالية</button>
+    <button class="continent-btn" data-continent="south-america">أمريكا الجنوبية</button>
+    <button class="continent-btn" data-continent="oceania">أوقيانوسيا</button>
+  </div>
+
+  <div class="country-grid" id="countryGrid">
+    <article class="country-card uae" data-country="uae" data-continent="asia">
+      <div class="content">
+        <span class="continent-label">🌏 آسيا</span>
+        <span class="badge">🇦🇪 الإمارات</span>
+        <h3>الإمارات العربية المتحدة</h3>
+        <p>مدن عصرية، صحراء، شواطئ وتجارب عائلية.</p>
+      </div>
+    </article>
+
+    <article class="country-card ksa" data-country="ksa" data-continent="asia">
+      <div class="content">
+        <span class="continent-label">🌏 آسيا</span>
+        <span class="badge">🇸🇦 السعودية</span>
+        <h3>المملكة العربية السعودية</h3>
+        <p>تاريخ، طبيعة، مدن حديثة وتجارب ثقافية متنوعة.</p>
+      </div>
+    </article>
+
+    <article class="country-card mauritius" data-country="mauritius" data-continent="africa">
+      <div class="content">
+        <span class="continent-label">🌍 أفريقيا</span>
+        <span class="badge">🇲🇺 موريشيوس</span>
+        <h3>جمهورية موريشيوس</h3>
+        <p>شواطئ استوائية، طبيعة خضراء، شلالات وتجارب بحرية هادئة.</p>
+      </div>
+    </article>
+
+    <article class="country-card srilanka" data-country="srilanka" data-continent="asia">
+      <div class="content">
+        <span class="continent-label">🌏 آسيا</span>
+        <span class="badge">🇱🇰 سريلانكا</span>
+        <h3>سريلانكا</h3>
+        <p>شواطئ استوائية، شاي، جبال، معابد وحياة برية متنوعة.</p>
+      </div>
+    </article>
+
+    <article class="country-card netherlands" data-country="netherlands" data-continent="europe">
+      <div class="content">
+        <span class="continent-label">🌍 أوروبا</span>
+        <span class="badge">🇳🇱 هولندا</span>
+        <h3>مملكة هولندا</h3>
+        <p>قنوات مائية، طواحين هواء، زهور، متاحف ومدن أوروبية جميلة.</p>
+      </div>
+    </article>
+
+    <article class="country-card belgium" data-country="belgium" data-continent="europe"><div class="content"><span class="continent-label">🌍 أوروبا</span><span class="badge">🇧🇪 بلجيكا</span><h3>مملكة بلجيكا</h3><p>مدن تاريخية، ساحات أوروبية، قنوات، شوكولاتة وتجارب ثقافية.</p></div></article>
+    <article class="country-card japan" data-country="japan" data-continent="asia"><div class="content"><span class="continent-label">🌏 آسيا</span><span class="badge">🇯🇵 اليابان</span><h3>اليابان</h3><p>مدن حديثة، معابد، طبيعة، ثقافة يابانية وتجارب متنوعة.</p></div></article>
+  </div>
+
+  <div class="country-empty" id="countryEmpty">
+    لا توجد دول مضافة في هذه القارة بعد.
+  </div>
+</div>
+</section>
+
+<section id="map">
+<div class="container">
+  <div class="section-head"><div><span class="badge">الدليل التفاعلي</span><h2>اكتشف البلد من خلال الخريطة</h2></div><p>اختر الدولة ثم اضغط على المدينة لمعرفة أهم المعالم والخطة المقترحة.</p></div>
+  <div class="country-switch">
+    <button class="pill active" data-panel="uaePanel">الإمارات</button>
+    <button class="pill" data-panel="ksaPanel">السعودية</button>
+    <button class="pill" data-panel="mauritiusPanel">موريشيوس</button>
+    <button class="pill" data-panel="srilankaPanel">سريلانكا</button>
+    <button class="pill" data-panel="netherlandsPanel">هولندا</button>
+    <button class="pill" data-panel="belgiumPanel">بلجيكا</button>
+    <button class="pill" data-panel="japanPanel">اليابان</button>
+  </div>
+
+  <div id="uaePanel" class="country-panel active">
+    <div class="quick-grid">
+      <div class="quick"><b>أبوظبي</b><span>العاصمة</span></div><div class="quick"><b>الدرهم AED</b><span>العملة</span></div><div class="quick"><b>نوفمبر–مارس</b><span>أفضل وقت</span></div><div class="quick"><b>دبي وأبوظبي</b><span>المطارات الرئيسية</span></div><div class="quick"><b>971+</b><span>مفتاح الاتصال</span></div>
+    </div>
+    <div class="map-card">
+      <div class="google-route-map" aria-label="خريطة Google Maps التفاعلية لمسارات الإمارات">
+        <div class="google-map-badge">📍 Google Maps · الإمارات</div>
+        <iframe id="uaeGoogleMap" title="خريطة Google Maps لمسارات الإمارات" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps?q=United%20Arab%20Emirates&z=7&output=embed"></iframe>
+      </div>
+      <div class="map-info">
+        <span class="tag">مسارات Google Maps</span>
+        <h3 id="mapTitle">تتبّع أوضح لرحلتك في الإمارات</h3>
+        <p id="mapText">اختر الجولة المناسبة ثم افتح المسار في Google Maps لعرض الطريق والمسافة ووقت القيادة بصورة أوضح.</p>
+        <div class="route-controls">
+          <select class="route-select" id="uaeRouteSelect" aria-label="اختر مسار الإمارات">
+            <option value="main">أبوظبي ← دبي ← الشارقة ← رأس الخيمة</option>
+            <option value="north">دبي والإمارات الشمالية</option>
+            <option value="east">دبي ← الشارقة ← الفجيرة</option>
+            <option value="alain">أبوظبي ← العين ← دبي</option>
+            <option value="full">جولة موسعة في الإمارات</option>
+          </select>
+          <ul class="route-stops" id="uaeRouteStops"></ul>
+          <div class="route-actions">
+            <a class="btn btn-primary" id="openUaeRoute" target="_blank" rel="noopener">🧭 ابدأ المسار في Google Maps</a>
+            <a class="btn btn-light" target="_blank" rel="noopener" href="https://maps.app.goo.gl/3rESTVNdh5feENv5A?g_st=iw">🗺️ افتح قائمتك في Google Maps</a>
+          </div>
+          <p class="route-hint">الخريطة داخل الموقع هي Google Maps مباشرة. زر «ابدأ المسار» يفتح التوجيه الكامل مع نقاط التوقف. ولإظهار خط الاتجاهات داخل الخريطة نفسها يمكن إضافة مفتاح Google Maps Embed API في config.js.</p>
+        </div>
+        <div class="city-tabs"><button class="city-tab active" data-city="dubai">دبي</button><button class="city-tab" data-city="abudhabi">أبوظبي</button><button class="city-tab" data-city="sharjah">الشارقة</button></div>
+        <a class="btn btn-light city-map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=دبي">📍 افتح دبي في Google Maps</a>
+        <button class="btn btn-primary ask-city" data-name="دبي">اسأل رحّال عن دبي</button>
+      </div>
+    </div>
+    <div class="landmarks" id="uaeLandmarks"></div>
+  </div>
+
+  <div id="ksaPanel" class="country-panel">
+    <div class="quick-grid">
+      <div class="quick"><b>الرياض</b><span>العاصمة</span></div><div class="quick"><b>الريال SAR</b><span>العملة</span></div><div class="quick"><b>أكتوبر–مارس</b><span>أفضل وقت</span></div><div class="quick"><b>الرياض وجدة</b><span>المطارات الرئيسية</span></div><div class="quick"><b>966+</b><span>مفتاح الاتصال</span></div>
+    </div>
+    <div class="map-card">
+      <div class="google-route-map" aria-label="خريطة Google Maps التفاعلية لمسارات السعودية">
+        <div class="google-map-badge">📍 Google Maps · السعودية</div>
+        <iframe id="ksaGoogleMap" title="خريطة Google Maps لمسارات السعودية" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps?q=Saudi%20Arabia&z=5&output=embed"></iframe>
+      </div>
+      <div class="map-info">
+        <span class="tag">مسارات Google Maps</span>
+        <h3 id="ksaMapTitle">تتبّع أوضح لرحلتك في السعودية</h3>
+        <p id="ksaMapText">اختر المسار المناسب لعرض المدن ونقاط التوقف، ثم افتحه في Google Maps لمشاهدة الطريق والمسافة ووقت القيادة بصورة أوضح.</p>
+        <div class="route-controls">
+          <select class="route-select" id="ksaRouteSelect" aria-label="اختر مسار السعودية">
+            <option value="main">الرياض ← الدمام ← الرياض ← جدة</option>
+            <option value="west">الرياض ← جدة ← مكة المكرمة ← المدينة المنورة</option>
+            <option value="alula">الرياض ← العلا ← المدينة المنورة</option>
+            <option value="full">جولة موسعة في السعودية</option>
+          </select>
+          <ul class="route-stops" id="ksaRouteStops"></ul>
+          <div class="route-actions">
+            <a class="btn btn-primary" id="openKsaRoute" target="_blank" rel="noopener">🧭 ابدأ المسار في Google Maps</a>
+            <a class="btn btn-light" target="_blank" rel="noopener" href="https://maps.app.goo.gl/TzqUe6U34HeaRQZW6">🗺️ افتح رابطك في Google Maps</a>
+          </div>
+          <p class="route-hint">تم استبدال الخريطة التجريبية بخريطة Google Maps مباشرة. زر «ابدأ المسار» يفتح التوجيه مع نقاط التوقف والمسافات ووقت القيادة. ولعرض خط الاتجاهات داخل الخريطة نفسها أضف مفتاح Google Maps Embed API في config.js.</p>
+        </div>
+        <div class="city-tabs"><button class="city-tab active" data-ksa="riyadh">الرياض</button><button class="city-tab" data-ksa="jeddah">جدة</button><button class="city-tab" data-ksa="alula">العلا</button></div>
+        <a class="btn btn-light city-map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=الرياض">📍 افتح الرياض في Google Maps</a>
+        <button class="btn btn-primary ask-city" data-name="الرياض">اسأل رحّال عن الرياض</button>
+      </div>
+    </div>
+    <div class="landmarks" id="ksaLandmarks"></div>
+  </div>
+
+  <div id="mauritiusPanel" class="country-panel">
+    <div class="quick-grid">
+      <div class="quick"><b>بورت لويس</b><span>العاصمة</span></div>
+      <div class="quick"><b>الروبية MUR</b><span>العملة</span></div>
+      <div class="quick"><b>مايو–ديسمبر</b><span>أفضل وقت</span></div>
+      <div class="quick"><b>مطار سير سيووساغور رامغولام</b><span>المطار الرئيسي</span></div>
+      <div class="quick"><b>230+</b><span>مفتاح الاتصال</span></div>
+    </div>
+
+    <div class="map-card">
+      <div class="google-route-map" aria-label="خريطة Google Maps التفاعلية لمسارات موريشيوس">
+        <div class="google-map-badge">📍 Google Maps · موريشيوس</div>
+        <iframe id="mauritiusGoogleMap" title="خريطة Google Maps لمسار موريشيوس" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps?q=Mauritius&z=10&output=embed"></iframe>
+      </div>
+
+      <div class="map-info">
+        <span class="tag">مسارات Google Maps</span>
+        <h3 id="mauritiusMapTitle">تتبّع أوضح لرحلتك في موريشيوس</h3>
+        <p id="mauritiusMapText">اختر الجولة المناسبة، ثم افتح المسار في Google Maps للملاحة الفعلية والمسافات والوقت حسب حالة الطريق.</p>
+
+        <div class="route-controls">
+          <select class="route-select" id="mauritiusRouteSelect" aria-label="اختر مسار موريشيوس">
+            <option value="north">الجولة الشمالية · غراند باي وبامبلموس وبورت لويس</option>
+            <option value="west">الغرب وشاماريل · كاسيلا والشلال وأرض الألوان</option>
+            <option value="south">الجنوب · ماكوندي وبيل أومبر ووادي الألوان</option>
+            <option value="east">الساحل الشرقي · One&Only وConstance Belle Mare</option>
+            <option value="full">جولة موسعة حول الجزيرة</option>
+          </select>
+          <ul class="route-stops" id="mauritiusRouteStops"></ul>
+          <div class="route-actions">
+            <a class="btn btn-primary" id="openMauritiusRoute" target="_blank" rel="noopener">🧭 ابدأ المسار في Google Maps</a>
+          </div>
+          <p class="route-hint">الخريطة داخل الموقع تعرض Google Maps مباشرة. عند الضغط على «ابدأ المسار» تفتح الملاحة الكاملة مع نقاط التوقف. ويمكن تفعيل خط المسار داخل الخريطة أيضًا بوضع مفتاح Google Maps Embed API في ملف config.js.</p>
+        </div>
+
+        <div class="city-tabs">
+          <button class="city-tab active" data-mauritius="portlouis">بورت لويس</button>
+          <button class="city-tab" data-mauritius="north">الشمال</button>
+          <button class="city-tab" data-mauritius="east">الساحل الشرقي</button>
+          <button class="city-tab" data-mauritius="west">شاماريل والغرب</button>
+          <button class="city-tab" data-mauritius="south">الجنوب وبيل أومبر</button>
+        </div>
+
+        <a class="btn btn-light city-map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=بورت لويس">📍 افتح المدينة في Google Maps</a>
+        <button class="btn btn-primary ask-city" data-name="بورت لويس">اسأل رحّال عن بورت لويس</button>
+      </div>
+    </div>
+
+    <div class="landmarks" id="mauritiusLandmarks"></div>
+
+  </div>
+
+</div>
+
+  <div id="srilankaPanel" class="country-panel">
+    <div class="quick-grid">
+      <div class="quick"><b>سري جاياواردنابورا كوتي</b><span>العاصمة الإدارية</span></div>
+      <div class="quick"><b>الروبية LKR</b><span>العملة</span></div>
+      <div class="quick"><b>ديسمبر–مارس</b><span>أفضل وقت للجنوب والغرب</span></div>
+      <div class="quick"><b>كولومبو</b><span>المطار الرئيسي</span></div>
+      <div class="quick"><b>+94</b><span>مفتاح الاتصال</span></div>
+    </div>
+    <div class="map-card">
+      <div class="google-route-map" aria-label="خريطة Google Maps التفاعلية لمسارات سريلانكا">
+        <div class="google-map-badge">📍 Google Maps · سريلانكا</div>
+        <iframe id="srilankaGoogleMap" title="خريطة Google Maps لمسار سريلانكا" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps?q=Sri%20Lanka&z=7&output=embed"></iframe>
+      </div>
+      <div class="map-info">
+        <span class="tag">مسارات Google Maps</span>
+        <h3 id="srilankaMapTitle">تتبّع أوضح لرحلتك في سريلانكا</h3>
+        <p id="srilankaMapText">اختر المسار المناسب، ثم افتحه في Google Maps للملاحة الفعلية ومعرفة المسافة والوقت حسب الطريق.</p>
+
+        <div class="route-controls">
+          <select class="route-select" id="srilankaRouteSelect" aria-label="اختر مسار سريلانكا">
+            <option value="west">كولومبو والساحل الغربي</option>
+            <option value="culture">كولومبو وكاندي · الثقافة والمعابد</option>
+            <option value="hills">كاندي وإيلا · المرتفعات والقطار</option>
+            <option value="south">الساحل الجنوبي · جالي والشواطئ</option>
+            <option value="full">جولة موسعة · كولومبو وكاندي وإيلا وجالي</option>
+          </select>
+          <ul class="route-stops" id="srilankaRouteStops"></ul>
+          <div class="route-actions">
+            <a class="btn btn-primary" id="openSrilankaRoute" target="_blank" rel="noopener">🧭 ابدأ المسار في Google Maps</a>
+            <a class="btn btn-light" target="_blank" rel="noopener" href="https://maps.app.goo.gl/VCArKi6UqS5dgkMcA">🗺️ افتح قائمة سريلانكا</a>
+          </div>
+          <p class="route-hint">الخريطة تعرض Google Maps مباشرة. عند الضغط على «ابدأ المسار» تفتح الملاحة الكاملة مع نقاط التوقف. وإذا وضعت مفتاح Google Maps Embed API في config.js فسيظهر خط الاتجاهات داخل الخريطة نفسها.</p>
+        </div>
+
+        <div class="city-tabs">
+          <button class="city-tab active" data-srilanka="colombo">كولومبو</button>
+          <button class="city-tab" data-srilanka="kandy">كاندي</button>
+          <button class="city-tab" data-srilanka="ella">إيلا</button>
+          <button class="city-tab" data-srilanka="sigiriya">سيجيريا ويالا</button>
+          <button class="city-tab" data-srilanka="nuwara">نوارا إليا</button>
+          <button class="city-tab" data-srilanka="galle">جالي</button>
+        </div>
+        <a class="btn btn-light city-map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Colombo%20Sri%20Lanka">📍 افتح كولومبو في Google Maps</a>
+        <button class="btn btn-primary ask-city" data-name="كولومبو">اسأل رحّال عن كولومبو</button>
+      </div>
+    </div>
+    <div class="landmarks" id="srilankaLandmarks"></div>
+  </div>
+
+  <div id="netherlandsPanel" class="country-panel">
+    <div class="quick-grid">
+      <div class="quick"><b>أمستردام</b><span>العاصمة</span></div><div class="quick"><b>اليورو EUR</b><span>العملة</span></div><div class="quick"><b>أبريل–مايو</b><span>موسم الزهور</span></div><div class="quick"><b>Schiphol AMS</b><span>المطار الرئيسي</span></div><div class="quick"><b>+31</b><span>مفتاح الاتصال</span></div>
+    </div>
+    <div class="map-card">
+      <div class="google-route-map" aria-label="خريطة Google Maps التفاعلية لهولندا"><div class="google-map-badge">📍 Google Maps · هولندا</div><iframe title="خريطة هولندا" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps?q=Netherlands&z=7&output=embed"></iframe></div>
+      <div class="map-info"><span class="tag">مسارات Google Maps</span><h3>مسارات هولندا</h3><p>اختر المدينة أو المنطقة لعرض نقاط مقترحة من الأماكن الموجودة في كروت هولندا، ثم افتح المسار مباشرة في Google Maps.</p>
+        <div class="route-controls">
+          <select class="route-select" id="netherlandsRouteSelect" aria-label="اختر مسار هولندا">
+            <option value="amsterdam">أمستردام</option><option value="utrecht">أوتريخت</option><option value="rotterdam">روتردام</option><option value="hague">لاهاي وليدن</option><option value="waterland">ماركن وفولندام</option>
+          </select>
+          <ul class="route-stops" id="netherlandsRouteStops"></ul>
+          <div class="route-actions"><a class="btn btn-primary" id="openNetherlandsRoute" target="_blank" rel="noopener">🧭 ابدأ المسار في Google Maps</a></div>
+          <p class="route-hint">المسار مبني على الأماكن الموجودة في كروت هولندا، ويمكن فتحه مباشرة للملاحة في Google Maps.</p>
+        </div>
+        <div class="city-tabs"><button class="city-tab active" data-netherlands="amsterdam">أمستردام</button><button class="city-tab" data-netherlands="rotterdam">روتردام</button><button class="city-tab" data-netherlands="utrecht">أوتريخت</button><button class="city-tab" data-netherlands="giethoorn">جيثورن</button><button class="city-tab" data-netherlands="bourtange">حصن بورتانج</button><button class="city-tab" data-netherlands="zaanse">زانسي سخانس</button><button class="city-tab" data-netherlands="hague">لاهاي وليدن</button><button class="city-tab" data-netherlands="waterland">ماركن وفولندام</button><button class="city-tab" data-netherlands="keukenhof">حديقة كيوكينهوف</button><button class="city-tab" data-netherlands="leiden">ليدن</button><button class="city-tab" data-netherlands="themeparks">مدن الملاهي</button><button class="city-tab" data-netherlands="kinderdijk">كيندردايك</button><button class="city-tab" data-netherlands="schiphol">مطار سخيبول</button></div>
+        <a class="btn btn-light city-map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Amsterdam%20Netherlands">📍 افتح أمستردام في Google Maps</a><button class="btn btn-primary ask-city" data-name="أمستردام">اسأل رحّال عن أمستردام</button>
+      </div>
+    </div><div class="landmarks" id="netherlandsLandmarks"></div>
+  </div>
+
+  <div id="belgiumPanel" class="country-panel"><div class="quick-grid"><div class="quick"><b>بروكسل</b><span>العاصمة</span></div><div class="quick"><b>اليورو EUR</b><span>العملة</span></div><div class="quick"><b>بروكسل BRU</b><span>المطار الرئيسي</span></div><div class="quick"><b>+32</b><span>مفتاح الاتصال</span></div></div><div class="map-card"><div class="google-route-map"><div class="google-map-badge">📍 Google Maps · بلجيكا</div><iframe title="خريطة بلجيكا" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps?q=Belgium&z=7&output=embed"></iframe></div><div class="map-info"><span class="tag">مسارات Google Maps</span><h3>مسارات بلجيكا</h3><p>اختر المدينة لعرض نقاط مقترحة من الأماكن الموجودة في كروت بلجيكا، ثم افتح المسار مباشرة في Google Maps.</p><div class="route-controls"><select class="route-select" id="belgiumRouteSelect" aria-label="اختر مسار بلجيكا"><option value="antwerp">أنتويرب</option><option value="ghent">غنت</option><option value="bruges">بروج</option><option value="brussels">بروكسل</option></select><ul class="route-stops" id="belgiumRouteStops"></ul><div class="route-actions"><a class="btn btn-primary" id="openBelgiumRoute" target="_blank" rel="noopener">🧭 ابدأ المسار في Google Maps</a></div><p class="route-hint">المسار مبني على الأماكن الموجودة في كروت بلجيكا، ويمكن فتحه مباشرة للملاحة في Google Maps.</p></div><div class="city-tabs"><button class="city-tab active" data-belgium="antwerp">أنتويرب</button><button class="city-tab" data-belgium="ghent">غنت</button><button class="city-tab" data-belgium="bruges">بروج</button><button class="city-tab" data-belgium="brussels">بروكسل</button></div><a class="btn btn-light city-map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Antwerp%20Belgium">📍 افتح أنتويرب في Google Maps</a><button class="btn btn-primary ask-city" data-name="أنتويرب">اسأل رحّال عن أنتويرب</button></div></div><div class="landmarks" id="belgiumLandmarks"></div></div>
+  <div id="japanPanel" class="country-panel"><div class="quick-grid"><div class="quick"><b>طوكيو</b><span>العاصمة</span></div><div class="quick"><b>الين JPY</b><span>العملة</span></div><div class="quick"><b>ناريتا / هانيدا</b><span>مطارات طوكيو</span></div><div class="quick"><b>+81</b><span>مفتاح الاتصال</span></div></div><div class="map-card"><div class="google-route-map"><div class="google-map-badge">📍 Google Maps · اليابان</div><iframe title="خريطة اليابان" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps?q=Japan&z=5&output=embed"></iframe></div><div class="map-info"><span class="tag">دليل اليابان</span><h3>نارا</h3><p>معالم مختارة في نارا من الصور والروابط التي أضفتها.</p><div class="city-tabs"><button class="city-tab active" data-japan="nara">نارا</button><button class="city-tab" data-japan="osaka">أوساكا</button><button class="city-tab" data-japan="kyoto">كيوتو / أراشيياما</button></div><a class="btn btn-light city-map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Nara%20Japan">📍 افتح نارا في Google Maps</a><button class="btn btn-primary ask-city" data-name="نارا">اسأل رحّال عن نارا</button></div></div><div class="landmarks" id="japanLandmarks"></div></div>
+
+</section>
+
+<section id="planner" class="planner">
+<div class="container">
+  <div class="section-head"><div><span class="badge">AI Trip Planner</span><h2>ابنِ خطة رحلتك في ثوانٍ</h2></div><p>نسخة تجريبية تعمل بناءً على الدولة، عدد الأيام، نوع الرحلة والميزانية.</p></div>
+  <div class="planner-box">
+    <div>
+      <div class="form-grid">
+        <div class="field"><label>الدولة</label><select id="planCountry"><option>الإمارات</option><option>السعودية</option><option>موريشيوس</option><option>سريلانكا</option><option>هولندا</option><option>بلجيكا</option><option>اليابان</option></select></div>
+        <div class="field"><label>عدد الأيام</label><input id="days" type="number" min="1" max="14" value="3"></div>
+        <div class="field"><label>نوع الرحلة</label><select id="tripType"><option>عائلية</option><option>مغامرات</option><option>استرخاء</option><option>تسوق</option></select></div>
+        <div class="field"><label>الميزانية</label><select id="budgetLevel"><option>اقتصادية</option><option>متوسطة</option><option>فاخرة</option></select></div>
+      </div>
+      <button class="btn btn-primary" id="generatePlan" style="margin-top:18px;width:100%">أنشئ خطتي</button>
+    </div>
+    <div class="plan-output">
+      <span class="tag" style="background:rgba(255,255,255,.15);color:#fff">خطة مقترحة</span>
+      <h3 id="planTitle">3 أيام في الإمارات</h3>
+      <div class="timeline" id="planTimeline"></div>
+      <button class="btn btn-light ask-plan" style="margin-top:18px;width:100%">اسأل رحّال عن هذه الخطة</button>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="weather"><div class="container"><div class="section-head"><div><span class="badge">الطقس والمناخ الرسمي</span><h2>الطقس طوال العام حسب الدولة</h2></div><p>مواسم ومتوسطات شهرية مرجعية، مع وصول مباشر إلى جهة الأرصاد الرسمية للحالة الحالية والتنبيهات والتوقعات المحدثة.</p></div><div class="weather-controls"><label>اختر الدولة<br><select id="weatherCountry" onchange="renderOfficialWeather(this.value)"><option value="uae">الإمارات</option><option value="ksa">السعودية</option><option value="mauritius">موريشيوس</option><option value="srilanka">سريلانكا</option><option value="netherlands">هولندا</option><option value="belgium">بلجيكا</option><option value="japan">اليابان</option></select></label><div id="weatherPlace" class="weather-note"></div></div><div id="officialWeatherSource" class="weather-source"></div><div id="seasonGrid" class="season-grid"></div><div class="weather-table"><table><thead><tr><th>الشهر</th><th>متوسط العظمى °م</th><th>متوسط الصغرى °م</th><th>طبيعة الطقس</th><th>ملاءمة الرحلة</th></tr></thead><tbody id="weatherRows"></tbody></table></div><p class="weather-note" style="margin-top:12px">القيم الشهرية متوسطات مناخية مرجعية للمدينة/المحطة الممثلة وليست توقعًا ليوم محدد. للحالة اللحظية والتحذيرات استخدم «الطقس الرسمي الآن».</p></div></section>
+
+<section id="budget">
+<div class="container">
+  <div class="section-head"><div><span class="badge">حاسبة الميزانية</span><h2>اعرف تكلفة رحلتك التقريبية</h2></div></div>
+  <div class="budget-wrap">
+    <div class="budget-form">
+      <div class="form-grid">
+        <div class="field"><label>الدولة</label><select id="budgetCountry"><option value="uae">الإمارات</option><option value="ksa">السعودية</option><option value="mauritius">موريشيوس</option><option value="srilanka">سريلانكا</option><option value="netherlands">هولندا</option><option value="belgium">بلجيكا</option><option value="japan">اليابان</option></select></div>
+        <div class="field"><label>عدد الأشخاص</label><input id="people" type="number" value="2" min="1"></div>
+        <div class="field"><label>عدد الأيام</label><input id="budgetDays" type="number" value="4" min="1"></div>
+        <div class="field"><label>نوع الفندق</label><select id="hotelLevel"><option value="3">3 نجوم</option><option value="4">4 نجوم</option><option value="5">5 نجوم</option></select></div>
+        <div class="field"><label>النقل</label><select id="transport"><option value="public">مواصلات عامة</option><option value="economy">سيارة اقتصادية</option><option value="luxury">سيارة فاخرة</option></select></div>
+      </div>
+      <button class="btn btn-primary" id="calcBudget" style="width:100%;margin-top:18px">احسب التكلفة</button>
+    </div>
+    <div class="budget-result">
+      <div id="budgetDestination" style="font-weight:900;font-size:1.1rem;margin-bottom:8px">🇦🇪 الإمارات · العملة AED</div>
+      <div class="cost"><span>الفندق</span><b id="hotelCost">—</b></div>
+      <div class="cost"><span>النقل</span><b id="transportCost">—</b></div>
+      <div class="cost"><span>المطاعم والأنشطة</span><b id="activityCost">—</b></div>
+      <div class="cost total"><span>الإجمالي التقريبي</span><b id="totalCost">—</b></div>
+      <div id="budgetBasis" style="margin-top:14px;color:var(--muted);line-height:1.8;font-size:.9rem"></div>
+      <div id="budgetSources" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="hotels">
+<div class="container">
+  <div class="section-head"><div><span class="badge">فنادق مقترحة</span><h2>فنادق ومنتجعات مرتبطة ببيانات رحّال</h2></div><p>تُجمع الفنادق تلقائيًا من كروت رحّال، وتُستكمل بخيارات 3 و4 و5 نجوم وخيارات عائلية، مع فتح الموقع مباشرة في Google Maps.</p></div>
+  <div id="hotelCountryFilter" class="hotel-country-filter" aria-label="اختيار دولة الفنادق"></div>
+  <div class="hotel-filter">
+    <button class="active" data-filter="all">الكل</button>
+    <button data-filter="3star">3 نجوم</button><button data-filter="4star">4 نجوم</button><button data-filter="5star">5 نجوم</button><button data-filter="family">👨‍👩‍👧‍👦 عائلي / أطفال</button><button data-filter="rahhal">من كروت رحّال</button>
+  </div>
+  <div id="hotelMapDiscovery" style="margin:0 0 18px"></div>
+  <div id="dynamicHotels" class="hotel-grid"></div>
+  <p style="margin-top:14px;color:var(--muted);font-size:.86rem">ملاحظة: تصنيف النجوم والعلامة العائلية يعتمدان على البيانات المتاحة في المصدر المذكور أو بيانات رحّال؛ تحقّق من المرافق المناسبة للأطفال مباشرة قبل الحجز. الأسعار لا تُخمن؛ استخدم رابط الفندق أو Google Maps للتحقق من السعر والتوفر الحالي.</p>
+</div>
+</section>
+
+<section id="reels">
+<div class="container">
+  <div class="section-head"><div><span class="badge">مشاهد سريعة</span><h2>ريلز ومقتطفات من الوجهات</h2></div><p>يمكن لاحقًا استبدال هذه البطاقات بفيديوهات MP4 أو YouTube أو Vimeo أو Instagram Embeds.</p></div>
+  <div class="reels">
+    <div class="reel" style="background-image:url('https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=700&q=80')"><div class="play">▶</div><div class="caption">دبي في 30 ثانية</div></div>
+    <div class="reel" style="background-image:url('https://images.unsplash.com/photo-1512632578888-169bbbc64f33?auto=format&fit=crop&w=700&q=80')"><div class="play">▶</div><div class="caption">أبوظبي</div></div>
+    <div class="reel" style="background-image:url('https://images.unsplash.com/photo-1578895101408-1a36b834405b?auto=format&fit=crop&w=700&q=80')"><div class="play">▶</div><div class="caption">الرياض</div></div>
+    <div class="reel" style="background-image:url('https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?auto=format&fit=crop&w=700&q=80')"><div class="play">▶</div><div class="caption">العلا</div></div>
+    <div class="reel" style="background-image:url('https://images.unsplash.com/photo-1589979481223-deb893043163?auto=format&fit=crop&w=700&q=80')"><div class="play">▶</div><div class="caption">موريشيوس</div></div>
+  </div>
+</div>
+</section>
+
+<section>
+<div class="container">
+  <div class="section-head"><div><span class="badge">قارن الوجهات</span><h2>أي مدينة تناسبك أكثر؟</h2></div></div>
+  <div class="compare-tools" style="display:flex;gap:12px;flex-wrap:wrap;margin:0 0 18px;align-items:end">
+    <div class="field" style="min-width:230px;flex:1"><label for="compareCountry">الدولة</label><select id="compareCountry"><option value="all">كل الدول المضافة</option></select></div>
+    <div class="field" style="min-width:230px;flex:1"><label for="compareFocus">أهم ما يهمني</label><select id="compareFocus"><option value="all">عرض كل المعايير</option><option value="shopping">التسوق</option><option value="nature">الطبيعة</option><option value="family">العائلات</option><option value="sea">البحر</option><option value="culture">الثقافة</option></select></div>
+  </div>
+  <div class="compare"><table><thead><tr><th>الدولة</th><th>المدينة / المنطقة</th><th>التسوق</th><th>الطبيعة</th><th>العائلات</th><th>البحر</th><th>الثقافة</th><th>المعالم</th></tr></thead><tbody id="dynamicCompareBody"></tbody></table></div>
+  <p id="compareNote" style="margin-top:14px;color:var(--muted)">المقارنة ديناميكية وتُحتسب من الكروت والمعالم المضافة فعليًا داخل رحّال؛ لذلك أي دولة أو مدينة جديدة تُضاف إلى بيانات الموقع تظهر هنا تلقائيًا. النجوم مؤشر محتوى من 5 وليست تقييمات مستخدمين.</p>
+</div>
+</section>
+
+
+<section id="feedback">
+<div class="container">
+  <div class="section-head">
+    <div><span class="badge">شاركنا رأيك</span><h2>ساعدنا نطوّر رحّال</h2></div>
+    <p>رأيك واقتراحاتك وأفكارك للمحتوى تساعدنا على تحسين الموقع وتقديم تجربة أفضل.</p>
+  </div>
+  <div class="feedback-box">
+    <div class="feedback-art">
+      <div>
+        <div class="emoji">💬</div>
+        <h3>كل فكرة تفرق معنا</h3>
+        <p style="color:rgba(255,255,255,.82)">ملاحظة بسيطة منك قد تصبح الميزة القادمة في رحّال.</p>
+      </div>
+    </div>
+    <div class="feedback-form">
+      <div class="field">
+        <label for="feedbackName">الاسم — اختياري</label>
+        <input id="feedbackName" type="text" placeholder="اكتب اسمك">
+      </div>
+      <div class="field">
+        <label for="feedbackEmail">البريد الإلكتروني — اختياري</label>
+        <input id="feedbackEmail" type="email" placeholder="name@example.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="feedbackType">نوع الرسالة</label>
+        <select id="feedbackType">
+          <option>رأي عام في الموقع</option>
+          <option>اقتراح لتطوير المحتوى</option>
+          <option>اقتراح ميزة جديدة</option>
+          <option>ملاحظة أو مشكلة</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="feedbackText">اكتب تعليقك أو اقتراحك</label>
+        <textarea id="feedbackText" placeholder="مثلاً: أتمنى إضافة قسم للرحلات العائلية الاقتصادية..."></textarea>
+      </div>
+      <small>سيتم إرسال اقتراحك مباشرة إلى بريد رحّال الإلكتروني، ولن يتم فتح واتساب.</small>
+      <button class="btn btn-primary" id="sendFeedback" type="button">إرسال الاقتراح عبر البريد الإلكتروني</button>
+      <div class="feedback-success" id="feedbackSuccess" role="status" aria-live="polite">تم إرسال اقتراحك بنجاح إلى بريد رحّال. شكرًا لك.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section>
+<div class="container"><div class="cta" id="tripRequestCta"><h2>جاهز تبدأ رحلتك؟</h2><p>أرسل لنا تفاصيل رحلتك مباشرة، وسيصل طلب التخطيط إلى بريد رحّال الإلكتروني.</p><button class="btn btn-light" id="openTripRequest" type="button">✉️ ابدأ التخطيط عبر البريد الإلكتروني</button><div class="trip-request-form" id="tripRequestForm" hidden><div class="trip-request-grid"><div><label for="tripRequestName">الاسم</label><input id="tripRequestName" type="text" placeholder="اسمك — اختياري"></div><div><label for="tripRequestEmail">بريدك الإلكتروني</label><input id="tripRequestEmail" type="email" placeholder="name@example.com"></div><div><label for="tripRequestCountry">الدولة</label><select id="tripRequestCountry"></select></div><div><label for="tripRequestDays">عدد الأيام</label><input id="tripRequestDays" type="number" min="1" max="30" value="5"></div><div><label for="tripRequestBudget">الميزانية</label><select id="tripRequestBudget"><option>اقتصادية</option><option selected>متوسطة</option><option>فاخرة</option></select></div><div><label for="tripRequestType">نوع الرحلة</label><select id="tripRequestType"><option>عائلية</option><option>مغامرات</option><option>استرخاء</option><option>تسوق</option><option>شهر عسل</option><option>أخرى</option></select></div></div><label for="tripRequestNotes">تفاصيل إضافية</label><textarea id="tripRequestNotes" placeholder="اكتب المدن المفضلة، عدد الأشخاص، اهتماماتك أو أي طلبات خاصة..."></textarea><button class="btn btn-light" id="sendTripRequest" type="button">إرسال طلب التخطيط</button><div class="trip-request-status" id="tripRequestStatus" role="status" aria-live="polite"></div><small>يُرسل الطلب مباشرة إلى binbishr1@gmail.com — بدون واتساب.</small></div></div></div>
+</section>
+
+<footer><div class="container footer"><div class="brand"><span class="logo">ر</span><span>رحّال</span></div><div>© 2026 رحّال — نموذج أولي قابل للتطوير</div></div></footer>
+
+<div class="floating" aria-label="أدوات المساعدة">
+  <button class="float-btn ai" id="aiBtn" aria-label="اسأل رحّال عبر واتساب" title="اسأل رحّال عبر واتساب">
+    <svg class="wa-icon" viewBox="0 0 32 32" aria-hidden="true">
+      <path fill="currentColor" d="M16 3a12.7 12.7 0 0 0-11 19.1L3 29l7.1-1.9A12.7 12.7 0 1 0 16 3Zm0 23.1c-2 0-3.9-.5-5.6-1.5l-.4-.2-4.2 1.1 1.1-4.1-.3-.4A10.4 10.4 0 1 1 16 26.1Zm5.7-7.8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.8.2-.2.3-.9 1-1.1 1.2-.2.2-.4.2-.7.1-1.9-.9-3.2-1.7-4.5-3.9-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6-.1-.2-.8-1.9-1.1-2.6-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.4-.3-.8-.5Z"/>
+    </svg>
+  </button>
+  <button class="float-btn wa" id="chatBtn" aria-label="تحدث مع رحّال الذكي" title="تحدث مع رحّال الذكي">
+    <svg class="wa-icon" viewBox="0 0 32 32" aria-hidden="true">
+      <path fill="currentColor" d="M16 3a12.7 12.7 0 0 0-11 19.1L3 29l7.1-1.9A12.7 12.7 0 1 0 16 3Zm0 23.1c-2 0-3.9-.5-5.6-1.5l-.4-.2-4.2 1.1 1.1-4.1-.3-.4A10.4 10.4 0 1 1 16 26.1Zm5.7-7.8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.8.2-.2.3-.9 1-1.1 1.2-.2.2-.4.2-.7.1-1.9-.9-3.2-1.7-4.5-3.9-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6-.1-.2-.8-1.9-1.1-2.6-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.4-.3-.8-.5Z"/>
+    </svg>
+  </button>
+</div>
+
+
+<div class="modal" id="pdfModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="pdfModalTitle">تحميل PDF</h3>
+      <button class="close" id="closePdfModal" aria-label="إغلاق">✕</button>
+    </div>
+    <p id="pdfModalDesc" style="color:var(--muted)">اختر المحتوى الذي تريد حفظه على جهازك.</p>
+    <div class="pdf-options">
+      <button class="pdf-option" id="downloadFullPdf" type="button">
+        <span class="pdf-option-icon">🌍</span>
+        <span><strong id="fullPdfTitle">دليل رحّال كامل</strong><span id="fullPdfDesc">حفظ جميع أقسام الموقع في ملف PDF من نافذة الطباعة.</span></span>
+      </button>
+      <button class="pdf-option" id="downloadPlanPdf" type="button">
+        <span class="pdf-option-icon">🗓️</span>
+        <span><strong id="planPdfTitle">خطة الرحلة فقط</strong><span id="planPdfDesc">حفظ الخطة التي أنشأتها من مخطط الرحلة كملف PDF.</span></span>
+      </button>
+    </div>
+    <div class="pdf-loading" id="pdfLoading"><span class="pdf-spinner"></span><span id="pdfLoadingText">جارٍ إنشاء ملف PDF…</span></div>
+  </div>
+</div>
+
+<div class="modal" id="aiModal">
+  <div class="modal-box">
+    <div class="modal-head"><h3>اسأل رحّال عبر واتساب</h3><button class="close" id="closeModal">✕</button></div>
+    <p style="color:var(--muted)">اكتب سؤالك، وسنجهّز لك رسالة واتساب تلقائيًا.</p>
+    <div class="field"><label>سؤالك</label><input id="aiQuestion" placeholder="مثلاً: أريد خطة 4 أيام في دبي"></div>
+    <button class="btn btn-primary" id="sendAI" style="width:100%;margin-top:15px">إرسال السؤال إلى واتساب</button>
+  </div>
+</div>
+
+<div class="modal" id="chatModal">
+  <div class="modal-box chat-modal-box">
+    <div class="chat-head">
+      <div>
+        <h3>رحّال الذكي</h3>
+        <small>مساعد السفر داخل الموقع</small>
+      </div>
+      <button class="close" id="closeChat" aria-label="إغلاق">✕</button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-message bot">أهلًا بك 👋 أنا مساعد رحّال السياحي. اسألني عن أي وجهة، خطة يومية، فنادق، ميزانية، مواصلات، طقس، متطلبات دخول، نصائح عائلية أو مخاطر السفر. عند تفعيل الاتصال الذكي أستطيع الاستفادة من البحث الحديث وإظهار المصادر.</div>
+      <div class="chat-status" id="chatStatus">رحّال يكتب الآن…</div>
+    </div>
+    <div class="chat-compose">
+      <input id="chatInput" placeholder="اكتب سؤالك هنا..." autocomplete="off">
+      <button class="chat-send" id="chatSend" aria-label="إرسال">➤</button>
+    </div>
+    <div class="chat-note">يعمل فورًا ببيانات رحّال الموجودة داخل الموقع. وللحصول على معلومات عالمية حديثة ومصادر مباشرة، فعّل Backend آمن في config.js؛ لا تضع مفتاح API داخل المتصفح.</div>
+  </div>
+</div>
+
+<script>
+const WHATSAPP_NUMBER="971500000000";
+let CURRENT_LANGUAGE = localStorage.getItem("rahhal_language") || "ar";
+/* CURRENT_LANGUAGE is initialized at the beginning of the script. */
+function waLink(message){return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`}
+function updateGeneralWhatsAppLinks(){
+ document.querySelectorAll(".wa-general").forEach(a=>{
+   a.href=waLink(CURRENT_LANGUAGE==="en"?"Hello Rahhal, I need help planning a trip.":"مرحبًا رحّال، أريد المساعدة في تخطيط رحلة.");
+   a.target="_blank";
+ });
+}
+updateGeneralWhatsAppLinks();
+
+const cityData={
+dubai:{title:"دبي",text:"مدينة مثالية للتسوق، المعالم الحديثة، الشواطئ والتجارب العائلية.",items:[
+["برج خليفة","https://images.unsplash.com/photo-1582672060674-bc2bd808a8b5?auto=format&fit=crop&w=900&q=80","3 ساعات","قبل الغروب","Burj Khalifa"],
+["متحف المستقبل","assets/museum-of-the-future.png","2 ساعة","صباحًا","Museum of the Future Dubai"],
+["نخلة جميرا","assets/palm-jumeirah.png","4 ساعات","الغروب","Palm Jumeirah Dubai"]]},
+abudhabi:{title:"أبوظبي",text:"ثقافة، شواطئ، متاحف وتجارب عائلية في العاصمة.",items:[
+["جامع الشيخ زايد","https://images.unsplash.com/photo-1512632578888-169bbbc64f33?auto=format&fit=crop&w=900&q=80","2 ساعة","قبل الغروب","Sheikh Zayed Grand Mosque"],
+["اللوفر أبوظبي","https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&fit=crop&w=900&q=80","3 ساعات","صباحًا","Louvre Abu Dhabi"],
+["جزيرة ياس","https://images.unsplash.com/photo-1606152536277-5aa1fd33e150?auto=format&fit=crop&w=900&q=80","يوم كامل","صباحًا","Yas Island Abu Dhabi"]]},
+sharjah:{title:"الشارقة",text:"مدينة مناسبة للعائلات، المتاحف، الأسواق والواجهات البحرية.",items:[
+["قلب الشارقة","https://images.unsplash.com/photo-1625731226721-b4d51ae63a83?auto=format&fit=crop&w=900&q=80","2 ساعة","العصر","Heart of Sharjah"],
+["واجهة المجاز","https://images.unsplash.com/photo-1577702312706-e23ff063064f?auto=format&fit=crop&w=900&q=80","2 ساعة","المساء","Al Majaz Waterfront"],
+["أكواريوم الشارقة","https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=900&q=80","2 ساعة","الظهر","Sharjah Aquarium"]]},
+  "142 كم":"142 km",
+  "30 كم":"30 km",
+  "106 كم":"106 km",
+  "128 كم":"128 km",
+  "120 كم":"120 km",
+  "950 كم":"950 km",
+  "1,060 كم":"1,060 km",
+  "410 كم":"410 km",
+  "ابتداءً من 350 AED":"Starting from 350 AED",
+  "ابتداءً من 480 AED":"Starting from 480 AED",
+  "ابتداءً من 2500 AED":"Starting from 2500 AED",
+  "ابتداءً من 300 SAR":"Starting from 300 SAR",
+  "ابتداءً من 850 SAR":"Starting from 850 SAR",
+  "ابتداءً من 3000 SAR":"Starting from 3000 SAR"
+};
+
+const mauritiusData={
+portlouis:{title:"بورت لويس",text:"العاصمة النابضة بالحياة، مناسبة للأسواق والثقافة والميناء والواجهة البحرية.",items:[
+["واجهة كودان البحرية","assets/caudan-waterfront.png","3 ساعات","العصر","Caudan Waterfront Mauritius"],
+["السوق المركزي","assets/port-louis-central-market.png","2 ساعة","صباحًا","Central Market Port Louis Mauritius"],
+["حصن أديلايد (Citadel)","assets/fort-adelaide-citadel.webp","1–2 ساعة","قبل الغروب","Citadel Fort Adelaide Mauritius"],
+["Kuanfu Ripe Black Tea Art Center & Museum","assets/kuanfu-ripe-black-tea.png","45–90 دقيقة","النهار","Kuanfu Ripe Black Tea Art Center & Museum Mauritius"]]},
+north:{title:"الشمال",text:"غراند باي وبامبلموس ومحيطهما؛ شواطئ وحدائق ورحلات بحرية وتجارب إقامة.",items:[
+["LUX* Grand Baie","assets/lux-grand-baie-new.png","إقامة / يوم","غراند باي","LUX Grand Baie Mauritius"],
+["شاطئ بيريبير","assets/unawatuna-beach.png","3 ساعات","صباحًا","Pereybere Beach Mauritius"],
+["غراند باي لا كروازيت","https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80","2 ساعة","المساء","La Croisette Grand Baie"],
+["رحلة الجزر الشمالية","https://images.unsplash.com/photo-1544550285-f813152fb2fd?auto=format&fit=crop&w=900&q=80","يوم كامل","صباحًا","Grand Baie Mauritius Catamaran"],
+["حديقة السير سيووساغور رامغولام النباتية","assets/ssr-botanical-garden.png","2–3 ساعات","صباحًا","Sir Seewoosagur Ramgoolam Botanical Garden Mauritius"]]},
+east:{title:"الساحل الشرقي",text:"بيل مار والساحل الشرقي؛ منتجعات وشواطئ هادئة وتجارب استرخاء.",items:[
+["Constance Belle Mare Plage","assets/constance-belle-mare-plage.png","نصف يوم","صباحًا","Constance Belle Mare Plage Mauritius"],
+["One&Only Le Saint Géran","assets/one-only-le-saint-geran.png","إقامة / يوم","الساحل الشرقي","One&Only Le Saint Geran Mauritius"]]},
+west:{title:"شاماريل والغرب",text:"شاماريل وكاسكافيل والغرب؛ شلالات وطبيعة وإطلالات ومغامرات ومطاعم محلية.",items:[
+["كاسيلا عالم المغامرات","assets/casela-nature-parks.png","4–6 ساعات","صباحًا","Casela Nature Parks Mauritius"],
+["Gorges Viewpoint","https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80","45–60 دقيقة","صباحًا","Gorges Viewpoint Mauritius"],
+["نقطة مشاهدة شلال شاماريل","assets/chamarel-waterfall-viewpoint.png","1–2 ساعة","صباحًا","Chamarel Waterfall Mauritius"],
+["أرض السبعة ألوان","assets/seven-coloured-earth.png","1–2 ساعة","صباحًا","Chamarel Seven Colored Earth Geopark Mauritius"],
+["Chez Ruben Restaurant","assets/chez-ruben-restaurant.png","45–90 دقيقة","الغداء","Chez Ruben Restaurant Chamarel Mauritius"],
+["مطعم شاماريل","assets/chamarel-restaurant.png","60–90 دقيقة","الغداء أو العشاء","Chamarel Restaurant Mauritius"]]},
+south:{title:"الجنوب وبيل أومبر",text:"بيل أومبر ولو مورن وماكوندي والجنوب؛ طبيعة وشواطئ ومغامرات ومنتجعات.",items:[
+["محمية فريدريكا","https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80","4 ساعات","صباحًا","Frederica Nature Reserve Mauritius"],
+["Maconde Viewpoint","assets/maconde-viewpoint.png","30–60 دقيقة","صباحًا أو قبل الغروب","Maconde Viewpoint Mauritius"],
+["Vallé Advenature Park (La Vallée des Couleurs)","https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80","3–5 ساعات","صباحًا","Valle Advenature Park Mauritius"],
+["Bel Ombre Horse Paradise","assets/bel-ombre-horse-paradise.png","1–2 ساعة","العصر أو الغروب","Bel Ombre Horse Paradise Mauritius"],
+["Paradis Beachcomber Golf Resort & Spa","assets/paradis-beachcomber.png","إقامة / يوم","Le Morne","Paradis Beachcomber Golf Resort & Spa Mauritius"],
+["Le Port Ship Model Factory and Showroom","assets/le-port-ship-model-factory.png","30–60 دقيقة","النهار","Le Port Ship Model Factory and Showroom Mauritius"]]}
+};
+
+
+const srilankaData={
+colombo:{title:"كولومبو",text:"مدينة ساحلية تجمع بين الأسواق، المعابد، الواجهة البحرية والمطاعم.",items:[
+["واجهة جالي فيس جرين","assets/galle-face-green.png","2 ساعة","قبل الغروب","Galle Face Green Colombo Sri Lanka"]]},
+kandy:{title:"كاندي",text:"مدينة جبلية ثقافية تشتهر بالبحيرة والحدائق والطبيعة الخضراء.",items:[
+["Pinnawala Elephant Orphanage","assets/pinnawala-elephant-orphanage.png","3–4 ساعات","صباحًا","Pinnawala Elephant Orphanage Sri Lanka"],
+["مطعم الطباخة شيرين","assets/shereen-restaurant.png","1–2 ساعة","الغداء أو العشاء","مطعم الطباخة شيرين Sri Lanka"],
+["بحيرة كاندي","assets/kandy-lake.png","1 ساعة","العصر","Kandy Lake Sri Lanka"],
+["حدائق بيرادنيا النباتية","assets/peradeniya-gardens.png","3 ساعات","صباحًا","Royal Botanic Gardens Peradeniya Sri Lanka"],
+["SRI LANKA RAFTING KITHULGALA – Green Adventure","assets/kithulgala-rafting.png","3–4 ساعات","صباحًا","SRI LANKA RAFTING KITHULGALA Green Adventure Kitulgala Sri Lanka"]]},
+ella:{title:"إيلا",text:"وجهة جبلية ساحرة لمحبي الطبيعة والمشي وركوب القطار بين الجبال.",items:[
+["جسر الأقواس التسعة","assets/nine-arch-bridge.png","2 ساعة","صباحًا","Nine Arch Bridge Ella Sri Lanka"],
+["قمة ليتل آدمز بيك","assets/little-adams-peak.png","3 ساعات","شروق الشمس","Little Adam's Peak Ella Sri Lanka"],
+["رحلة القطار إلى إيلا","https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=900&q=80","يوم كامل","صباحًا","Kandy Ella Train Sri Lanka"],
+["شلال كيتال إيلا","assets/kital-ella-waterfall.png","1–2 ساعة","صباحًا","Kital Ella Waterfall Sri Lanka"],
+["Ella Swing","assets/ella-swing.png","1–2 ساعة","صباحًا أو العصر","Ella Swing Sri Lanka"]]},
+sigiriya:{title:"سيجيريا ويالا",text:"تجارب طبيعية وتاريخية بارزة تشمل صخرة سيجيريا ورحلات السفاري في يالا.",items:[
+["Sigiriya Lion Rock","assets/sigiriya-lion-rock.png","3–4 ساعات","صباحًا","Sigiriya Lion Rock Sri Lanka"],
+["منتزه يالا الوطني","https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=900&q=80","4–6 ساعات","صباحًا أو العصر","Yala National Park Sri Lanka","https://maps.app.goo.gl/XZCQVd18eU6Fv2x39"],
+["The Golden Crown Hotel","assets/golden-crown-hotel.png","إقامة / يوم","كاندي","The Golden Crown Hotel Kandy Sri Lanka"],
+["Pilimathalawa Tea Factory","assets/pilimathalawa-tea-factory.png","1–2 ساعة","صباحًا","Pilimathalawa Tea Factory Sri Lanka"],
+["The Golden Ridge Hotel","assets/golden-ridge-hotel.png","إقامة / يوم","نوارا إليا","The Golden Ridge Nuwara Eliya Sri Lanka"]]},
+nuwara:{title:"نوارا إليا",text:"مرتفعات خضراء وشلالات وبحيرات ومزارع مناسبة لجولة طبيعية هادئة.",items:[
+["شلال سانت كلير","assets/saint-clair-falls.png","1–2 ساعة","صباحًا","St Clair Falls Sri Lanka"],
+["بحيرة غريغوري","assets/lake-gregory.png","2–3 ساعات","العصر","Gregory Lake Nuwara Eliya Sri Lanka"],
+["New Zealand Farm","https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=900&q=80","2–3 ساعات","صباحًا","New Zealand Farm Ambewela Sri Lanka"]]},
+galle:{title:"جالي",text:"مدينة ساحلية تاريخية تجمع الحصن القديم والشوارع الاستعمارية والشواطئ.",items:[
+["Madu River Safari by Nilwala","assets/madu-river-safari-nilwala.png","2–3 ساعات","صباحًا أو العصر","Madu River Safari by Nilwala Sri Lanka"],
+["Hotel Riu Sri Lanka","assets/hotel-riu-sri-lanka.png","إقامة / يوم","أهونغالا","Hotel Riu Sri Lanka Ahungalla"],
+["حصن جالي","assets/galle-fort.png","3 ساعات","العصر","Galle Fort Sri Lanka"],
+["شاطئ أوناواتونا","assets/unawatuna-beach.png","4 ساعات","صباحًا","Unawatuna Beach Sri Lanka"],
+["منارة جالي","assets/galle-lighthouse.png","1 ساعة","قبل الغروب","Galle Lighthouse Sri Lanka"]]}
+};
+
+const netherlandsData={
+amsterdam:{title:"أمستردام",text:"العاصمة الهولندية الشهيرة بالقنوات والمتاحف والأحياء التاريخية.",items:[["دي كوفي شينكيراي - De Koffieschenkerij","assets/de-koffieschenkerij-user.png","1-2 ساعة","صباحًا أو الظهر","De Koffieschenkerij Oudekerksplein 27 Amsterdam Netherlands","https://maps.app.goo.gl/D5DsDySaoPYX6F9Y9"],["إيه دام لوك آوت - A'DAM Lookout","assets/adam-lookout-user.png","1-2 ساعة","النهار أو المساء","A'DAM Lookout Overhoeksplein 5 Amsterdam Netherlands","https://maps.app.goo.gl/fH9MCu3bHe8sggop7"],["مانكن بيس نيوفندايك - Manneken Pis Nieuwendijk","assets/manneken-pis-nieuwendijk-user.png","1-2 ساعة","الغداء أو المساء","Manneken Pis Nieuwendijk 222 Amsterdam Netherlands","https://maps.app.goo.gl/xaxGDQvRRdqYB1w58"],["تشون كافيه سبويسترات - Chun Café Spuistraat","assets/chun-cafe-spuistraat-user.png","1-2 ساعة","صباحًا أو الظهر","Chun Café Spuistraat 122 Amsterdam Netherlands","https://maps.app.goo.gl/uVyhHoU5pjKjMqXc8"],["هانس إغستورف - Hans Egstorf","assets/hans-egstorf-user.png","1-2 ساعة","صباحًا أو الظهر","Hans Egstorf Spuistraat 274 Amsterdam Netherlands"],["مطعم ومقهى فلوريا - Florya Restaurant & Cafe","assets/florya-user.png","1-2 ساعة","الغداء أو المساء","Florya Restaurant Cafe Bos en Lommerplantsoen 10 Amsterdam Netherlands"],["متحف ريكز","assets/rijksmuseum-amsterdam-real.png","2–3 ساعات","صباحًا","Rijksmuseum Amsterdam Netherlands"],["قنوات أمستردام","https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&w=900&q=80","2 ساعة","العصر","Amsterdam Canal Ring Netherlands"],["ساحة دام","assets/dam-square-amsterdam-real.png","1–2 ساعة","المساء","Dam Square Amsterdam Netherlands"],["متحف الشمع – Madame Tussauds Amsterdam","assets/madame-tussauds-amsterdam-real.png","1–2 ساعة","الظهر أو المساء","Madame Tussauds Amsterdam Netherlands"],["جولة قنوات أمستردام – Gray Line Canal Cruises","https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&w=900&q=80","1–2 ساعة","العصر","Gray Line Amsterdam Canal Cruises Netherlands"],["محطة أمستردام المركزية","assets/amsterdam-centraal-real.png","1 ساعة","المساء","Amsterdam Centraal Station Netherlands"],["عالم الجسم – BODY WORLDS Amsterdam","https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=900&q=80","2–3 ساعات","11 ص–7 م","BODY WORLDS Amsterdam Netherlands"],["متحف صدق أو لا تصدق – Ripley’s Believe It or Not!","https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&fit=crop&w=900&q=80","2–3 ساعات","11 ص–7 م","Ripleys Believe It or Not Amsterdam Netherlands"],["شارع التسوق – Nieuwendijk","assets/nieuwendijk-amsterdam.png","2–3 ساعات","النهار","Nieuwendijk Amsterdam Netherlands","https://maps.app.goo.gl/Yy2gg6jH62VtGzVE7"],["القصر الملكي – Royal Palace Amsterdam","assets/royal-palace-amsterdam-real.png","1–2 ساعة","10 ص–5 م","Royal Palace Amsterdam Netherlands"],["زنزانة أمستردام – The Amsterdam Dungeon","assets/amsterdam-dungeon-real.png","1–2 ساعة","الظهر أو المساء","The Amsterdam Dungeon Netherlands"],["سوق الزهور العائم – Bloemenmarkt Amsterdam","assets/bloemenmarkt-amsterdam-real.png","1–2 ساعة","النهار","Bloemenmarkt Amsterdam Netherlands"],["حديقة الحيوان آرتيس – ARTIS Amsterdam","https://images.unsplash.com/photo-1564760055775-d63b17a55c44?auto=format&fit=crop&w=900&q=80","3–4 ساعات","صباحًا","ARTIS Amsterdam Royal Zoo Netherlands"],["Nxt Museum","assets/images/nxt-museum-user.png","2–3 ساعات","الظهر أو المساء","Nxt Museum Amsterdam Netherlands"],["نيمو – NEMO Science Museum","assets/images/nemo-science-museum-user.png","3–4 ساعات","صباحًا أو الظهر","NEMO Science Museum Amsterdam Netherlands"],["هذه هولندا – THIS IS HOLLAND","assets/images/this-is-holland-user.png","حوالي ساعة","النهار","THIS IS HOLLAND Amsterdam Netherlands"],["بلو أمستردام – Blue Amsterdam","assets/blue-amsterdam-user-correct.png","1–2 ساعة","الغداء أو العصر","Blue Amsterdam Netherlands"],["لاغوم كافيه – Lagom Café","assets/lagom-cafe-user-correct.png","1–2 ساعة","الغداء أو العصر","Lagom Café Amsterdam Netherlands"],["A/CAFÉ","assets/acafe-amsterdam-user-correct.png","1–2 ساعة","صباحًا أو الظهر","A/CAFÉ Amsterdam Netherlands"],["فان ستابيل كوكمكراي - Van Stapele Koekmakerij","assets/van-stapele-user.png","1-2 ساعة","صباحًا أو الظهر","Van Stapele Koekmakerij Rokin 17 Amsterdam Netherlands"],["أوميليغ سيتي سنتر - Omelegg City Centre","assets/omelegg-city-centre-user.png","1-2 ساعة","صباحًا أو الظهر","Omelegg City Centre Nieuwebrugsteeg 24 Amsterdam Netherlands"],["فندق ماي أمستردام - Hotel Mai Amsterdam","assets/hotel-mai-amsterdam-user.png","حسب الإقامة","حسب الإقامة","Hotel Mai Amsterdam Geldersekade 30 Amsterdam Netherlands"],["دي باينكورف - De Bijenkorf","assets/de-bijenkorf-amsterdam-user.png","2-3 ساعات","النهار أو المساء","De Bijenkorf Dam 1 Amsterdam Netherlands"],["غرينوودز سينغل - Greenwoods Singel","assets/greenwoods-singel-user.png","1-2 ساعة","صباحًا أو الظهر","Greenwoods Singel 103 Amsterdam Netherlands"],["هوتيل ذا كرافتسمِن - Hotel The Craftsmen","assets/hotel-the-craftsmen-user.png","حسب الإقامة","حسب الإقامة","Hotel The Craftsmen Singel 83 Amsterdam Netherlands"],["دبل تري باي هيلتون أمستردام سنترال - DoubleTree by Hilton Amsterdam Centraal Station","assets/doubletree-hilton-amsterdam-centraal-user.png","حسب الإقامة","حسب الإقامة","DoubleTree by Hilton Amsterdam Centraal Station Oosterdoksstraat 4 Amsterdam Netherlands"],["فابل فريت - Fabel Friet","assets/fabel-friet-user.png","1-2 ساعة","الغداء أو المساء","Fabel Friet Amsterdam Netherlands"],["أنانتارا جراند هوتيل كراسنابولسكي - Anantara Grand Hotel Krasnapolsky Amsterdam","assets/anantara-krasnapolsky-user.png","حسب الإقامة","حسب الإقامة","Anantara Grand Hotel Krasnapolsky Amsterdam Dam 9 Netherlands"],["ميليز ستروب وافلز - Melly's StroopWafels","assets/mellys-stroopwafels-user.png","1-2 ساعة","صباحًا أو الظهر","Melly's StroopWafels Nieuwezijds Voorburgwal 141 Amsterdam Netherlands"],["أشوكا - Ashoka","assets/ashoka-user.png","1-2 ساعة","المساء","Ashoka Spuistraat 3G Amsterdam Netherlands"],["واكو - WAKO","assets/wako-user.png","1-2 ساعة","المساء","WAKO Lange Leidsedwarsstraat 93 Amsterdam Netherlands"],["لورينس - Lourens","assets/lourens-user.png","1-2 ساعة","صباحًا أو الظهر","Lourens Oude Leliestraat 15 Amsterdam Netherlands"],["ساجيريا اللبنانية - The Lebanese Sajeria","assets/lebanese-sajeria-card-correct.png","1-2 ساعة","الغداء أو المساء","The Lebanese Sajeria Wijde Heisteeg 1 Amsterdam Netherlands"],["سوق ألبرت كويب – Albert Cuyp Markt","assets/albert-cuyp-markt-user.png","1–2 ساعة","صباحًا أو الظهر","Albert Cuyp Markt Amsterdam Netherlands","https://maps.app.goo.gl/a7mKaVi1ZgcgxyTG6"],["الشوارع التسعة – The 9 Streets","assets/the-9-streets-amsterdam-user.png","2–3 ساعات","النهار أو المساء","The 9 Streets Amsterdam Netherlands","https://maps.app.goo.gl/2imFxo8KTWkvX2v96"],["ميدان المتاحف – Museumplein","assets/museumplein-amsterdam-user.png","2–3 ساعات","صباحًا أو العصر","Museumplein Amsterdam Netherlands","https://maps.app.goo.gl/8sr5XCod774GvATm8"]]},
+utrecht:{title:"أوتريخت",text:"مدينة تاريخية في قلب هولندا، تشتهر بالقنوات والأرصفة السفلية وبرج دوم والمتاحف.",items:[["أوتريخت – Utrecht","assets/utrecht-real.png","يوم كامل","النهار","Utrecht Netherlands"],["برج دوم – Dom Tower","assets/dom-tower-utrecht-real.png","1–2 ساعة","النهار","Dom Tower Utrecht Netherlands"],["قناة أوديغراخت – Oudegracht","assets/oudegracht-utrecht-real.png","2–3 ساعات","النهار أو المساء","Oudegracht Utrecht Netherlands"],["حي جوردان – Jordaan","assets/jordaan-amsterdam-correct.png","2–3 ساعات","النهار أو المساء","Jordaan Amsterdam Netherlands"],["فوندل بارك – Vondelpark","assets/vondelpark-amsterdam-correct.png","2–3 ساعات","صباحًا أو العصر","Vondelpark Amsterdam Netherlands"],["بارك بلازا فوندل بارك أمستردام - Park Plaza Vondelpark Amsterdam","assets/park-plaza-vondelpark-user.png","حسب الإقامة","طوال اليوم","Park Plaza Vondelpark Amsterdam Koningslaan 3 Netherlands"],["إن إتش كوليكشن أمستردام باربيزون بالاس - NH Collection Amsterdam Barbizon Palace","assets/nh-collection-barbizon-palace-user.png","حسب الإقامة","طوال اليوم","NH Collection Amsterdam Barbizon Palace Prins Hendrikkade 59-72 Amsterdam Netherlands"],["متحف فان غوخ – Van Gogh Museum","assets/van-gogh-museum-amsterdam-correct.png","2–3 ساعات","صباحًا أو الظهر","Van Gogh Museum Amsterdam Netherlands"]]}, rotterdam:{title:"روتردام",text:"مدينة حديثة مع عمارة مميزة وميناء وواجهة مائية.",items:[["روتردام – Rotterdam","assets/rotterdam-real.png","يوم كامل","النهار","Rotterdam Netherlands"],["منازل المكعبات","assets/cube-houses-rotterdam-real.png","1–2 ساعة","صباحًا","Cube Houses Rotterdam Netherlands"],["ماركت هال","assets/markthal-rotterdam-real.png","1–2 ساعة","الظهر","Markthal Rotterdam Netherlands"],["أوتلت رويرموند - Designer Outlet Roermond","assets/designer-outlet-roermond-user.png","3-4 ساعات","النهار","Designer Outlet Roermond Stadsweide 2 Roermond Netherlands"]]},
+giethoorn:{title:"جيثورن",text:"قرية هادئة تشتهر بالقنوات والجسور والقوارب.",items:[["قنوات جيثورن","assets/giethoorn-canals-real.png","3–4 ساعات","صباحًا","Giethoorn Netherlands"]]},
+zaanse:{title:"زانسي سخانس",text:"منطقة تراثية شهيرة بطواحين الهواء والبيوت الهولندية التقليدية.",items:[["طواحين زانسي سخانس","assets/zaanse-schans-real.png","3 ساعات","صباحًا","Zaanse Schans Netherlands"],["إنتل هوتلز أمستردام زاندام - Inntel Hotels Amsterdam Zaandam","assets/inntel-hotels-amsterdam-zaandam-user.png","حسب الإقامة","طوال اليوم","Inntel Hotels Amsterdam Zaandam Provincialeweg 102 Zaandam Netherlands"]]},
+bourtange:{title:"حصن بورتانج",text:"حصن نجمي تاريخي في قرية بورتانج شمال شرق هولندا، يتميز بالأسوار والخنادق المائية.",items:[["حصن بورتانج – Fort Bourtange","assets/fort-bourtange-user.png","2–3 ساعات","النهار","Fort Bourtange Netherlands","https://maps.app.goo.gl/4hHhNtTsQLdFsWUq9"]]},
+hague:{title:"لاهاي وليدن",text:"معالم عائلية وتعليمية مميزة في منطقة لاهاي وليدن.",items:[["لاهاي – Den Haag","assets/den-haag-real.png","يوم كامل","النهار","Den Haag Netherlands"],["هولندا المصغرة – Madurodam","assets/madurodam-real.png","3–4 ساعات","صباحًا","Madurodam The Hague Netherlands"],["متحف جسم الإنسان – CORPUS","assets/corpus-real.png","2–3 ساعات","صباحًا","CORPUS Experience Oegstgeest Netherlands"]]},
+waterland:{title:"ماركن وفولندام",text:"قرى هولندية ساحلية تقليدية شمال أمستردام، مناسبة لجولة يوم تجمع المرافئ والبيوت الخشبية والطبيعة.",items:[["ماركن – Marken","assets/marken-real.png","2–3 ساعات","صباحًا","Marken Netherlands"],["فولندام – Volendam","assets/volendam-real.png","2–3 ساعات","الظهر","Volendam Netherlands"],["بروك إن وترلاند – Broek in Waterland","assets/broek-in-waterland-real.png","1–2 ساعة","العصر","Broek in Waterland Netherlands"]]},
+keukenhof:{title:"حديقة كيوكينهوف",text:"حديقة الزهور الشهيرة في ليسه، من أبرز وجهات التوليب الموسمية في هولندا.",items:[["حديقة كيوكينهوف – Keukenhof","assets/keukenhof-real.png","3–4 ساعات","صباحًا","Keukenhof Lisse Netherlands"]]},
+leiden:{title:"ليدن",text:"مدينة تاريخية هولندية جميلة تشتهر بالقنوات والعمارة القديمة، وتقع بين أمستردام ولاهاي.",items:[["ليدن – Leiden","assets/leiden-real.png","3–4 ساعات","النهار","Leiden Netherlands"]]},
+themeparks:{title:"مدن الملاهي",text:"وجهات ترفيهية عائلية شهيرة في هولندا، مناسبة ليوم كامل.",items:[["ملاهي عالم واليبي – Walibi Holland","assets/walibi-holland-real.png","يوم كامل","النهار","Walibi Holland Biddinghuizen Netherlands"],["ملاهي إفتيلينغ – Efteling","assets/efteling-real.png","يوم كامل","النهار","Efteling Kaatsheuvel Netherlands"]]},
+kinderdijk:{title:"كيندردايك",text:"قرية شهيرة بطواحين الهواء التاريخية والمناظر الريفية الهولندية.",items:[["كيندردايك – Kinderdijk","assets/kinderdijk-real.png","2–3 ساعات","النهار","Kinderdijk Netherlands"]]},
+schiphol:{title:"مطار أمستردام سخيبول",text:"مطار أمستردام الدولي وأحد أبرز بوابات الوصول إلى هولندا.",items:[["مطار أمستردام سخيبول – Amsterdam Schiphol","assets/amsterdam-schiphol-real.png","حسب الرحلة","الوصول أو المغادرة","Amsterdam Airport Schiphol Netherlands"]]}
+};
+function setNetherlands(key){const d=netherlandsData[key]; const panel=document.getElementById("netherlandsPanel"); panel.querySelector(".map-info h3").textContent=d.title;panel.querySelector(".map-info p").textContent=d.text;panel.querySelector(".ask-city").dataset.name=d.title;panel.querySelector(".ask-city").textContent=`اسأل رحّال عن ${d.title}`;panel.querySelector(".city-map-link").href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.title+" Netherlands")}`;panel.querySelector(".city-map-link").textContent=`📍 افتح ${d.title} في Google Maps`;renderCards("netherlandsLandmarks",d);}
+
+const belgiumData={
+antwerp:{title:"أنتويرب",text:"مدينة بلجيكية تاريخية تضم متاحف ومعالم بارزة وتجارب عائلية.",items:[
+["حديقة حيوان أنتويرب – Antwerp Zoo","assets/antwerp-zoo-user.png","3–4 ساعات","صباحًا أو الظهر","Antwerp Zoo Belgium","https://maps.app.goo.gl/LLBYYhpqrY5DCrnPA"],
+["MAS – Museum aan de Stroom","assets/mas-antwerp-user.png","2–3 ساعات","صباحًا أو الظهر","MAS Museum aan de Stroom Antwerp Belgium","https://maps.app.goo.gl/FDtGXtR5oT5G3oQr6"],
+["هيت ستين – Het Steen","assets/het-steen-user.png","1–2 ساعة","النهار","Het Steen Antwerp Belgium","https://maps.app.goo.gl/aeJoMP7JRpw7HT6b8"],
+["Nello & Patrasche Statue","assets/nello-patrasche-user.png","1 ساعة","النهار أو المساء","Nello Patrasche Statue Handschoenmarkt Antwerp Belgium","https://maps.app.goo.gl/GziNVbokbvQJM25CA"],
+["Meir","assets/meir-user.png","2–3 ساعات","النهار","Meir Antwerp Belgium","https://maps.app.goo.gl/KsVXYGfai1LcjjCe8"],
+["محطة أنتويرب المركزية – Antwerp Central Station","assets/antwerp-central-user.png","1–2 ساعة","النهار","Antwerpen Centraal Belgium","https://maps.app.goo.gl/AuXD26rTxoUm1tvYA"],
+["حي الألماس في أنتويرب – Antwerp Diamond District","assets/antwerp-diamond-user.png","1–2 ساعة","النهار","Antwerp Diamond District Belgium","https://maps.app.goo.gl/bRhpGYuKb8jLM4Wo6"]]},
+ghent:{title:"غنت",text:"مدينة بلجيكية تاريخية مع أبراج وساحات وقنوات جميلة.",items:[
+["برج جرس غنت – Belfry of Ghent","assets/ghent-belfry-user.png","1–2 ساعة","النهار","Belfry of Ghent Belgium","https://maps.app.goo.gl/owYH6t79S8GvYawk6"],
+["متحف الفنون الجميلة، غنت – Museum of Fine Arts Ghent","assets/msk-ghent-user.png","2–3 ساعات","صباحًا أو الظهر","Museum of Fine Arts Ghent Belgium","https://maps.app.goo.gl/qpd9jrLEvsmjtFVD6"],
+["Korenlei – كورينلي","assets/korenlei-ghent-user.png","1–2 ساعة","النهار أو المساء","Korenlei Ghent Belgium","https://maps.app.goo.gl/fhNPB8kjxbHj42Gt9"],
+["غرافنستين – Gravensteen","assets/gravensteen-ghent-user.png","2–3 ساعات","صباحًا أو الظهر","Gravensteen Ghent Belgium","https://maps.app.goo.gl/jvzXuHUH2o2TXWH37"],
+["Gent photo worthy","assets/gent-photo-worthy-user.png","1–2 ساعة","النهار أو المساء","Gent photo worthy Ghent Belgium","https://maps.app.goo.gl/CEjckFxgxabDRWfMA"],
+["Belgian Chocolate Workshop in Ghent – ورشة الشوكولاتة البلجيكية","assets/belgian-chocolate-workshop-ghent-user.png","2–3 ساعات","صباحًا أو الظهر","Belgian Chocolate Workshop in Ghent Belgium","https://maps.app.goo.gl/6Fjynim9noxBpWyz9"],
+["كنيسة القديس نيكولاس – St Nicholas Church Gent","assets/st-nicholas-church-ghent-user.png","1–2 ساعة","النهار","St Nicholas Church Ghent Belgium","https://maps.app.goo.gl/7JPMDwUrRL8NzBSLA"],
+["Graslei – غراسلي","assets/graslei-ghent-user.png","1–2 ساعة","النهار أو المساء","Graslei Ghent Belgium","https://maps.app.goo.gl/BDi6RrBT5dBVcRkm7"],
+["Korenmarkt – كورينماركت","assets/korenmarkt-ghent-user.png","1–2 ساعة","النهار أو المساء","Korenmarkt Ghent Belgium","https://maps.app.goo.gl/mxxBkig4mY8Nb2TYA"]]},
+bruges:{title:"بروج",text:"مدينة بلجيكية تاريخية تشتهر بالقنوات والشوكولاتة والعمارة القديمة.",items:[
+["Historium Bruges – هيستوريوم بروج","assets/historium-bruges-user.png","2–3 ساعات","النهار","Historium Bruges Belgium","https://maps.app.goo.gl/orVKuSaCMAK53DW8A"],
+["Choco-Story, Chocolate Museum – متحف الشوكولاتة","assets/choco-story-bruges-user.png","1–2 ساعة","صباحًا أو الظهر","Choco-Story Chocolate Museum Bruges Belgium","https://maps.app.goo.gl/hWrVF5EyGE4PWwNw5"],
+["Chocolate Factory Brugge – مصنع شوكولاتة بروج","assets/chocolate-factory-brugge-user.png","1 ساعة","النهار","Chocolate Factory Brugge Belgium","https://maps.app.goo.gl/T5qLThfQYjmCGdFA7"],
+["Brasserie Rozenhoedkaai – براسيري روزنهويدكاي","assets/brasserie-rozenhoedkaai-user.png","1–2 ساعة","الغداء أو المساء","Brasserie Rozenhoedkaai Bruges Belgium","https://maps.app.goo.gl/A4nQTQtfQfVaz4VeA"],
+["Groeninge Museum – متحف غرونينغه","assets/groeninge-museum-user.png","2–3 ساعات","صباحًا أو الظهر","Groeningemuseum Bruges Belgium","https://maps.app.goo.gl/4aTeoMhSPEJvstS49"],
+["Boat tours - De Meulemeester – جولات دي موليميستر بالقارب","assets/boat-tours-de-meulemeester-user.png","1–2 ساعة","النهار","Boat tours De Meulemeester Bruges Belgium","https://maps.app.goo.gl/Ry2yvRT9ZfzyZQko8"],
+["Bruges River Cruises – رحلات نهر بروج","assets/bruges-river-cruises-user.png","1–2 ساعة","النهار","Bruges River Cruises Belgium","https://maps.app.goo.gl/YH8SrdrodPLYHNDs9"],
+["جسر بونيفاس – Boniface Bridge","assets/boniface-bridge-bruges-user.png","1–2 ساعة","النهار","Boniface Bridge Bruges Belgium","https://maps.app.goo.gl/2ntFv6FLdsCKVo3L7"],
+["برج جرس بروج – Belfry of Bruges","assets/belfry-bruges-user.png","1–2 ساعة","النهار","Belfry of Bruges Belgium","https://maps.app.goo.gl/bbMN1kJfKQuVELDg8"],
+["ساحة السوق – Market Square","assets/market-square-bruges-user.png","1–2 ساعة","النهار أو المساء","Market Square Bruges Belgium","https://maps.app.goo.gl/MbgXeidimJ78PoSW8"]]},
+brussels:{title:"بروكسل",text:"العاصمة البلجيكية وتضم معالم تاريخية وحدائق ومعالم معمارية بارزة.",items:[
+["المعارض الملكية سانت هوبرت – Royal Gallery of Saint Hubert","assets/royal-gallery-saint-hubert-user.png","1–2 ساعة","النهار أو المساء","Royal Gallery of Saint Hubert Brussels Belgium","https://maps.app.goo.gl/CTVsiwx2VBy8KHG86"],
+["أتوميوم – Atomium","assets/atomium-user.png","2–3 ساعات","النهار","Atomium Brussels Belgium","https://maps.app.goo.gl/sgPjVcE7j2Aw1kCXA"],
+["حديقة بروكسل – Parc de Bruxelles","assets/parc-de-bruxelles-user.png","1–2 ساعة","النهار","Parc de Bruxelles Brussels Belgium","https://maps.app.goo.gl/cYe29sX8vZzop8jo9"],
+["القصر الملكي في بروكسل – Royal Palace of Brussels","assets/royal-palace-brussels-user.png","1–2 ساعة","النهار","Royal Palace of Brussels Belgium","https://maps.app.goo.gl/L57Uz3xgEXkZNxn49"],
+["الساحة الكبرى في بروكسل – Grand-Place de Bruxelles","assets/grand-place-brussels-user.png","1–2 ساعة","النهار أو المساء","Grand-Place de Bruxelles Belgium","https://maps.app.goo.gl/tbjZ3xQCBqFVmDEp8"],
+["Brussel-Centraal – محطة بروكسل المركزية","assets/brussels-central-user.png","1–2 ساعة","النهار","Bruxelles-Central Brussels Belgium","https://maps.app.goo.gl/QekegwjZSGHMznTDA"],
+["Brussels COMICS Figurines Museum – متحف مجسمات القصص المصورة","assets/brussels-comics-figurines-user.png","1–2 ساعة","النهار","Brussels COMICS Figurines Museum Belgium","https://maps.app.goo.gl/LbZ5FKyiFvkfcydp8"],
+["Walibi Belgium – واليبي بلجيكا","assets/walibi-belgium-user.png","يوم كامل","النهار","Walibi Belgium Wavre Belgium","https://maps.app.goo.gl/LEvC8nVWQjZishzJ8"],
+["Mini-Europe – ميني أوروبا","assets/mini-europe-user.png","2–3 ساعات","النهار","Mini-Europe Brussels Belgium","https://maps.app.goo.gl/iJ8JgFPmEZwiaHqc8"],
+["Point de vue de l’Atomium – نقطة مشاهدة الأتوميوم","assets/atomium-viewpoint-user.png","1–2 ساعة","النهار","Point de vue de l Atomium Brussels Belgium","https://maps.app.goo.gl/g6igtaRqAjgvtfE58"],
+["Huize Den Vos – هاوس دن فوس","assets/huize-den-vos-user.png","1 ساعة","النهار أو المساء","Huize Den Vos Brussels Belgium","https://maps.app.goo.gl/rf3wQ9vus6FqWTwv5"],
+["الميدان الكبير – Grand-Place","assets/grand-place-user-2.png","1–2 ساعة","النهار أو المساء","Grand Place Brussels Belgium","https://maps.app.goo.gl/Fpxjma3nTsMDT5dx7"]]}};
+function setBelgium(key){const d=belgiumData[key];const panel=document.getElementById("belgiumPanel");panel.querySelector(".map-info h3").textContent=d.title;panel.querySelector(".map-info p").textContent=d.text;panel.querySelector(".ask-city").dataset.name=d.title;panel.querySelector(".ask-city").textContent=`اسأل رحّال عن ${d.title}`;panel.querySelector(".city-map-link").href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.title+" Belgium")}`;panel.querySelector(".city-map-link").textContent=`📍 افتح ${d.title} في Google Maps`;renderCards("belgiumLandmarks",d);}
+
+const japanData={
+nara:{title:"نارا",text:"معالم مختارة في نارا تجمع التسوق والطبيعة والأجواء التاريخية.",items:[
+["شارع هيغاشيموكي للتسوق – Higashimuki Shopping Street","assets/japan/higashimuki-shopping-street-user.png","1–2 ساعة","النهار","Higashimuki Shopping Street Nara Japan","https://maps.app.goo.gl/H6QYsmTF3FWMqKbh8"],
+["حديقة نارا – Nara Park","assets/japan/nara-park-user.png","2–3 ساعات","صباحًا أو العصر","Nara Park Japan","https://maps.app.goo.gl/9UZSifscH4wnGsBz6"]]},
+osaka:{title:"أوساكا",text:"أبرز معالم أوساكا للتسوق والمشي والمعالم التاريخية.",items:[
+["شينسيكاي – Shinsekai","assets/japan/shinsekai-user.png","2–3 ساعات","العصر أو المساء","Shinsekai Osaka Japan","https://maps.app.goo.gl/gdA2nmsstSb3Tykq9"],
+["قلعة أوساكا – Osaka Castle","assets/japan/osaka-castle-user.png","2–3 ساعات","صباحًا أو الظهر","Osaka Castle Japan","https://maps.app.goo.gl/1eUoH73VkyRbXn2k9"],
+["ميدوسوجي – Mido-Suji","assets/japan/midosuji-user.png","1–2 ساعة","النهار أو المساء","Midosuji Osaka Japan","https://maps.app.goo.gl/T74KpzZ9UgxSaBvf6"],
+["شارع شينسايباشي-سوجي للتسوق – Shinsaibashi-Suji Shopping Street","assets/japan/shinsaibashi-suji-user.png","2–3 ساعات","النهار أو المساء","Shinsaibashi-Suji Shopping Street Osaka Japan","https://maps.app.goo.gl/QsmZKShD5gLbvB5j6"]]},
+kyoto:{title:"كيوتو / أراشيياما",text:"تجارب أراشيياما الشهيرة بالطبيعة والجسر وغابة الخيزران.",items:[
+["حديقة قرود أراشيياما إيواتاياما – Arashiyama Monkey Park Iwatayama","assets/japan/iwatayama-monkey-park-user.png","2–3 ساعات","صباحًا أو العصر","Arashiyama Monkey Park Iwatayama Kyoto Japan","https://maps.app.goo.gl/W1p1s5GGuWVgMRFv5"],
+["% ARABICA Kyoto Arashiyama","assets/japan/arabica-kyoto-arashiyama-user.png","1 ساعة","صباحًا أو العصر","% ARABICA Kyoto Arashiyama Japan","https://maps.app.goo.gl/3jKWagNeN5GN9wNx6"],
+["جسر توغيتسوكيو – Togetsukyo Bridge","assets/japan/togetsukyo-bridge-user.png","1–2 ساعة","صباحًا أو قبل الغروب","Togetsukyo Bridge Kyoto Japan","https://maps.app.goo.gl/7uLPCcfnVgzXo6sX7"],
+["غابة خيزران أراشيياما – Arashiyama Bamboo Forest","assets/japan/arashiyama-bamboo-forest-user.png","1–2 ساعة","صباحًا","Arashiyama Bamboo Forest Kyoto Japan","https://maps.app.goo.gl/t9TrNPdk1ADR4NtYA"]]}
+};
+function setJapan(key){const d=japanData[key];const panel=document.getElementById("japanPanel");panel.querySelector(".map-info h3").textContent=d.title;panel.querySelector(".map-info p").textContent=d.text;panel.querySelector(".ask-city").dataset.name=d.title;panel.querySelector(".ask-city").textContent=`اسأل رحّال عن ${d.title}`;panel.querySelector(".city-map-link").href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.title+" Japan")}`;panel.querySelector(".city-map-link").textContent=`📍 افتح ${d.title} في Google Maps`;renderCards("japanLandmarks",d);}
+
+const netherlandsRoutes={
+  amsterdam:{label:"أمستردام",stops:["Rijksmuseum Amsterdam Netherlands","Dam Square Amsterdam Netherlands","NEMO Science Museum Amsterdam Netherlands","A'DAM Lookout Amsterdam Netherlands"]},
+  utrecht:{label:"أوتريخت",stops:["Utrecht Netherlands","Dom Tower Utrecht Netherlands","Oudegracht Utrecht Netherlands"]},
+  rotterdam:{label:"روتردام",stops:["Rotterdam Netherlands","Markthal Rotterdam Netherlands","Erasmus Bridge Rotterdam Netherlands"]},
+  hague:{label:"لاهاي وليدن",stops:["The Hague Netherlands","Leiden Netherlands"]},
+  waterland:{label:"ماركن وفولندام",stops:["Marken Netherlands","Volendam Netherlands"]}
+};
+function updateNetherlandsRoute(key){const r=netherlandsRoutes[key]||netherlandsRoutes.amsterdam;const e=document.getElementById("netherlandsRouteStops"),b=document.getElementById("openNetherlandsRoute");if(e)e.innerHTML=r.stops.map((x,i)=>`<li><span>${i+1}</span>${x.replace(/ Netherlands/g,"")}</li>`).join("");if(b)b.href=googleDirectionsUrl(r.stops);}
+const netherlandsRouteSelect=document.getElementById("netherlandsRouteSelect");if(netherlandsRouteSelect)netherlandsRouteSelect.addEventListener("change",e=>updateNetherlandsRoute(e.target.value));
+
+const belgiumRoutes={
+  antwerp:{label:"أنتويرب",stops:["Antwerp Zoo Belgium","MAS Museum aan de Stroom Antwerp Belgium","Het Steen Antwerp Belgium","Antwerpen Centraal Belgium"]},
+  ghent:{label:"غنت",stops:["Museum of Fine Arts Ghent Belgium","Korenlei Ghent Belgium","Graslei Ghent Belgium","Korenmarkt Ghent Belgium","Belfry of Ghent Belgium"]},
+  bruges:{label:"بروج",stops:["Market Square Bruges Belgium","Belfry of Bruges Belgium","Boniface Bridge Bruges Belgium","Groeningemuseum Bruges Belgium"]},
+  brussels:{label:"بروكسل",stops:["Grand-Place de Bruxelles Belgium","Royal Gallery of Saint Hubert Brussels Belgium","Bruxelles-Central Brussels Belgium","Brussels COMICS Figurines Museum Belgium","Parc de Bruxelles Brussels Belgium","Royal Palace of Brussels Belgium","Atomium Brussels Belgium","Mini-Europe Brussels Belgium","Point de vue de l Atomium Brussels Belgium","Huize Den Vos Brussels Belgium","Walibi Belgium Wavre Belgium"]}
+};
+function updateBelgiumRoute(key){const r=belgiumRoutes[key]||belgiumRoutes.antwerp;const e=document.getElementById("belgiumRouteStops"),b=document.getElementById("openBelgiumRoute");if(e)e.innerHTML=r.stops.map((x,i)=>`<li><span>${i+1}</span>${x.replace(/ Belgium/g,"")}</li>`).join("");if(b)b.href=googleDirectionsUrl(r.stops);}
+const belgiumRouteSelect=document.getElementById("belgiumRouteSelect");if(belgiumRouteSelect)belgiumRouteSelect.addEventListener("change",e=>updateBelgiumRoute(e.target.value));
+
+const ksaData={
+riyadh:{title:"الرياض",text:"العاصمة الحديثة مع معالم ثقافية وتجارب تسوق ومطاعم متنوعة.",items:[
+["الدرعية","assets/diriyah.png","3 ساعات","العصر","Diriyah Riyadh"],
+["برج المملكة","assets/kingdom-centre.png","2 ساعة","المساء","Kingdom Centre Riyadh"],
+["بوليفارد رياض سيتي","assets/boulevard-riyadh-city.png","4 ساعات","المساء","Boulevard Riyadh City"]]},
+jeddah:{title:"جدة",text:"واجهة بحرية، أحياء تاريخية ومطاعم وتجارب على البحر الأحمر.",items:[
+["جدة التاريخية","assets/historic-jeddah.png","3 ساعات","العصر","Al Balad Jeddah"],
+["كورنيش جدة","assets/jeddah-corniche.png","3 ساعات","الغروب","Jeddah Corniche"],
+["واجهة جدة البحرية","assets/jeddah-waterfront.png","4 ساعات","المساء","Jeddah Waterfront"]]},
+alula:{title:"العلا",text:"تجربة طبيعية وتاريخية فريدة بين الصخور والآثار والصحراء.",items:[
+["الحِجر","assets/hegra-alula.png","4 ساعات","صباحًا","Hegra AlUla"],
+["جبل الفيل","assets/elephant-rock-alula.png","2 ساعة","الغروب","Elephant Rock AlUla"],
+["البلدة القديمة","assets/alula-old-town.png","3 ساعات","المساء","AlUla Old Town"]]}
+};
+
+
+
+function updateHeroDynamicStats(){
+  const sources=[cityData,ksaData,mauritiusData,srilankaData,netherlandsData,belgiumData,japanData].filter(Boolean);
+  const cityKeys=new Set();
+  const landmarkKeys=new Set();
+  sources.forEach(data=>Object.entries(data||{}).forEach(([id,place])=>{
+    if(!place || typeof place!=="object" || !Array.isArray(place.items) || !String(place.title||"").trim()) return;
+    cityKeys.add(String(place.title).trim().toLowerCase());
+    place.items.forEach(item=>{
+      const key=String((item&&item[4])||(item&&item[0])||"").trim().toLowerCase();
+      if(key) landmarkKeys.add(key);
+    });
+  }));
+  const hotelKeys=new Set();
+  if(typeof rahhalHotelCountrySources!=="undefined" && typeof allHotelsForCountry==="function"){
+    Object.keys(rahhalHotelCountrySources).forEach(country=>allHotelsForCountry(country).forEach(h=>{
+      const key=String(h?.name||"").trim().toLowerCase(); if(key) hotelKeys.add(key);
+    }));
+  }else{
+    document.querySelectorAll("#hotels .hotel-card").forEach(card=>{const key=String(card.querySelector("h4")?.textContent||"").trim().toLowerCase();if(key)hotelKeys.add(key);});
+  }
+  const routeCount=[...document.querySelectorAll("select.route-select")].reduce((sum,select)=>sum+select.options.length,0);
+  const cityEl=document.getElementById("heroCitiesCount");
+  const contentEl=document.getElementById("heroContentCount");
+  if(cityEl) cityEl.textContent=`${cityKeys.size} مدينة / منطقة`;
+  if(contentEl) contentEl.textContent=`${landmarkKeys.size} معلم • ${hotelKeys.size} فندق • ${routeCount} مسار`;
+}
+
+function updateRahhalDynamicStats(){
+  const countryCards=[...document.querySelectorAll("#countryGrid .country-card")];
+  const countryKeys=new Set(countryCards.map(card=>card.dataset.country).filter(Boolean));
+  const sources=[cityData,ksaData,mauritiusData,srilankaData,netherlandsData,belgiumData,japanData].filter(Boolean);
+  const experienceKeys=new Set();
+  sources.forEach(data=>Object.values(data||{}).forEach(place=>{
+    (place.items||[]).forEach(item=>{
+      const key=(item[4]||item[0]||"").toString().trim().toLowerCase();
+      if(key) experienceKeys.add(key);
+    });
+  }));
+  const countriesEl=document.getElementById("rahhalCountriesCount");
+  const experiencesEl=document.getElementById("rahhalExperiencesCount");
+  if(countriesEl) countriesEl.textContent=countryKeys.size;
+  if(experiencesEl) experiencesEl.textContent=experienceKeys.size;
+}
+
+const compareCountryNames={uae:"الإمارات",ksa:"السعودية",mauritius:"موريشيوس",srilanka:"سريلانكا",netherlands:"هولندا",belgium:"بلجيكا",japan:"اليابان"};
+const compareKeywords={
+ shopping:["سوق","تسوق","مول","market","shopping","nieuwendijk","croisette","dam square","واجهة كودان"],
+ nature:["طبيعة","حديقة","شلال","جبل","صخرة","بحيرة","محمية","وادي","مزرعة","waterfall","garden","park","rock","lake","peak","farm","gorges","earth","kinderdijk","giethoorn"],
+ family:["عائل","حديقة الحيوان","ملاهي","aquarium","zoo","artis","efteling","walibi","madurodam","ripley","body worlds","swing","rafting","safari"],
+ sea:["بحر","شاطئ","كورنيش","واجهة بحرية","قنوات","جزيرة","شاط","beach","waterfront","canal","river","galle face","grand baie","unawatuna","madu"],
+ culture:["متحف","تاريخ","حصن","قصر","جامع","بلدة القديمة","آثار","museum","fort","palace","historic","old town","hegra","rijks","dungeon","citadel","sigiriya"]
+};
+function comparisonSources(){
+ return [
+  {country:"uae",data:cityData},
+  {country:"ksa",data:ksaData},
+  {country:"mauritius",data:mauritiusData},
+  {country:"srilanka",data:srilankaData},
+  {country:"netherlands",data:netherlandsData},
+  {country:"belgium",data:belgiumData},
+  {country:"japan",data:japanData}
+ ];
+}
+function compareText(d){return [d.title,d.text,...(d.items||[]).flatMap(x=>[x[0],x[4]||""])].join(" ").toLowerCase()}
+function compareScore(d,key){
+ const text=compareText(d), kws=compareKeywords[key]||[];
+ let hits=kws.reduce((n,k)=>n+(text.includes(k.toLowerCase())?1:0),0);
+ const itemCount=(d.items||[]).length;
+ if(key==="family" && itemCount>=3) hits++;
+ return Math.max(0,Math.min(5,hits));
+}
+function starCell(score){return score?`<span title="مؤشر مبني على المعالم المضافة">${"★".repeat(score)}${"☆".repeat(5-score)}</span>`:`<span style="color:var(--muted)">—</span>`}
+function isValidCompareDestination(d){
+ return !!(d && typeof d==="object" && !Array.isArray(d) && typeof d.title==="string" && d.title.trim() && Array.isArray(d.items));
+}
+function renderDynamicComparison(){
+ const body=document.getElementById("dynamicCompareBody"); if(!body)return;
+ const country=document.getElementById("compareCountry")?.value||"all";
+ const focus=document.getElementById("compareFocus")?.value||"all";
+ const groups=[];
+ comparisonSources().forEach(src=>{
+   if(country!=="all"&&country!==src.country)return;
+   const seen=new Set(), rows=[];
+   Object.entries(src.data||{}).forEach(([id,d])=>{
+     if(!isValidCompareDestination(d))return;
+     const key=d.title.trim().toLowerCase(); if(seen.has(key))return; seen.add(key);
+     const scores={shopping:compareScore(d,"shopping"),nature:compareScore(d,"nature"),family:compareScore(d,"family"),sea:compareScore(d,"sea"),culture:compareScore(d,"culture")};
+     rows.push({country:src.country,id,d,scores});
+   });
+   if(focus!=="all") rows.sort((a,b)=>b.scores[focus]-a.scores[focus] || (b.d.items||[]).length-(a.d.items||[]).length || a.d.title.localeCompare(b.d.title,"ar"));
+   else rows.sort((a,b)=>a.d.title.localeCompare(b.d.title,"ar"));
+   if(rows.length)groups.push({country:src.country,rows});
+ });
+ if(!groups.length){body.innerHTML='<tr><td colspan="8" style="padding:28px;color:var(--muted)">لا توجد مدن أو مناطق صالحة للمقارنة ضمن هذا الاختيار.</td></tr>';return;}
+ body.innerHTML=groups.map(g=>{
+   const countryName=compareCountryNames[g.country]||g.country;
+   const header=`<tr class="compare-country-row"><td colspan="8" style="text-align:right;background:rgba(16,139,130,.08);font-weight:800;color:var(--primary);padding:13px 18px">${countryName} <span style="font-weight:500;color:var(--muted);font-size:.9em">— ${g.rows.length} ${g.rows.length===1?"مدينة/منطقة":"مدن/مناطق"}</span></td></tr>`;
+   const rows=g.rows.map(r=>`<tr><td><span style="color:var(--muted)">↳</span></td><td><strong>${r.d.title}</strong></td><td>${starCell(r.scores.shopping)}</td><td>${starCell(r.scores.nature)}</td><td>${starCell(r.scores.family)}</td><td>${starCell(r.scores.sea)}</td><td>${starCell(r.scores.culture)}</td><td><strong>${(r.d.items||[]).length}</strong></td></tr>`).join("");
+   return header+rows;
+ }).join("");
+}
+function initDynamicComparison(){
+ const sel=document.getElementById("compareCountry"); if(!sel)return;
+ comparisonSources().forEach(src=>{if(!src.data||!Object.keys(src.data).length)return;const o=document.createElement("option");o.value=src.country;o.textContent=compareCountryNames[src.country]||src.country;sel.appendChild(o)});
+ sel.addEventListener("change",renderDynamicComparison);document.getElementById("compareFocus")?.addEventListener("change",renderDynamicComparison);renderDynamicComparison();
+}
+setTimeout(initDynamicComparison,0);
+
+function renderCards(target,data){
+ const el=document.getElementById(target);el.innerHTML="";
+ data.items.forEach(x=>el.innerHTML+=`<article class="card"><img src="${x[1]}" alt="${x[0]}"><div class="card-body"><span class="tag">معلم مقترح</span><h4>${x[0]}</h4><p>تجربة مختارة ضمن خطة رحّال السياحية.</p><div class="meta"><span>⏱ ${x[2]}</span><span>☀ ${x[3]}</span><span>👨‍👩‍👧 مناسب للعائلات</span></div><div class="card-actions"><a target="_blank" href="${x[5]||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x[4])}`}">📍 الموقع</a><button class="ask" onclick="askPlace('${x[0]}')">اسألني</button></div></div></article>`);
+}
+function setCity(key){
+ const d=cityData[key];document.getElementById("mapTitle").textContent=d.title;document.getElementById("mapText").textContent=d.text;
+ document.querySelector("#uaePanel .ask-city").dataset.name=d.title;document.querySelector("#uaePanel .ask-city").textContent=`اسأل رحّال عن ${d.title}`;document.querySelector("#uaePanel .city-map-link").href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.title+" UAE")}`;document.querySelector("#uaePanel .city-map-link").textContent=`📍 افتح ${d.title} في Google Maps`;
+ renderCards("uaeLandmarks",d);
+}
+
+const mauritiusRoutes={
+  north:{label:"الجولة الشمالية",stops:["LUX Grand Baie Mauritius","Sir Seewoosagur Ramgoolam Botanical Garden Mauritius","Fort Adelaide Mauritius","Kuanfu Ripe Black Tea Art Center & Museum Mauritius"]},
+  west:{label:"الغرب وشاماريل",stops:["Casela Nature Parks Mauritius","Gorges Viewpoint Mauritius","Chamarel Waterfall Mauritius","Chamarel Restaurant Mauritius","Chamarel Seven Colored Earth Geopark Mauritius","Maconde Viewpoint Mauritius"]},
+  south:{label:"الجنوب",stops:["Maconde Viewpoint Mauritius","Bel Ombre Horse Paradise Mauritius","Valle Advenature Park Mauritius","Paradis Beachcomber Golf Resort & Spa Mauritius"]},
+  east:{label:"الساحل الشرقي",stops:["One&Only Le Saint Geran Mauritius","Constance Belle Mare Plage Mauritius"]},
+  full:{label:"جولة موسعة حول الجزيرة",stops:["LUX Grand Baie Mauritius","Sir Seewoosagur Ramgoolam Botanical Garden Mauritius","Fort Adelaide Mauritius","Casela Nature Parks Mauritius","Gorges Viewpoint Mauritius","Chamarel Waterfall Mauritius","Chamarel Restaurant Mauritius","Maconde Viewpoint Mauritius","Bel Ombre Horse Paradise Mauritius","Valle Advenature Park Mauritius","Constance Belle Mare Plage Mauritius"]}
+};
+function googleDirectionsUrl(stops){
+  const origin=stops[0],destination=stops[stops.length-1],waypoints=stops.slice(1,-1).join("|");
+  let url=`https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`;
+  if(waypoints)url+=`&waypoints=${encodeURIComponent(waypoints)}`;
+  return url;
+}
+function updateMauritiusRoute(key){
+  const route=mauritiusRoutes[key]||mauritiusRoutes.north;
+  const map=document.getElementById("mauritiusGoogleMap");
+  const stopsEl=document.getElementById("mauritiusRouteStops");
+  const openBtn=document.getElementById("openMauritiusRoute");
+  if(stopsEl)stopsEl.innerHTML=route.stops.map(s=>`<li>${s.replace(/ Mauritius/g,"")}</li>`).join("");
+  if(openBtn)openBtn.href=googleDirectionsUrl(route.stops);
+  if(map){
+    const apiKey=(window.RAHHAL_GOOGLE_MAPS_API_KEY||"").trim();
+    if(apiKey){
+      const origin=route.stops[0],destination=route.stops[route.stops.length-1];
+      const wp=route.stops.slice(1,-1).join("|");
+      let src=`https://www.google.com/maps/embed/v1/directions?key=${encodeURIComponent(apiKey)}&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&mode=driving`;
+      if(wp)src+=`&waypoints=${encodeURIComponent(wp)}`;
+      map.src=src;
+    }else{
+      const focus=route.stops[Math.floor(route.stops.length/2)];
+      map.src=`https://www.google.com/maps?q=${encodeURIComponent(focus)}&z=10&output=embed`;
+    }
+  }
+}
+const mauritiusRouteSelect=document.getElementById("mauritiusRouteSelect");
+if(mauritiusRouteSelect)mauritiusRouteSelect.addEventListener("change",e=>updateMauritiusRoute(e.target.value));
+
+const srilankaRoutes={
+  west:{label:"كولومبو والساحل الغربي",stops:["Colombo Sri Lanka","Galle Face Green Colombo Sri Lanka","SRI LANKA RAFTING KITHULGALA Green Adventure Kitulgala Sri Lanka","Hotel Riu Sri Lanka Ahungalla"]},
+  culture:{label:"الثقافة والطبيعة",stops:["Colombo Sri Lanka","Pinnawala Elephant Orphanage Sri Lanka","Royal Botanic Gardens Peradeniya Sri Lanka","Kandy Lake Sri Lanka","Pilimathalawa Tea Factory Sri Lanka"]},
+  hills:{label:"المرتفعات والقطار",stops:["Kandy Sri Lanka","SRI LANKA RAFTING KITHULGALA Green Adventure Kitulgala Sri Lanka","Nuwara Eliya Sri Lanka","The Golden Ridge Nuwara Eliya Sri Lanka","St Clair Falls Sri Lanka","Gregory Lake Nuwara Eliya Sri Lanka","New Zealand Farm Ambewela Sri Lanka","Nine Arch Bridge Ella Sri Lanka","Little Adam's Peak Ella Sri Lanka","Kital Ella Waterfall Sri Lanka","Ella Swing Sri Lanka"]},
+  south:{label:"الساحل الجنوبي",stops:["Colombo Sri Lanka","Hotel Riu Sri Lanka Ahungalla","Madu River Safari by Nilwala Sri Lanka","Galle Fort Sri Lanka","Galle Lighthouse Sri Lanka","Unawatuna Beach Sri Lanka"]},
+  full:{label:"جولة موسعة",stops:["Colombo Sri Lanka","Pinnawala Elephant Orphanage Sri Lanka","SRI LANKA RAFTING KITHULGALA Green Adventure Kitulgala Sri Lanka","Kandy Sri Lanka","The Golden Crown Hotel Kandy Sri Lanka","Pilimathalawa Tea Factory Sri Lanka","The Golden Ridge Nuwara Eliya Sri Lanka","St Clair Falls Sri Lanka","Gregory Lake Nuwara Eliya Sri Lanka","New Zealand Farm Ambewela Sri Lanka","Sigiriya Lion Rock Sri Lanka","Nuwara Eliya Sri Lanka","Ella Sri Lanka","Ella Swing Sri Lanka","Kital Ella Waterfall Sri Lanka","Yala National Park Sri Lanka","Galle Fort Sri Lanka","Unawatuna Beach Sri Lanka"]}
+};
+function updateSrilankaRoute(key){
+  const route=srilankaRoutes[key]||srilankaRoutes.west;
+  const map=document.getElementById("srilankaGoogleMap");
+  const stopsEl=document.getElementById("srilankaRouteStops");
+  const openBtn=document.getElementById("openSrilankaRoute");
+  if(stopsEl)stopsEl.innerHTML=route.stops.map(s=>`<li>${s.replace(/ Sri Lanka/g,"")}</li>`).join("");
+  if(openBtn)openBtn.href=googleDirectionsUrl(route.stops);
+  if(map){
+    const apiKey=(window.RAHHAL_GOOGLE_MAPS_API_KEY||"").trim();
+    if(apiKey){
+      const origin=route.stops[0],destination=route.stops[route.stops.length-1];
+      const wp=route.stops.slice(1,-1).join("|");
+      let src=`https://www.google.com/maps/embed/v1/directions?key=${encodeURIComponent(apiKey)}&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&mode=driving`;
+      if(wp)src+=`&waypoints=${encodeURIComponent(wp)}`;
+      map.src=src;
+    }else{
+      const focus=route.stops[Math.floor(route.stops.length/2)];
+      map.src=`https://www.google.com/maps?q=${encodeURIComponent(focus)}&z=8&output=embed`;
+    }
+  }
+}
+const srilankaRouteSelect=document.getElementById("srilankaRouteSelect");
+if(srilankaRouteSelect)srilankaRouteSelect.addEventListener("change",e=>updateSrilankaRoute(e.target.value));
+
+function setMauritius(key){
+ const d=mauritiusData[key];
+ document.getElementById("mauritiusMapTitle").textContent=d.title;
+ document.getElementById("mauritiusMapText").textContent=d.text;
+ document.querySelector("#mauritiusPanel .ask-city").dataset.name=d.title;
+ document.querySelector("#mauritiusPanel .ask-city").textContent=`اسأل رحّال عن ${d.title}`;
+ const mapLink=document.querySelector("#mauritiusPanel .city-map-link");
+ mapLink.href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.title+" Mauritius")}`;
+ mapLink.textContent=`📍 افتح ${d.title} في Google Maps`;
+ renderCards("mauritiusLandmarks",d);
+}
+
+function setSriLanka(key){
+ const d=srilankaData[key];
+ document.getElementById("srilankaMapTitle").textContent=d.title;
+ document.getElementById("srilankaMapText").textContent=d.text;
+ const link=document.querySelector("#srilankaPanel .city-map-link");
+ link.href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.title+" Sri Lanka")}`;
+ link.textContent=`📍 افتح ${d.title} في Google Maps`;
+ document.querySelector("#srilankaPanel .ask-city").dataset.name=d.title;
+ document.querySelector("#srilankaPanel .ask-city").textContent=`اسأل رحّال عن ${d.title}`;
+ renderCards("srilankaLandmarks",d);
+}
+function setKsa(key){
+ const d=ksaData[key];document.getElementById("ksaMapTitle").textContent=d.title;document.getElementById("ksaMapText").textContent=d.text;
+ document.querySelector("#ksaPanel .ask-city").dataset.name=d.title;document.querySelector("#ksaPanel .ask-city").textContent=`اسأل رحّال عن ${d.title}`;document.querySelector("#ksaPanel .city-map-link").href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.title+" Saudi Arabia")}`;document.querySelector("#ksaPanel .city-map-link").textContent=`📍 افتح ${d.title} في Google Maps`;
+ renderCards("ksaLandmarks",d);
+}
+function askPlace(name){
+  const message=CURRENT_LANGUAGE==="en"
+    ?`Hello Rahhal, I would like to ask about ${name}.`
+    :`مرحبًا رحّال، أريد الاستفسار عن ${name}.`;
+  window.open(waLink(message),"_blank")
+}
+document.querySelectorAll(".ask-city").forEach(b=>b.onclick=()=>askPlace(b.dataset.name))
+document.querySelectorAll("[data-city]").forEach(b=>b.addEventListener("click",()=>{setCity(b.dataset.city);document.querySelectorAll("#uaePanel .city-tab").forEach(x=>x.classList.toggle("active",x.dataset.city===b.dataset.city))}))
+document.querySelectorAll("[data-ksa]").forEach(b=>b.addEventListener("click",()=>{setKsa(b.dataset.ksa);document.querySelectorAll("#ksaPanel .city-tab").forEach(x=>x.classList.toggle("active",x.dataset.ksa===b.dataset.ksa))}))
+document.querySelectorAll("[data-mauritius]").forEach(b=>b.addEventListener("click",()=>{setMauritius(b.dataset.mauritius);document.querySelectorAll("#mauritiusPanel .city-tab").forEach(x=>x.classList.toggle("active",x.dataset.mauritius===b.dataset.mauritius))}))
+document.querySelectorAll("[data-netherlands]").forEach(b=>b.addEventListener("click",()=>{setNetherlands(b.dataset.netherlands);document.querySelectorAll("#netherlandsPanel .city-tab").forEach(x=>x.classList.toggle("active",x.dataset.netherlands===b.dataset.netherlands))}));
+document.querySelectorAll("[data-belgium]").forEach(b=>b.addEventListener("click",()=>{setBelgium(b.dataset.belgium);document.querySelectorAll("#belgiumPanel .city-tab").forEach(x=>x.classList.toggle("active",x.dataset.belgium===b.dataset.belgium))}));
+document.querySelectorAll("[data-japan]").forEach(b=>b.addEventListener("click",()=>{setJapan(b.dataset.japan);document.querySelectorAll("#japanPanel .city-tab").forEach(x=>x.classList.toggle("active",x.dataset.japan===b.dataset.japan))}));
+document.querySelectorAll("[data-srilanka]").forEach(b=>b.addEventListener("click",()=>{setSriLanka(b.dataset.srilanka);document.querySelectorAll("#srilankaPanel .city-tab").forEach(x=>x.classList.toggle("active",x.dataset.srilanka===b.dataset.srilanka))}))
+document.querySelectorAll(".pill").forEach(p=>p.onclick=()=>{document.querySelectorAll(".pill").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".country-panel").forEach(x=>x.classList.remove("active"));p.classList.add("active");document.getElementById(p.dataset.panel).classList.add("active")})
+
+document.querySelectorAll(".continent-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const continent=btn.dataset.continent;
+    document.querySelectorAll(".continent-btn").forEach(x=>x.classList.toggle("active",x===btn));
+    let visible=0;
+    document.querySelectorAll("#countryGrid .country-card").forEach(card=>{
+      const show=continent==="all"||card.dataset.continent===continent;
+      card.classList.toggle("is-hidden",!show);
+      if(show) visible++;
+    });
+    countryEmpty.classList.toggle("show",visible===0);
+  });
+});
+
+document.querySelectorAll(".country-card").forEach(c=>c.onclick=()=>{document.querySelectorAll(".pill").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".country-panel").forEach(x=>x.classList.remove("active"));const panelMap={uae:"uaePanel",ksa:"ksaPanel",mauritius:"mauritiusPanel",srilanka:"srilankaPanel",netherlands:"netherlandsPanel",belgium:"belgiumPanel",japan:"japanPanel"};const id=panelMap[c.dataset.country]||"uaePanel";document.getElementById(id).classList.add("active");document.querySelector(`[data-panel="${id}"]`).classList.add("active");document.getElementById("map").scrollIntoView()})
+
+function plannerCountryConfig(country){
+ const configs={
+  "الإمارات":{data:cityData,suffix:"UAE",hotelId:"uaeHotels"},
+  "السعودية":{data:ksaData,suffix:"Saudi Arabia",hotelId:"ksaHotels"},
+  "موريشيوس":{data:mauritiusData,suffix:"Mauritius",hotelId:"mauritiusHotels"},
+  "سريلانكا":{data:srilankaData,suffix:"Sri Lanka",hotelId:"srilankaHotels"},
+  "هولندا":{data:netherlandsData,suffix:"Netherlands",hotelId:null}
+ };
+ return configs[country]||configs["الإمارات"];
+}
+function plannerGroups(country){
+ const cfg=plannerCountryConfig(country), groups=[];
+ Object.values(cfg.data).forEach(g=>{
+   if(!g||!Array.isArray(g.items)||!g.items.length)return;
+   groups.push({title:g.title,items:g.items.map(x=>({name:x[0],duration:x[2],time:x[3],query:x[4]||`${x[0]} ${cfg.suffix}`,url:x[5]||null,kind:/مطعم|restaurant|cafe|coffee/i.test(x[0])?"مطعم / كوفي":/hotel|منتجع|إقامة/i.test(`${x[0]} ${x[2]}`)?"إقامة":"مكان سياحي"}))});
+ });
+ return groups;
+}
+function plannerHotel(country,budget){
+ const cfg=plannerCountryConfig(country); if(!cfg.hotelId)return null;
+ const level=budget==="فاخرة"?"luxury":budget==="متوسطة"?"mid":"budget";
+ const card=document.querySelector(`#${cfg.hotelId} .hotel-card[data-level="${level}"]`); if(!card)return null;
+ return {name:card.querySelector("h4")?.textContent.trim(),url:card.querySelector(".hotel-map")?.href};
+}
+function placeMapUrl(p){return p.url||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.query)}`}
+function createPlan(){
+ const country=document.getElementById("planCountry").value, days=Math.max(1,Math.min(14,+document.getElementById("days").value||1)), type=document.getElementById("tripType").value, budget=document.getElementById("budgetLevel").value;
+ document.getElementById("planTitle").textContent=`${days} أيام في ${country} — رحلة ${type}`;
+ const groups=plannerGroups(country), out=document.getElementById("planTimeline"); out.innerHTML="";
+ if(!groups.length){out.innerHTML='<div class="event">لا توجد أماكن مضافة لهذه الدولة بعد.</div>';return;}
+ const hotel=plannerHotel(country,budget), used=new Set();
+ for(let i=0;i<days;i++){
+   const g=groups[i%groups.length]; let choices=g.items.filter(p=>!used.has(p.name));
+   if(!choices.length)choices=g.items;
+   let stops=choices.slice(0,3); stops.forEach(p=>used.add(p.name));
+   // If the selected group is a restaurant-only group, keep it as a meal stop; otherwise prefer actual attractions from the card group.
+   const queries=stops.map(p=>p.query);
+   const routeUrl=queries.length>1?googleDirectionsUrl(queries):placeMapUrl(stops[0]);
+   const baseTimes=["09:00","12:00","15:30"];
+   const stopHtml=stops.map((p,j)=>`<div class="plan-stop"><span class="stop-time">${baseTimes[j]||"18:00"}</span><span class="stop-name"><b>${p.name}</b><small style="display:block;color:rgba(255,255,255,.7)">⏱ ${p.duration} · ${p.time}</small></span><span><span class="stop-kind">${p.kind}</span><br><a target="_blank" rel="noopener" href="${placeMapUrl(p)}">📍 الموقع</a></span></div>`).join("");
+   out.innerHTML+=`<div class="time-item"><div class="time">اليوم ${i+1}</div><div class="event"><b>${g.title}</b><span>أماكن اليوم مستخرجة من الكروت المضافة في ${country}.</span><div class="plan-stops">${stopHtml}</div>${hotel?`<span class="day-hotel">🏨 الإقامة المقترحة حسب الميزانية: <a style="color:#fff;font-weight:800" target="_blank" rel="noopener" href="${hotel.url}">${hotel.name}</a></span>`:""}<div class="plan-day-route"><a target="_blank" rel="noopener" href="${routeUrl}">🗺️ تتبع مسار اليوم في Google Maps</a><button onclick="window.open(waLink('مرحبًا رحّال، أريد الاستفسار عن خطة اليوم ${i+1} في ${country}: ${stops.map(p=>p.name).join('، ')}.'),'_blank')">اسألني عن هذا اليوم</button></div></div></div>`;
+ }
+ out.insertAdjacentHTML("beforeend",`<p class="planner-map-note">📍 المسارات تستخدم Google Maps، وكل محطة مرتبطة بموقعها مباشرة. الخطة تعتمد على الأماكن الموجودة فعليًا في كروت الموقع ولا تستخدم عبارات عامة مثل «جولة رئيسية».</p>`);
+}
+document.getElementById("generatePlan").onclick=createPlan;document.querySelector(".ask-plan").onclick=()=>window.open(waLink(`مرحبًا رحّال، أريد الاستفسار عن الخطة المقترحة.`),"_blank")
+
+const budgetProfiles={
+ uae:{name:"الإمارات",flag:"🇦🇪",currency:"AED",hotel:{3:350,4:600,5:1100},transport:{public:45,economy:180,luxury:420},foodActivity:240,sourceNote:"تقدير يومي إرشادي مبني على نطاقات رحّال مع الرجوع إلى المصادر السياحية الرسمية للعروض والرسوم. الأسعار الفعلية تتغير حسب المدينة والموسم والحجز.",sources:[["Experience Abu Dhabi الرسمي","https://visitabudhabi.ae/en/plan-your-trip"],["Visit Dubai الرسمي","https://www.visitdubai.com/"]]},
+ ksa:{name:"السعودية",flag:"🇸🇦",currency:"SAR",hotel:{3:280,4:520,5:950},transport:{public:35,economy:170,luxury:380},foodActivity:210,sourceNote:"تقدير إرشادي خاص بالسعودية؛ راجع منصة روح السعودية للعروض الحالية على الإقامة والنقل والأنشطة قبل الحجز.",sources:[["روح السعودية – خطط رحلتك","https://www.visitsaudi.com/ar/plan-your-trip"],["عروض روح السعودية","https://www.visitsaudi.com/ar/offers"]]},
+ mauritius:{name:"موريشيوس",flag:"🇲🇺",currency:"MUR",hotel:{3:4200,4:7200,5:13500},transport:{public:350,economy:2200,luxury:4200},foodActivity:2600,sourceNote:"مرجع الإنفاق السياحي الحكومي في موريشيوس ينشر متوسطات إنفاق وإقامة دورية؛ الحاسبة توزعها إلى فئات عملية ولا تعتبرها سعر حجز ملزمًا.",sources:[["Statistics Mauritius – Tourism","https://statsmauritius.govmu.org/Pages/Statistics/By_Subject/Tourism/SB_Tourism.aspx"],["وزارة السياحة – موريشيوس","https://tourism.govmu.org/"]]},
+ srilanka:{name:"سريلانكا",flag:"🇱🇰",currency:"LKR",hotel:{3:18000,4:32000,5:60000},transport:{public:1800,economy:12000,luxury:24000},foodActivity:12000,sourceNote:"تقدير إرشادي بحسب نمط الرحلة. بوابة السياحة الرسمية تعرض وسائل النقل والتخطيط؛ الأسعار تختلف كثيرًا بين النقل العام والسيارة الخاصة والوجهات.",sources:[["Sri Lanka Tourism الرسمي","https://srilanka.travel/"],["النقل – Sri Lanka Tourism","https://www.srilanka.travel/transport"]]},
+ belgium:{name:"بلجيكا",flag:"🇧🇪",currency:"EUR",hotel:{3:120,4:185,5:320},transport:{public:35,economy:80,luxury:160},foodActivity:90,sourceNote:"تقدير إرشادي للتخطيط في بلجيكا؛ الأسعار تتغير حسب المدينة والموسم والحجز.",sources:[["Visit Flanders الرسمي","https://www.visitflanders.com/"]] },
+ japan:{name:"اليابان",flag:"🇯🇵",currency:"JPY",hotel:{3:14000,4:24000,5:48000},transport:{public:2500,economy:9000,luxury:18000},foodActivity:9000,sourceNote:"تقدير إرشادي للتخطيط في اليابان؛ الأسعار تختلف بين طوكيو وكيوتو وأوساكا ونارا والموسم.",sources:[["Japan National Tourism Organization","https://www.japan.travel/en/"]] },
+ netherlands:{name:"هولندا",flag:"🇳🇱",currency:"EUR",hotel:{3:125,4:190,5:330},transport:{public:48,economy:85,luxury:165},foodActivity:95,sourceNote:"للنقل العام استُخدم Holland Travel Ticket Off-Peak كمرجع يومي عند اختيار المواصلات العامة؛ تذاكر الرحلات الفردية تعتمد على المسار الفعلي.",sources:[["NS – أسعار 2026","https://www.ns.nl/en/service-and-contact/payment/consumer-rates"],["Holland Travel Ticket","https://www.ns.nl/producten/holland-travel-ticket"],["Holland.com – النقل العام","https://www.holland.com/global/tourism/getting-around/information/getting-around-in-the-netherlands/pay-in-public-transport"]]}
+};
+function money(n,c){return `${Math.round(n).toLocaleString('en-US')} ${c}`}
+function calcBudget(){
+ const c=budgetCountry.value,profile=budgetProfiles[c],p=Math.max(1,+people.value||1),d=Math.max(1,+budgetDays.value||1),h=hotelLevel.value,t=transport.value;
+ // الفندق محسوب للغرفة؛ نقدر غرفة لكل شخصين. الطعام/الأنشطة للفرد؛ النقل العام للفرد، والسيارة للمركبة.
+ const rooms=Math.ceil(p/2),hc=profile.hotel[h]*d*rooms;
+ const tc=profile.transport[t]*d*(t==='public'?p:1);
+ const ac=profile.foodActivity*p*d,total=hc+tc+ac;
+ budgetDestination.textContent=`${profile.flag} ${profile.name} · العملة ${profile.currency}`;
+ hotelCost.textContent=money(hc,profile.currency);transportCost.textContent=money(tc,profile.currency);activityCost.textContent=money(ac,profile.currency);totalCost.textContent=money(total,profile.currency);
+ budgetBasis.innerHTML=`<b>أساس الحساب:</b> ${d} أيام · ${p} أشخاص · ${rooms} غرفة · فندق ${h} نجوم · ${transport.options[transport.selectedIndex].text}.<br>${profile.sourceNote}<br><small>آخر مراجعة مرجعية: سبتمبر 2026. لا تشمل تذاكر الطيران الدولية أو التأشيرة، وهي تكلفة تقريبية وليست عرض سعر.</small>`;
+ budgetSources.innerHTML=profile.sources.map(x=>`<a class="btn btn-light" style="padding:8px 12px" target="_blank" rel="noopener" href="${x[1]}">↗ ${x[0]}</a>`).join('');
+}
+document.getElementById("calcBudget").onclick=calcBudget;
+document.getElementById("budgetCountry").onchange=calcBudget;
+
+// كل علامة مدينة على الخريطة تفتح موقعها مباشرة في Google Maps.
+document.querySelectorAll(".map-marker").forEach(marker=>{
+  marker.setAttribute("role","link");
+  marker.setAttribute("tabindex","0");
+  marker.addEventListener("click",()=>{
+    const label=marker.querySelector("text")?.textContent?.trim()||"";
+    if(!label) return;
+    let country="";
+    if(marker.dataset.ksa!==undefined) country="Saudi Arabia";
+    else if(marker.dataset.mauritius!==undefined) country="Mauritius";
+    else if(marker.dataset.srilanka!==undefined) country="Sri Lanka";
+    else country="UAE";
+    window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(label+" "+country)}`,"_blank","noopener");
+  });
+  marker.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();marker.click();}});
+});
+
+const rahhalHotelCountrySources={
+  "الإمارات":{flag:"🇦🇪",suffix:"UAE",data:cityData,official:"https://www.visitdubai.com/en/plan-your-trip/places-to-stay"},
+  "السعودية":{flag:"🇸🇦",suffix:"Saudi Arabia",data:ksaData,official:"https://www.visitsaudi.com/"},
+  "موريشيوس":{flag:"🇲🇺",suffix:"Mauritius",data:mauritiusData,official:"https://mauritiusnow.com/"},
+  "سريلانكا":{flag:"🇱🇰",suffix:"Sri Lanka",data:srilankaData,official:"https://srilanka.travel/accommodation"},
+  "هولندا":{flag:"🇳🇱",suffix:"Netherlands",data:netherlandsData,official:"https://www.iamsterdam.com/en/travel-stay/where-to-stay"},
+  "بلجيكا":{flag:"🇧🇪",suffix:"Belgium",data:belgiumData,official:"https://www.visitflanders.com/"},
+  "اليابان":{flag:"🇯🇵",suffix:"Japan",data:japanData,official:"https://www.japan.travel/en/"}
+};
+const verifiedHotelSupplement={
+  "الإمارات":[
+    {name:"Atlantis The Royal",city:"دبي",stars:5,query:"Atlantis The Royal Dubai UAE",source:"https://www.visitdubai.com/en/plan-your-trip/places-to-stay"},
+    {name:"Park Hyatt Abu Dhabi Hotel and Villas",city:"أبوظبي",stars:5,query:"Park Hyatt Abu Dhabi Hotel and Villas",source:"https://visitabudhabi.ae/en/plan-your-trip/where-to-stay"},
+    {name:"Fairmont Bab Al Bahr",city:"أبوظبي",stars:5,query:"Fairmont Bab Al Bahr Abu Dhabi",source:"https://visitabudhabi.ae/en/plan-your-trip/where-to-stay"},
+    {name:"Premier Inn Abu Dhabi International Airport",city:"أبوظبي",stars:3,family:true,query:"Premier Inn Abu Dhabi International Airport UAE"},
+    {name:"Rove Downtown Dubai",city:"دبي",stars:3,family:true,query:"Rove Downtown Dubai UAE"}
+  ],
+  "السعودية":[
+    {name:"Banyan Tree AlUla",city:"العلا",stars:5,query:"Banyan Tree AlUla Saudi Arabia",source:"https://www.visitsaudi.com/en/stories/the-cultural-secrets-of-alula"},
+    {name:"Our Habitas AlUla",city:"العلا",stars:5,query:"Our Habitas AlUla Saudi Arabia",source:"https://www.visitsaudi.com/en/stories/the-cultural-secrets-of-alula"},
+    {name:"ibis Riyadh Olaya Street",city:"الرياض",stars:3,family:true,query:"ibis Riyadh Olaya Street Saudi Arabia"}
+  ],
+  "موريشيوس":[
+    {name:"LUX* Grand Baie",city:"غراند باي",stars:5,query:"LUX Grand Baie Mauritius"},
+    {name:"One&Only Le Saint Géran",city:"الساحل الشرقي",stars:5,query:"One&Only Le Saint Geran Mauritius"},
+    {name:"Constance Belle Mare Plage",city:"بيل مار",stars:5,query:"Constance Belle Mare Plage Mauritius"},
+    {name:"Paradis Beachcomber Golf Resort & Spa",city:"لو مورن",stars:5,family:true,query:"Paradis Beachcomber Golf Resort Spa Mauritius"},
+    {name:"Coin de Mire Attitude",city:"باين بوف",stars:3,family:true,query:"Coin de Mire Attitude Mauritius"}
+  ],
+  "سريلانكا":[
+    {name:"Anantara Kalutara Resort",city:"كالوتارا",stars:5,query:"Anantara Kalutara Resort Sri Lanka",source:"https://www.srilanka.travel/index.php?hotel_star=5&hotel_type=4&route=travel%2Ftostay"},
+    {name:"Anantara Peace Haven Tangalle Resort",city:"تانغالي",stars:5,family:true,query:"Anantara Peace Haven Tangalle Resort Sri Lanka",source:"https://www.srilanka.travel/index.php?hotel_star=5&hotel_type=4&route=travel%2Ftostay"},
+    {name:"Venus Family Resort",city:"فيانغودا",stars:3,family:true,query:"Venus Family Resort Veyangoda Sri Lanka",source:"https://www.google.com/travel/hotels/entity/CgoIuf6L9fa_6LwaEAE"}
+  ],
+  "هولندا":[
+    {name:"Hotel Okura Amsterdam",city:"أمستردام",stars:5,query:"Hotel Okura Amsterdam Netherlands",source:"https://www.iamsterdam.com/en/travel-stay/where-to-stay/luxury-hotels"},
+    {name:"Sofitel Legend The Grand Amsterdam",city:"أمستردام",stars:5,query:"Sofitel Legend The Grand Amsterdam Netherlands",source:"https://www.iamsterdam.com/en/travel-stay/where-to-stay/luxury-hotels"},
+    {name:"Grand Hotel Amrâth Amsterdam",city:"أمستردام",stars:5,query:"Grand Hotel Amrath Amsterdam Netherlands",source:"https://www.iamsterdam.com/en/whats-on/calendar/accomodations/all-accomodations/grand-hotel-amrath-amsterdam"},
+    {name:"Inntel Hotels Amsterdam Zaandam",city:"زاندام",stars:4,query:"Inntel Hotels Amsterdam Zaandam Netherlands",source:"https://www.iamsterdam.com/en/travel-stay/where-to-stay/classic-dutch-villages-around-amsterdam"},
+    {name:"Rotterdam Marriott Hotel",city:"روتردام",stars:5,query:"Rotterdam Marriott Hotel Netherlands",source:"https://www.rotterdam.info/en/visit/guide/hotels-rotterdam"},
+    {name:"Hilton Rotterdam",city:"روتردام",stars:5,query:"Hilton Rotterdam Netherlands",source:"https://www.rotterdam.info/en/visit/guide/hotels-rotterdam"},
+    {name:"ibis Amsterdam Centre",city:"أمستردام",stars:3,family:true,query:"ibis Amsterdam Centre Netherlands"}
+  ]
+};
+function googleHotelUrl(q){return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`}
+function hotelsFromRahhal(country){
+  const cfg=rahhalHotelCountrySources[country], out=[];
+  if(!cfg?.data)return out;
+  Object.values(cfg.data).forEach(group=>(group.items||[]).forEach(x=>{
+    const blob=`${x[0]} ${x[2]} ${x[3]} ${x[4]||""}`;
+    if(/hotel|resort|منتجع|فندق|إقامة/i.test(blob)){ const family=/عائل|أطفال|kids|family|child/i.test(blob); out.push({name:x[0],city:group.title,stars:null,family,query:x[4]||`${x[0]} ${cfg.suffix}`,rahhal:true,url:x[5]||null}); }
+  }));
+  return out;
+}
+function allHotelsForCountry(country){
+  const merged=[...hotelsFromRahhal(country),...(verifiedHotelSupplement[country]||[])], seen=new Set();
+  return merged.filter(h=>{const k=h.name.toLowerCase().trim();if(seen.has(k))return false;seen.add(k);return true});
+}
+let activeHotelCountry="الإمارات", activeHotelFilter="all";
+function renderHotelCountries(){
+  const box=document.getElementById("hotelCountryFilter"); if(!box)return;
+  box.innerHTML=Object.entries(rahhalHotelCountrySources).map(([name,cfg],i)=>`<button class="${i===0?'active':''}" data-country="${name}">${cfg.flag} ${name}</button>`).join("");
+  box.querySelectorAll("button").forEach(b=>b.onclick=()=>{box.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active");activeHotelCountry=b.dataset.country;renderDynamicHotels();});
+}
+function renderDynamicHotels(){
+  const grid=document.getElementById("dynamicHotels"), discover=document.getElementById("hotelMapDiscovery"); if(!grid)return;
+  const cfg=rahhalHotelCountrySources[activeHotelCountry], all=allHotelsForCountry(activeHotelCountry);
+  const list=all.filter(h=>activeHotelFilter==="all"||(activeHotelFilter==="rahhal"&&h.rahhal)||(activeHotelFilter==="family"&&h.family)||(activeHotelFilter==="3star"&&h.stars===3)||(activeHotelFilter==="4star"&&h.stars===4)||(activeHotelFilter==="5star"&&h.stars===5));
+  discover.innerHTML=`<a class="hotel-map" target="_blank" rel="noopener" href="${googleHotelUrl(`3 star 4 star 5 star family friendly hotels resorts kids ${cfg.suffix}`)}">🗺️ استكشف فنادق 3 و4 و5 نجوم وخيارات عائلية على Google Maps</a> <a class="hotel-map" target="_blank" rel="noopener" href="${cfg.official}">✓ المصدر السياحي الرسمي</a>`;
+  grid.innerHTML=list.length?list.map(h=>`<article class="hotel-card" data-level="${h.stars?`${h.stars}star`:'rahhal'}"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><h4>${h.name}</h4><span class="badge" style="white-space:nowrap">${h.stars?`${h.stars} نجوم`:'كرت رحّال'}${h.family?' • عائلي':''}</span></div><p>${h.city||activeHotelCountry} — ${h.rahhal?'مستخرج تلقائيًا من بيانات رحّال.':'خيار إقامة مضاف لاستكمال دليل الفنادق.'}${h.family?' مناسب للعائلات/الأطفال وفق البيانات المتاحة؛ تحقق من المرافق الحالية قبل الحجز.':''}</p><div class="price">${h.stars?'التصنيف موثق • تحقق من السعر الحالي':'مرتبط ببيانات الموقع'}</div><a class="hotel-map" target="_blank" rel="noopener" href="${h.url||googleHotelUrl(h.query)}">📍 الموقع في Google Maps</a>${h.source?` <a class="hotel-map" target="_blank" rel="noopener" href="${h.source}">✓ مصدر التصنيف</a>`:''}</article>`).join(""):`<div class="hotel-card"><h4>لا توجد نتائج لهذا الفلتر</h4><p>جرّب «الكل» أو استكشف الفنادق مباشرة على Google Maps.</p></div>`;
+  if(typeof updateDynamicAboutStats==="function") updateDynamicAboutStats();
+}
+renderHotelCountries();
+document.querySelectorAll(".hotel-filter button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".hotel-filter button").forEach(x=>x.classList.remove("active"));b.classList.add("active");activeHotelFilter=b.dataset.filter;renderDynamicHotels();});
+renderDynamicHotels();
+
+function syncTripRequestCountries(){
+  const source=document.getElementById("planCountry"), target=document.getElementById("tripRequestCountry");
+  if(!source||!target)return;
+  target.innerHTML=[...source.options].map(o=>`<option>${o.textContent}</option>`).join("");
+}
+syncTripRequestCountries();
+document.getElementById("openTripRequest").onclick=()=>{
+  syncTripRequestCountries();
+  const form=document.getElementById("tripRequestForm");
+  form.hidden=!form.hidden;
+  document.getElementById("openTripRequest").textContent=form.hidden?"✉️ ابدأ التخطيط عبر البريد الإلكتروني":"إخفاء نموذج التخطيط";
+  if(!form.hidden)form.scrollIntoView({behavior:"smooth",block:"nearest"});
+};
+document.getElementById("sendTripRequest").onclick=async()=>{
+  const country=document.getElementById("tripRequestCountry").value;
+  const days=document.getElementById("tripRequestDays").value;
+  const budget=document.getElementById("tripRequestBudget").value;
+  const tripType=document.getElementById("tripRequestType").value;
+  const name=document.getElementById("tripRequestName").value.trim()||"زائر رحّال";
+  const email=document.getElementById("tripRequestEmail").value.trim()||"غير مذكور";
+  const notes=document.getElementById("tripRequestNotes").value.trim()||"لا توجد تفاصيل إضافية";
+  const btn=document.getElementById("sendTripRequest"), status=document.getElementById("tripRequestStatus"), old=btn.textContent;
+  btn.disabled=true;btn.textContent="جارٍ إرسال الطلب...";status.style.display="none";
+  try{
+    const response=await fetch("https://formsubmit.co/ajax/binbishr1@gmail.com",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({name,email,country,days,budget,trip_type:tripType,notes,_subject:`طلب تخطيط رحلة جديد — ${country} — ${days} أيام`,_template:"table",_captcha:"false"})});
+    if(!response.ok)throw new Error("send failed");
+    status.textContent="✅ تم إرسال طلب التخطيط مباشرة إلى بريد رحّال بنجاح.";status.style.display="block";
+    document.getElementById("tripRequestNotes").value="";
+  }catch(e){status.textContent="تعذر إرسال الطلب الآن. يرجى المحاولة مرة أخرى بعد قليل.";status.style.display="block";}
+  finally{btn.disabled=false;btn.textContent=old;}
+};
+
+sendFeedback.onclick=async()=>{
+  const name=feedbackName.value.trim();
+  const email=document.getElementById("feedbackEmail").value.trim();
+  const type=feedbackType.value;
+  const messageText=feedbackText.value.trim();
+  if(!messageText){
+    feedbackText.focus();
+    feedbackText.placeholder="اكتب تعليقك أو اقتراحك أولًا";
+    return;
+  }
+  const btn=sendFeedback;
+  const oldText=btn.textContent;
+  btn.disabled=true;
+  btn.textContent="جارٍ الإرسال...";
+  feedbackSuccess.style.display="none";
+  try{
+    const response=await fetch("https://formsubmit.co/ajax/binbishr1@gmail.com",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify({
+        name:name||"زائر رحّال",
+        email:email||"غير مذكور",
+        type:type,
+        message:messageText,
+        _subject:`اقتراح جديد من موقع رحّال — ${type}`,
+        _template:"table",
+        _captcha:"false"
+      })
+    });
+    if(!response.ok) throw new Error("send failed");
+    feedbackSuccess.textContent="تم إرسال اقتراحك بنجاح إلى بريد رحّال. شكرًا لك.";
+    feedbackSuccess.style.display="block";
+    feedbackName.value="";
+    document.getElementById("feedbackEmail").value="";
+    feedbackText.value="";
+  }catch(err){
+    feedbackSuccess.textContent="تعذر الإرسال الآن. يرجى المحاولة مرة أخرى بعد قليل.";
+    feedbackSuccess.style.display="block";
+  }finally{
+    btn.disabled=false;
+    btn.textContent=oldText;
+  }
+};
+
+darkBtn.onclick=()=>document.body.classList.toggle("dark");
+openPlanner.onclick=()=>document.getElementById("planner").scrollIntoView();
+aiBtn.onclick=()=>aiModal.classList.add("open");
+closeModal.onclick=()=>aiModal.classList.remove("open");
+aiModal.onclick=e=>{if(e.target===aiModal)aiModal.classList.remove("open")}
+sendAI.onclick=()=>{const q=aiQuestion.value.trim()||"أريد المساعدة في تخطيط رحلة.";window.open(waLink(`مرحبًا رحّال، ${q}`),"_blank")}
+
+const CHAT_API_ENDPOINT=(window.RAHHAL_AI_ENDPOINT||"").trim(); // Backend آمن فقط — لا تضع مفتاح API في الواجهة
+const RAHHAL_CHAT_HISTORY=[];
+chatBtn.onclick=()=>chatModal.classList.add("open");
+const heroAskAssistant=document.getElementById("heroAskAssistant"); if(heroAskAssistant)heroAskAssistant.onclick=()=>chatModal.classList.add("open");
+closeChat.onclick=()=>chatModal.classList.remove("open");
+chatModal.onclick=e=>{if(e.target===chatModal)chatModal.classList.remove("open")}
+
+function addChatMessage(text,type){
+  const div=document.createElement("div");
+  div.className=`chat-message ${type}`;
+  div.textContent=text;
+  chatBody.insertBefore(div,chatStatus);
+  chatBody.scrollTop=chatBody.scrollHeight;
+}
+function rahhalKnowledge(){
+  const sources=[];
+  const add=(country,data)=>Object.values(data||{}).forEach(d=>{
+    if(!d||typeof d!=="object"||!Array.isArray(d.items))return;
+    sources.push({country,title:d.title||"",text:d.text||"",items:d.items.map(x=>({name:x[0],duration:x[2],time:x[3],map:x[4]}))});
+  });
+  add("الإمارات",typeof cityData!=="undefined"?cityData:{});
+  add("السعودية",typeof ksaData!=="undefined"?ksaData:{});
+  add("موريشيوس",typeof mauritiusData!=="undefined"?mauritiusData:{});
+  add("سريلانكا",typeof srilankaData!=="undefined"?srilankaData:{});
+  add("هولندا",typeof netherlandsData!=="undefined"?netherlandsData:{});
+  add("بلجيكا",typeof belgiumData!=="undefined"?belgiumData:{});
+  return sources;
+}
+function detectTravelDestinations(question){
+  const q=question.toLowerCase();
+  const aliases={
+    "الإمارات":["الإمارات","الامارات","دبي","أبوظبي","ابوظبي","الشارقة"],
+    "السعودية":["السعودية","الرياض","جدة","العلا"],
+    "موريشيوس":["موريشيوس","mauritius"],
+    "سريلانكا":["سريلانكا","سري لانكا","sri lanka","سيلان"],
+    "هولندا":["هولندا","هولند","netherlands","amsterdam","أمستردام","امستردام","روتردام","لاهاي","ليدن","جيثورن","كيندردايك"],
+    "بلجيكا":["بلجيكا","belgium","بروكسل","brussels","بروج","bruges","أنتويرب","انتويرب","antwerp"],
+    "اليابان":["اليابان","يابان","japan","طوكيو","tokyo","كيوتو","kyoto","أوساكا","اوساكا","osaka"]
+  };
+  return Object.entries(aliases).filter(([,names])=>names.some(name=>q.includes(name))).map(([country])=>country);
+}
+function requestedDays(question){
+  const q=question.toLowerCase();
+  const ar={"يوم":1,"يومين":2,"يومان":2,"ثلاث":3,"ثلاثة":3,"أربع":4,"اربع":4,"أربعة":4,"اربعة":4,"خمس":5,"خمسة":5,"ست":6,"ستة":6,"سبع":7,"سبعة":7,"ثمان":8,"ثمانية":8,"تسع":9,"تسعة":9,"عشر":10,"عشرة":10};
+  const digit=q.match(/(\d{1,2})\s*(?:يوم|أيام|ايام)/); if(digit)return Math.max(1,Math.min(30,+digit[1]));
+  for(const [word,n] of Object.entries(ar)) if(q.includes(word+" أيام")||q.includes(word+" ايام")||q.includes("لمدة "+word)) return n;
+  return null;
+}
+function countryLocalEntries(country,kb){return kb.filter(d=>d.country===country)}
+function localTravelReply(question){
+  const q=question.toLowerCase(), kb=rahhalKnowledge();
+  const destinations=detectTravelDestinations(question), days=requestedDays(question);
+  const localCountries=new Set(kb.map(d=>d.country));
+  const supported=destinations.filter(c=>localCountries.has(c));
+  const unsupported=destinations.filter(c=>!localCountries.has(c));
+
+  // الوجهة المذكورة صراحة لها الأولوية المطلقة: لا نسمح بمطابقة كلمات عامة مع دولة أخرى.
+  if(destinations.length){
+    const parts=[];
+    if(supported.length){
+      const perCountry=Math.max(1,Math.floor((days||Math.max(2,supported.length*2))/supported.length));
+      supported.forEach(country=>{
+        const entries=countryLocalEntries(country,kb);
+        const places=entries.flatMap(d=>d.items.map(i=>({city:d.title,...i})));
+        const limit=Math.min(places.length,Math.max(3,perCountry*2));
+        const route=places.slice(0,limit).map((x,i)=>`${i+1}) ${x.name} — ${x.city}${x.time?` (${x.time})`:""}`).join("\n");
+        parts.push(`بيانات رحّال المطابقة لـ ${country}:\n${route||"لا توجد كروت كافية بعد."}`);
+      });
+    }
+    if(unsupported.length){
+      parts.push(`تنبيه دقة: ${unsupported.join(" و")} ${unsupported.length>1?"ليستا":"ليست"} ضمن بيانات رحّال المحلية حاليًا، لذلك لن أستبدلهما بدولة أخرى أو أخمّن معلومات عنهما. عند تفعيل البحث المباشر يمكنني جلب المعالم والمواصلات والطقس ومتطلبات الدخول من المصادر الرسمية الحديثة.`);
+    }
+    if(supported.length&&unsupported.length){
+      parts.push(`لإنشاء مسار مشترك${days?` لمدة ${days} أيام`:""} بين ${destinations.join(" و")} بدقة، أحتاج البحث المباشر للجزء غير الموجود في كروت رحّال. أما الجزء الموجود فسأبنيه فقط من كروته الصحيحة أعلاه.`);
+    }else if(supported.length){
+      parts.push(`أستطيع بناء خطة${days?` لمدة ${days} أيام`:""} من هذه الكروت. للمعلومات المتغيرة مثل الطقس الحالي، ساعات العمل، الأسعار، التأشيرات والتحذيرات يلزم البحث المباشر.`);
+    }
+    return parts.join("\n\n");
+  }
+
+  if(/ميزاني|تكلف|سعر/.test(q)) return "أرسل لي الوجهة، عدد المسافرين، عدد الأيام، مستوى الفندق وطريقة التنقل. سأرتب لك بنود الميزانية. الأسعار الحية تحتاج تفعيل البحث المباشر للتحقق من المصادر الحالية.";
+  if(/خطر|تجنب|أمان|سلام/.test(q)) return "اذكر الدولة أو المدينة أولًا. أستطيع إعداد قائمة بما يجب فعله وتجنبه، لكن التحذيرات الأمنية والصحية ومتطلبات الدخول معلومات متغيرة؛ مع البحث المباشر سأتحقق من المصادر الحكومية والرسمية قبل عرضها.";
+
+  // المطابقة الحرة تستخدم أسماء المدن/المعالم فقط، وليس كلمات السفر العامة، لتجنب اختيار دولة خاطئة.
+  const normalized=q.replace(/[،,.؟?!]/g," ");
+  const matches=kb.map(d=>{
+    const hay=[d.country,d.title,...d.items.map(i=>i.name)].join(" ").toLowerCase();
+    const meaningful=normalized.split(/\s+/).filter(t=>t.length>3 && !/^(رحلة|لمدة|ايام|أيام|اريد|أريد|مسار|سياحي|نصائح|السفر|سفر|خطة|برنامج|فنادق)$/.test(t));
+    return {d,score:meaningful.reduce((n,t)=>n+(hay.includes(t)?1:0),0)};
+  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
+  if(matches.length){
+    const d=matches[0].d;
+    return `وجدت تطابقًا مع ${d.title} (${d.country}).\n${d.items.slice(0,5).map((x,i)=>`${i+1}) ${x.name}${x.time?` — ${x.time}`:""}`).join("\n")}\n\nللمعلومات المتغيرة يلزم تفعيل البحث المباشر.`;
+  }
+  return "اذكر الوجهة أو المدن التي تريد زيارتها وعدد الأيام ونوع الرحلة. إذا كانت الوجهة موجودة في كروت رحّال سأستخدم بياناتها فقط، وإذا لم تكن موجودة سأخبرك بذلك بوضوح بدل عرض بيانات دولة أخرى. البحث العالمي الحديث يتطلب تفعيل الاتصال الآمن الموضح في SERVER-SETUP.md.";
+}
+async function sendChatMessage(){
+  const question=chatInput.value.trim();
+  if(!question)return;
+  addChatMessage(question,"user");
+  RAHHAL_CHAT_HISTORY.push({role:"user",content:question});
+  if(RAHHAL_CHAT_HISTORY.length>10)RAHHAL_CHAT_HISTORY.splice(0,RAHHAL_CHAT_HISTORY.length-10);
+  chatInput.value="";
+  chatStatus.style.display="block";
+  chatBody.scrollTop=chatBody.scrollHeight;
+  try{
+    let answer;
+    if(CHAT_API_ENDPOINT){
+      const response=await fetch(CHAT_API_ENDPOINT,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({message:question,language:CURRENT_LANGUAGE,destinations:detectTravelDestinations(question),days:requestedDays(question),rahhalData:rahhalKnowledge(),history:RAHHAL_CHAT_HISTORY.slice(0,-1)})
+      });
+      const rawText=await response.text();
+      let data={};
+      try{ data=rawText?JSON.parse(rawText):{}; }catch(_){ data={error:"invalid_server_response",message:rawText.slice(0,300)}; }
+      if(!response.ok){
+        const details=[data.error,data.message,data.status?`HTTP ${data.status}`:""].filter(Boolean).join(" — ");
+        throw new Error(details||`HTTP ${response.status}`);
+      }
+      answer=data.reply||data.answer||"لم يصل رد واضح من المساعد.";
+    }else{
+      await new Promise(resolve=>setTimeout(resolve,650));
+      answer=localTravelReply(question);
+    }
+    chatStatus.style.display="none";
+    addChatMessage(answer,"bot");
+    RAHHAL_CHAT_HISTORY.push({role:"assistant",content:answer});
+    if(RAHHAL_CHAT_HISTORY.length>10)RAHHAL_CHAT_HISTORY.splice(0,RAHHAL_CHAT_HISTORY.length-10);
+  }catch(error){
+    chatStatus.style.display="none";
+    const reason=(error&&error.message)?error.message:"خطأ غير معروف";
+    addChatMessage(`تعذر اتصال رحّال بالذكاء الاصطناعي. سبب التشخيص: ${reason}\n\nالرد المحلي المؤقت:\n${localTravelReply(question)}`,"bot");
+  }
+}
+chatSend.onclick=sendChatMessage;
+chatInput.addEventListener("keydown",e=>{if(e.key==="Enter")sendChatMessage()});
+
+
+const officialWeatherData={uae:{name:"الإمارات",place:"أبوظبي — مرجع مناخي للدولة",source:"المركز الوطني للأرصاد الإماراتي",url:"https://www.ncm.ae/",seasons:[["❄️","الشتاء","ديسمبر – فبراير","معتدل ومناسب للجولات الخارجية"],["🌤️","الربيع","مارس – مايو","دافئ وتزداد الحرارة تدريجيًا"],["☀️","الصيف","يونيو – سبتمبر","شديد الحرارة والرطوبة؛ الأنشطة الداخلية أفضل"],["🍂","الخريف","أكتوبر – نوفمبر","انخفاض تدريجي للحرارة"]],hi:[24,25,29,34,39,41,43,43,40,36,30,26],lo:[13,14,17,21,25,28,30,31,28,24,19,15]},ksa:{name:"السعودية",place:"الرياض — مرجع؛ المناخ يختلف بين مناطق المملكة",source:"المركز الوطني للأرصاد السعودي",url:"https://www.ncm.gov.sa/",seasons:[["❄️","الشتاء","ديسمبر – فبراير","بارد إلى معتدل بحسب المنطقة"],["🌤️","الربيع","مارس – مايو","معتدل ثم حار"],["☀️","الصيف","يونيو – أغسطس","حار جدًا في الداخل"],["🍂","الخريف","سبتمبر – نوفمبر","تراجع تدريجي للحرارة"]],hi:[20,23,28,34,39,42,43,43,40,35,27,22],lo:[8,10,14,19,24,26,27,27,24,19,13,9]},mauritius:{name:"موريشيوس",place:"موريشيوس — الساحل والهضبة يختلفان حراريًا",source:"Mauritius Meteorological Services",url:"https://metservice.intnet.mu/",seasons:[["🌧️","الصيف الدافئ الرطب","نوفمبر – أبريل","دافئ ورطب وتتركز فيه غالبية الأمطار"],["🍃","انتقالي","مايو","انتقال من الصيف إلى الشتاء"],["🌤️","الشتاء الأبرد والجاف نسبيًا","يونيو – سبتمبر","ألطف وأجف نسبيًا"],["🌺","انتقالي","أكتوبر","انتقال إلى الموسم الدافئ"]],hi:[29,29,29,27,25,23,22,22,23,25,27,28],lo:[22,22,21,20,18,16,16,16,17,18,20,21]},srilanka:{name:"سريلانكا",place:"كولومبو — مرجع ساحلي؛ الأمطار تختلف حسب المنطقة",source:"Department of Meteorology Sri Lanka",url:"https://meteo.gov.lk/",seasons:[["🌦️","الموسمي الشمالي الشرقي","ديسمبر – فبراير","أمطار أوضح في الشمال والشرق"],["🌤️","بين الموسمين الأولى","مارس – أبريل","حار ورطب مع زخات"],["🌧️","الموسمي الجنوبي الغربي","مايو – سبتمبر","أمطار أوضح في الجنوب والغرب"],["⛈️","بين الموسمين الثانية","أكتوبر – نوفمبر","زخات وعواصف رعدية"]],hi:[31,31,32,32,31,30,30,30,30,30,30,31],lo:[23,24,25,25,26,26,26,26,25,25,24,24]},netherlands:{name:"هولندا",place:"دي بيلت — محطة KNMI المرجعية",source:"KNMI — المعهد الملكي الهولندي للأرصاد",url:"https://www.knmi.nl/nederland-nu/weer/waarschuwingen",seasons:[["❄️","الشتاء","ديسمبر – فبراير","بارد ورطب مع رياح"],["🌷","الربيع","مارس – مايو","متقلب ويزداد اعتدالًا"],["☀️","الصيف","يونيو – أغسطس","معتدل إلى دافئ"],["🍂","الخريف","سبتمبر – نوفمبر","أبرد تدريجيًا مع أمطار ورياح"]],hi:[6,7,10,14,18,21,23,23,19,15,10,7],lo:[1,1,3,5,8,11,13,13,11,8,4,2]},belgium:{name:"بلجيكا",place:"بروكسل — مرجع مناخي للدولة",source:"Royal Meteorological Institute of Belgium",url:"https://www.meteo.be/en",seasons:[["❄️","الشتاء","ديسمبر – فبراير","بارد ورطب"],["🌷","الربيع","مارس – مايو","معتدل ومتقلب"],["☀️","الصيف","يونيو – أغسطس","معتدل إلى دافئ"],["🍂","الخريف","سبتمبر – نوفمبر","أبرد تدريجيًا مع أمطار"]],hi:[6,7,11,15,18,21,23,23,19,15,10,7],lo:[1,1,3,5,9,12,14,14,11,8,4,2]},japan:{name:"اليابان",place:"طوكيو — مرجع مناخي؛ المناخ يختلف بين مناطق اليابان",source:"Japan Meteorological Agency (JMA)",url:"https://www.jma.go.jp/jma/indexe.html",seasons:[["❄️","الشتاء","ديسمبر – فبراير","بارد وجاف نسبيًا في طوكيو"],["🌸","الربيع","مارس – مايو","معتدل وموسم أزهار الكرز"],["☀️","الصيف","يونيو – أغسطس","حار ورطب وممطر أحيانًا"],["🍁","الخريف","سبتمبر – نوفمبر","معتدل ثم أبرد تدريجيًا"]],hi:[10,11,14,19,23,26,30,31,27,22,17,12],lo:[2,2,5,10,15,19,23,24,21,15,9,4]}};
+const weatherMonths=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+function weatherDesc(c,i){const h=c.hi[i];return h>=38?"شديد الحرارة":h>=30?"حار":h>=24?"دافئ":h>=17?"معتدل":h>=10?"مائل للبرودة":"بارد"}
+function weatherRating(c,i){const h=c.hi[i];let n=h>=18&&h<=30?5:h>=14&&h<=34?4:h>=10&&h<=37?3:2;if(c.name==="موريشيوس"&&i>=5&&i<=9)n=5;if(c.name==="هولندا"&&i>=4&&i<=8)n=5;return"⭐".repeat(n)}
+function renderOfficialWeather(key){const c=officialWeatherData[key]||officialWeatherData.uae;document.getElementById("weatherPlace").textContent=c.place;document.getElementById("officialWeatherSource").innerHTML=`<a href="${c.url}" target="_blank" rel="noopener">🌦️ الطقس الرسمي الآن</a><span class="weather-note">المصدر الرسمي: ${c.source}</span>`;document.getElementById("seasonGrid").innerHTML=c.seasons.map(x=>`<div class="season"><div>${x[0]}</div><h3>${x[1]}</h3><p><b>${x[2]}</b><br>${x[3]}</p><div class="meter"><i style="width:82%"></i></div></div>`).join("");document.getElementById("weatherRows").innerHTML=weatherMonths.map((m,i)=>`<tr><td>${m}</td><td>${c.hi[i]}°</td><td>${c.lo[i]}°</td><td>${weatherDesc(c,i)}</td><td>${weatherRating(c,i)}</td></tr>`).join("")}
+document.addEventListener("DOMContentLoaded",()=>renderOfficialWeather("uae"));
+
+const SITE_TRANSLATIONS = {
+  "رحّال":"Rahhal",
+  "الدول":"Countries",
+  "الخريطة":"Map",
+  "خطط الرحلات":"Trip Plans",
+  "الطقس":"Weather",
+  "الفنادق":"Hotels",
+  "الريلز":"Reels",
+  "زائر":"Visitors",
+"سريلانكا":"Sri Lanka",
+"فنادق مقسمة حسب الدولة":"Hotels by Country",
+"اختر الدولة أولًا ثم صفّي الفنادق حسب مستوى الإقامة.":"Choose a country first, then filter hotels by stay level.",
+"اقتصادي":"Budget",
+"متوسط":"Mid-range",
+"فاخر":"Luxury",
+"كولومبو":"Colombo",
+"كاندي":"Kandy",
+"إيلا":"Ella",
+"جالي":"Galle",
+"سري جاياواردنابورا كوتي":"Sri Jayawardenepura Kotte",
+"الروبية LKR":"Sri Lankan Rupee",
+"ديسمبر–مارس":"December–March",
+"أفضل وقت للجنوب والغرب":"Best time for the south and west",
+"المطار الرئيسي":"Main Airport",
+"واجهة جالي فيس جرين":"Galle Face Green",
+"بحيرة كاندي":"Kandy Lake",
+"حدائق بيرادنيا النباتية":"Royal Botanic Gardens Peradeniya",
+"جسر الأقواس التسعة":"Nine Arch Bridge",
+"قمة ليتل آدمز بيك":"Little Adam's Peak",
+"رحلة القطار إلى إيلا":"Kandy–Ella Train Journey",
+"حصن جالي":"Galle Fort",
+"شاطئ أوناواتونا":"Unawatuna Beach",
+"منارة جالي":"Galle Lighthouse",
+"مدينة ساحلية تجمع بين الأسواق، المعابد، الواجهة البحرية والمطاعم.":"A coastal city combining markets, temples, waterfronts and restaurants.",
+"مدينة جبلية ثقافية تشتهر بمعبد السن والبحيرة والطبيعة الخضراء.":"A cultural mountain city known for the Temple of the Tooth, lake and lush nature.",
+"وجهة جبلية ساحرة لمحبي الطبيعة والمشي وركوب القطار بين الجبال.":"A scenic mountain destination for nature, hiking and train journeys.",
+"مدينة ساحلية تاريخية تجمع الحصن القديم والشوارع الاستعمارية والشواطئ.":"A historic coastal city with an old fort, colonial streets and beaches.",
+"🇱🇰 سريلانكا":"🇱🇰 Sri Lanka",
+"شواطئ استوائية، شاي، جبال، معابد وحياة برية متنوعة.":"Tropical beaches, tea, mountains, temples and diverse wildlife.",
+"افتتاح في Google Maps":"Open in Google Maps",
+"افتَح في Google Maps":"Open in Google Maps",
+"افتح في Google Maps":"Open in Google Maps",
+"رحّال… هوية تعيش بالسفر":"Rahhal… An Identity Shaped by Travel",
+"شغف لا يتوقف عن البحث عن جمال العالم، متعة الاكتشاف، وثراء الثقافات.":"A passion that never stops seeking the beauty of the world, the joy of discovery and the richness of cultures.",
+"رحّال عاشق للسفر والترحال":"Rahhal Is Passionate About Travel and Exploration",
+"رحّال عاشق للسفر والترحال، أجد في كل وجهة جديدة متعة الاكتشاف وشغف المغامرة.":"Rahhal is passionate about travel and exploration. Every new destination brings the joy of discovery and the thrill of adventure.",
+"أتمتع بروح إيجابية تنبض بالحب للحياة، وأرى في كل لحظة فرصة للتعلم والابتسام، وأسعى لنشر الطاقة الجميلة أينما حللت.":"I carry a positive spirit filled with love for life. I see every moment as a chance to learn and smile, and I seek to spread positive energy wherever I go.",
+"وكلمة “رحّال” — بتشديد الراء — تعني كثير الأسفار، وهي صفة تعكس هويتي كمن لا يتوقف عن البحث عن جمال العالم وثراء ثقافاته.":"The word “Rahhal” means a frequent traveler. It reflects my identity as someone who never stops searching for the beauty of the world and the richness of its cultures.",
+"“كل وجهة جديدة تحمل قصة، وكل رحلة تفتح بابًا لاكتشاف العالم من جديد.”":"“Every new destination carries a story, and every journey opens a new door to discovering the world.”",
+"عن رحّال":"About Rahhal",
+"شغف السفر":"Passion for Travel",
+"رحّال… أكثر من مجرد اسم":"Rahhal… More Than a Name",
+"هوية تعبّر عن حب الاكتشاف، المغامرة، والثقافات التي تجعل كل رحلة قصة جديدة.":"An identity inspired by discovery, adventure and cultures that turn every journey into a new story.",
+"رحّال ليس مجرد دليل سياحي":"Rahhal Is More Than a Travel Guide",
+"أنا عاشق للسفر والترحال، أجد في كل وجهة جديدة متعة الاكتشاف وشغف المغامرة. أؤمن أن لكل مدينة قصة تستحق أن تُروى، ولكل رحلة تجربة تستحق أن تُعاش.":"I am passionate about travel and exploration. Every new destination brings the joy of discovery and the thrill of adventure. I believe every city has a story worth telling, and every journey is an experience worth living.",
+"أتمتع بروح إيجابية تنبض بحب الحياة، وأرى في كل لحظة فرصة للتعلّم والابتسام، لذلك أحرص على مشاركة أفضل التجارب والأماكن والخطط السياحية لمساعدة الآخرين على الاستمتاع برحلاتهم بأبسط وأسهل طريقة.":"I carry a positive spirit filled with love for life, and I see every moment as a chance to learn and smile. That is why I share the best experiences, places and travel plans to help others enjoy their journeys in the easiest and most enjoyable way.",
+"وقد اخترت اسم “رحّال” لأنه يعني كثير الأسفار، وهي صفة تعبّر عن شخصيتي وشغفي الدائم باكتشاف جمال العالم وتنوع ثقافاته، وأتمنى أن يصبح هذا الموقع رفيقك في كل رحلة جديدة.":"I chose the name “Rahhal” because it means a frequent traveler. It reflects my personality and my endless passion for discovering the beauty of the world and the richness of its cultures. I hope this website becomes your companion on every new journey.",
+"“أؤمن أن أجمل الذكريات تبدأ بخطوة نحو مكان جديد، ولهذا أنشأت رحّال ليكون دليلك في كل رحلة.”":"“I believe the best memories begin with one step toward a new place, and that is why I created Rahhal to guide you on every journey.”",
+"دول حالية":"Current Countries",
+"تجربة سياحية":"Travel Experiences",
+"لغتان":"Two Languages",
+"شغف بالاكتشاف":"Passion for Discovery",
+"تواصل معي":"Contact Me",
+"كل القارات":"All Continents",
+"آسيا":"Asia",
+"أفريقيا":"Africa",
+"أوروبا":"Europe",
+"أمريكا الشمالية":"North America",
+"أمريكا الجنوبية":"South America",
+"أوقيانوسيا":"Oceania",
+"لا توجد دول مضافة في هذه القارة بعد.":"No countries have been added to this continent yet.",
+"موريشيوس":"Mauritius",
+"جمهورية موريشيوس":"Republic of Mauritius",
+"شواطئ استوائية، طبيعة خضراء، شلالات وتجارب بحرية هادئة.":"Tropical beaches, lush nature, waterfalls and peaceful sea experiences.",
+"بورت لويس":"Port Louis",
+"الروبية MUR":"Mauritian Rupee",
+"مايو–ديسمبر":"May–December",
+"مطار سير سيووساغور رامغولام":"Sir Seewoosagur Ramgoolam Airport",
+"المطار الرئيسي":"Main Airport",
+"غراند باي":"Grand Baie",
+"بيل أومبر":"Bel Ombre",
+"فليك إن فلاك":"Flic en Flac",
+"المسافات من بورت لويس":"Distances from Port Louis",
+"العاصمة النابضة بالحياة، مناسبة للأسواق والثقافة والميناء والواجهة البحرية.":"A lively capital ideal for markets, culture, the harbour and waterfront.",
+"منطقة ساحلية حيوية في الشمال، مناسبة للرحلات البحرية والمطاعم والشواطئ.":"A lively northern coastal area, ideal for boat trips, restaurants and beaches.",
+"جنوب هادئ يجمع المنتجعات الفاخرة والطبيعة والمحميات والشواطئ.":"A peaceful south combining luxury resorts, nature reserves and beaches.",
+"واجهة كودان البحرية":"Caudan Waterfront",
+"السوق المركزي":"Central Market",
+"حصن أديلايد":"Fort Adelaide",
+"شاطئ بيريبير":"Pereybere Beach",
+"غراند باي لا كروازيت":"Grand Baie La Croisette",
+"رحلة الجزر الشمالية":"Northern Islands Cruise",
+"محمية فريدريكا":"Frederica Nature Reserve",
+"شلالات شاماريل":"Chamarel Waterfall",
+"أرض السبعة ألوان":"Seven Coloured Earth",
+"اسأل رحّال عن بورت لويس":"Ask Rahhal about Port Louis",
+  "رحّال | خطط رحلتك بذكاء":"Rahhal | Plan Your Trip Smarter",
+  "ر":"R",
+  "العربية":"Arabic",
+  "🇦🇪 العربية":"🇦🇪 Arabic",
+  "✦ مساعدك السياحي الشخصي":"✦ Your Personal Travel Assistant",
+  "🇦🇪 الإمارات":"🇦🇪 UAE",
+  "🇸🇦 السعودية":"🇸🇦 Saudi Arabia",
+  "الفجيرة":"Fujairah",
+  "رأس الخيمة":"Ras Al Khaimah",
+  "العين":"Al Ain",
+  "الدمام":"Dammam",
+  "3 أيام في الإمارات":"3 Days in the UAE",
+  "دبي — موقع عملي وقريب من وسط المدينة.":"Dubai — A practical location near Downtown.",
+  "الشارقة — خيار عصري مناسب للعائلات.":"Sharjah — A modern family-friendly choice.",
+  "دبي — إقامة شاطئية فاخرة.":"Dubai — A luxury beachfront stay.",
+  "الرياض — قيمة جيدة وموقع مركزي.":"Riyadh — Good value in a central location.",
+  "جدة — إطلالة بحرية وموقع ممتاز.":"Jeddah — Sea views and an excellent location.",
+  "العلا — تجربة صحراوية فاخرة.":"AlUla — A luxury desert experience.",
+  "دبي في 30 ثانية":"Dubai in 30 Seconds",
+  "تم إرسال اقتراحك بنجاح إلى بريد رحّال. شكرًا لك.":"Your suggestion was sent successfully to Rahhal by email. Thank you.",
+  "© 2026 رحّال — نموذج أولي قابل للتطوير":"© 2026 Rahhal — A Scalable Prototype",
+  "حفظ الموقع كملف PDF":"Save Website as PDF",
+  "حفظ خطة الرحلة كملف PDF":"Save Trip Plan as PDF",
+  "ستفتح نافذة الطباعة؛ اختر Save as PDF أو حفظ بتنسيق PDF.":"The print dialog will open; choose Save as PDF.",
+  "طباعة / حفظ PDF":"Print / Save PDF",
+  "خطّط رحلتك":"Plan Your Trip",
+  "مساعدك السياحي الشخصي":"Your Personal Travel Assistant",
+  "رحلتك تبدأ":"Your Journey Starts",
+  "من هنا.":"Here.",
+  "اكتشف المعالم، شاهد موقعها على الخريطة، ابنِ خطتك اليومية، اعرف الطقس والتكلفة، ثم اسأل رحّال عن أي تفاصيل بضغطة واحدة.":"Discover landmarks, view them on the map, build a daily itinerary, check weather and costs, then ask Rahhal anything with one click.",
+  "ابدأ الاستكشاف":"Start Exploring",
+  "جرّب مخطط الرحلة":"Try Trip Planner",
+  "دولتان":"Two Countries",
+  "في النسخة الأولى":"In the first version",
+  "+20 تجربة":"+20 Experiences",
+  "معالم وفنادق ومسارات":"Landmarks, hotels and routes",
+  "خطة ذكية":"Smart Plan",
+  "حسب المدة والميزانية":"Based on duration and budget",
+  "الوجهات":"Destinations",
+  "اختر الدولة التي تريد اكتشافها":"Choose the country you want to explore",
+  "تم تصميم كل دولة بنفس الهيكل، بحيث يمكن إضافة دول جديدة لاحقًا بسهولة.":"Every country follows the same structure, making future expansion easy.",
+  "الإمارات":"UAE",
+  "الإمارات العربية المتحدة":"United Arab Emirates",
+  "مدن عصرية، صحراء، شواطئ وتجارب عائلية.":"Modern cities, desert, beaches and family experiences.",
+  "السعودية":"Saudi Arabia",
+  "المملكة العربية السعودية":"Kingdom of Saudi Arabia",
+  "تاريخ، طبيعة، مدن حديثة وتجارب ثقافية متنوعة.":"History, nature, modern cities and diverse cultural experiences.",
+  "الدليل التفاعلي":"Interactive Guide",
+  "اكتشف البلد من خلال الخريطة":"Explore the country through the map",
+  "اختر الدولة ثم اضغط على المدينة لمعرفة أهم المعالم والخطة المقترحة.":"Choose a country, then select a city to see top landmarks and a suggested plan.",
+  "العاصمة":"Capital",
+  "العملة":"Currency",
+  "أفضل وقت":"Best Time",
+  "المطارات الرئيسية":"Main Airports",
+  "مفتاح الاتصال":"Calling Code",
+  "أبوظبي":"Abu Dhabi",
+  "الدرهم AED":"AED Dirham",
+  "نوفمبر–مارس":"November–March",
+  "دبي وأبوظبي":"Dubai & Abu Dhabi",
+  "خريطة الرحلة":"Trip Map",
+  "دبي":"Dubai",
+  "مدينة مثالية للتسوق، المعالم الحديثة، الشواطئ والتجارب العائلية.":"An ideal city for shopping, modern landmarks, beaches and family experiences.",
+  "الشارقة":"Sharjah",
+  "اسأل رحّال عن دبي":"Ask Rahhal about Dubai",
+  "الرياض":"Riyadh",
+  "الريال SAR":"Saudi Riyal",
+  "أكتوبر–مارس":"October–March",
+  "الرياض وجدة":"Riyadh & Jeddah",
+  "العاصمة الحديثة مع معالم ثقافية وتجارب تسوق ومطاعم متنوعة.":"A modern capital with cultural landmarks, shopping and diverse restaurants.",
+  "جدة":"Jeddah",
+  "العلا":"AlUla",
+  "اسأل رحّال عن الرياض":"Ask Rahhal about Riyadh",
+  "AI Trip Planner":"AI Trip Planner",
+  "ابنِ خطة رحلتك في ثوانٍ":"Build Your Trip in Seconds",
+  "نسخة تجريبية تعمل بناءً على الدولة، عدد الأيام، نوع الرحلة والميزانية.":"A demo planner based on country, days, trip type and budget.",
+  "الدولة":"Country",
+  "عدد الأيام":"Number of Days",
+  "نوع الرحلة":"Trip Type",
+  "الميزانية":"Budget",
+  "عائلية":"Family",
+  "مغامرات":"Adventure",
+  "استرخاء":"Relaxation",
+  "تسوق":"Shopping",
+  "اقتصادية":"Budget",
+  "متوسطة":"Mid-range",
+  "فاخرة":"Luxury",
+  "أنشئ خطتي":"Create My Plan",
+  "خطة مقترحة":"Suggested Plan",
+  "اسأل رحّال عن هذه الخطة":"Ask Rahhal About This Plan",
+  "الطقس طوال العام":"Year-Round Weather",
+  "اختَر الموسم المناسب لرحلتك":"Choose the Best Season for Your Trip",
+  "عرض مبسط للفصول ومتوسطات تقريبية للاستخدام الإرشادي داخل النموذج.":"A simplified seasonal guide with approximate averages.",
+  "الشتاء":"Winter",
+  "نوفمبر إلى فبراير. أفضل وقت للأنشطة الخارجية والجولات.":"November to February. Best for outdoor activities and tours.",
+  "الربيع":"Spring",
+  "مارس وأبريل. جو لطيف نهارًا ودافئ مساءً.":"March and April. Pleasant days and warm evenings.",
+  "الصيف":"Summer",
+  "مايو إلى سبتمبر. حرارة مرتفعة، والأنشطة الداخلية أفضل.":"May to September. High temperatures; indoor activities are better.",
+  "الخريف":"Autumn",
+  "أكتوبر. بداية تحسن الجو وعودة الأنشطة الخارجية.":"October. Weather starts improving and outdoor activities return.",
+  "الشهر":"Month",
+  "التقييم":"Rating",
+  "يناير":"January",
+  "مارس":"March",
+  "يونيو":"June",
+  "أغسطس":"August",
+  "أكتوبر":"October",
+  "ديسمبر":"December",
+  "حاسبة الميزانية":"Budget Calculator",
+  "اعرف تكلفة رحلتك التقريبية":"Estimate Your Trip Cost",
+  "عدد الأشخاص":"Number of People",
+  "نوع الفندق":"Hotel Type",
+  "النقل":"Transport",
+  "3 نجوم":"3 Stars",
+  "4 نجوم":"4 Stars",
+  "5 نجوم":"5 Stars",
+  "مواصلات عامة":"Public Transport",
+  "سيارة اقتصادية":"Economy Car",
+  "سيارة فاخرة":"Luxury Car",
+  "احسب التكلفة":"Calculate Cost",
+  "الفندق":"Hotel",
+  "المطاعم والأنشطة":"Food & Activities",
+  "الإجمالي التقريبي":"Estimated Total",
+  "فنادق مقترحة":"Suggested Hotels",
+  "اختَر حسب ميزانيتك":"Choose by Budget",
+  "الكل":"All",
+  "اقتصادي":"Budget",
+  "متوسط":"Mid-range",
+  "فاخر":"Luxury",
+  "مشاهد سريعة":"Quick Views",
+  "ريلز ومقتطفات من الوجهات":"Reels and Destination Highlights",
+  "يمكن لاحقًا استبدال هذه البطاقات بفيديوهات MP4 أو YouTube أو Vimeo أو Instagram Embeds.":"These cards can later be replaced with MP4, YouTube, Vimeo or Instagram videos.",
+  "قارن الوجهات":"Compare Destinations",
+  "أي مدينة تناسبك أكثر؟":"Which City Suits You Best?",
+  "المدينة":"City",
+  "التسوق":"Shopping",
+  "الطبيعة":"Nature",
+  "الأطفال":"Kids",
+  "البحر":"Sea",
+  "الثقافة":"Culture",
+  "شاركنا رأيك":"Share Your Feedback",
+  "ساعدنا نطوّر رحّال":"Help Us Improve Rahhal",
+  "رأيك واقتراحاتك وأفكارك للمحتوى تساعدنا على تحسين الموقع وتقديم تجربة أفضل.":"Your feedback and ideas help us improve the website and provide a better experience.",
+  "كل فكرة تفرق معنا":"Every Idea Matters",
+  "ملاحظة بسيطة منك قد تصبح الميزة القادمة في رحّال.":"Your simple suggestion may become Rahhal's next feature.",
+  "الاسم — اختياري":"Name — Optional",
+  "نوع الرسالة":"Message Type",
+  "رأي عام في الموقع":"General Website Feedback",
+  "اقتراح لتطوير المحتوى":"Content Improvement Suggestion",
+  "اقتراح ميزة جديدة":"New Feature Suggestion",
+  "ملاحظة أو مشكلة":"Note or Issue",
+  "اكتب تعليقك أو اقتراحك":"Write Your Feedback or Suggestion",
+  "سيتم إرسال اقتراحك مباشرة إلى بريد رحّال الإلكتروني، ولن يتم فتح واتساب.":"Your suggestion will be sent directly to Rahhal by email; WhatsApp will not open.",
+  "إرسال الاقتراح عبر البريد الإلكتروني":"Send Suggestion by Email",
+  "جاهز تبدأ رحلتك؟":"Ready to Start Your Journey?",
+  "أرسل لنا الدولة، عدد الأيام والميزانية وسنساعدك في اختيار خطة مناسبة لك.":"Send us your destination, number of days and budget, and we will help you choose the right plan.",
+  "ابدأ التخطيط عبر واتساب":"Start Planning via WhatsApp",
+  "نموذج أولي قابل للتطوير":"A scalable prototype",
+  "اسأل رحّال عبر واتساب":"Ask Rahhal via WhatsApp",
+  "اكتب سؤالك، وسنجهّز لك رسالة واتساب تلقائيًا.":"Write your question and we will prepare a WhatsApp message automatically.",
+  "سؤالك":"Your Question",
+  "إرسال السؤال إلى واتساب":"Send Question to WhatsApp",
+  "رحّال الذكي":"Rahhal AI",
+  "مساعد السفر داخل الموقع":"Your in-site travel assistant",
+  "أهلًا بك 👋 أنا مساعد رحّال السياحي. اسألني عن أي وجهة، خطة يومية، فنادق، ميزانية، مواصلات، طقس، متطلبات دخول، نصائح عائلية أو مخاطر السفر. عند تفعيل الاتصال الذكي أستطيع الاستفادة من البحث الحديث وإظهار المصادر.":"Welcome 👋 Ask me about the UAE, Saudi Arabia, landmarks, itineraries or budgets.",
+  "رحّال يكتب الآن…":"Rahhal is typing…",
+  "يعمل فورًا ببيانات رحّال الموجودة داخل الموقع. وللحصول على معلومات عالمية حديثة ومصادر مباشرة، فعّل Backend آمن في config.js؛ لا تضع مفتاح API داخل المتصفح.":"The current version uses a demo assistant. A real ChatGPT connection requires a secure backend and a server-side OpenAI API key.",
+  "معلم مقترح":"Suggested Landmark",
+  "تجربة مختارة ضمن خطة رحّال السياحية.":"A selected experience from Rahhal's travel guide.",
+  "مناسب للعائلات":"Family Friendly",
+  "الموقع":"Location",
+  "اسألني":"Ask Me",
+  "المسافات من دبي":"Distances from Dubai",
+  "المسافات من الرياض":"Distances from Riyadh",
+  "المسافات تقريبية بالسيارة وقد تختلف حسب نقطة الانطلاق والطريق.":"Driving distances are approximate and may vary by route and starting point.",
+  "المسافات تقريبية بالسيارة وقد تختلف حسب الطريق ونقطة الوصول.":"Driving distances are approximate and may vary by route and destination.",
+  "تحميل PDF":"Download PDF",
+  "اختر المحتوى الذي تريد حفظه على جهازك.":"Choose what you want to save on your device.",
+  "دليل رحّال كامل":"Complete Rahhal Guide",
+  "حفظ جميع أقسام الموقع في ملف PDF من نافذة الطباعة.":"Save all website sections as a PDF from the print dialog.",
+  "خطة الرحلة فقط":"Trip Plan Only",
+  "حفظ الخطة التي أنشأتها من مخطط الرحلة كملف PDF.":"Save the itinerary created in the trip planner as a PDF.",
+  "جارٍ إنشاء ملف PDF…":"Creating your PDF…",
+  "زائر":"Visitors"
+};
+
+const ORIGINAL_TEXT = new WeakMap();
+const ORIGINAL_PLACEHOLDER = new WeakMap();
+
+
+function translatePattern(text, lang){
+  if(lang==="ar") return text;
+  let result=text;
+  result=result.replace(/(\d+)\s*أيام في الإمارات/g,"$1 Days in the UAE");
+  result=result.replace(/(\d+)\s*أيام في السعودية/g,"$1 Days in Saudi Arabia");
+  result=result.replace(/(\d+)\s*أيام في موريشيوس/g,"$1 Days in Mauritius");
+  result=result.replace(/اليوم\s*(\d+)/g,"Day $1");
+  result=result.replace(/ساعة/g,"Hours");
+  result=result.replace(/ساعات/g,"Hours");
+  result=result.replace(/دقيقة/g,"Minutes");
+  result=result.replace(/كم/g,"km");
+  result=result.replace(/ابتداءً من/g,"Starting from");
+  result=result.replace(/صباحًا/g,"Morning");
+  result=result.replace(/مساءً/g,"Evening");
+  result=result.replace(/قبل الغروب/g,"Before sunset");
+  result=result.replace(/الغروب/g,"Sunset");
+  return result;
+}
+
+function translateNodeText(root,lang){
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{
+    acceptNode(node){
+      const p=node.parentElement;
+      if(!p||["SCRIPT","STYLE","NOSCRIPT"].includes(p.tagName)) return NodeFilter.FILTER_REJECT;
+      if(!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes=[];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node=>{
+    if(!ORIGINAL_TEXT.has(node)) ORIGINAL_TEXT.set(node,node.nodeValue);
+    const original=ORIGINAL_TEXT.get(node);
+    const trimmed=original.trim();
+    if(lang==="ar"){node.nodeValue=original;return}
+    const translated=SITE_TRANSLATIONS[trimmed] || translatePattern(trimmed,lang);
+    node.nodeValue=original.replace(trimmed,translated);
+  });
+
+  root.querySelectorAll("input[placeholder],textarea[placeholder]").forEach(el=>{
+    if(!ORIGINAL_PLACEHOLDER.has(el)) ORIGINAL_PLACEHOLDER.set(el,el.placeholder);
+    const original=ORIGINAL_PLACEHOLDER.get(el);
+    if(lang==="ar"){el.placeholder=original;return}
+    const placeholders={
+      "اكتب اسمك":"Enter your name",
+      "مثلاً: أتمنى إضافة قسم للرحلات العائلية الاقتصادية...":"For example: Please add a section for affordable family trips...",
+      "مثلاً: أريد خطة 4 أيام في دبي":"For example: I want a 4-day Dubai plan",
+      "اكتب سؤالك هنا...":"Type your question here...",
+      "اكتب تعليقك أو اقتراحك أولًا":"Write your feedback or suggestion first"
+    };
+    el.placeholder=placeholders[original]||original;
+  });
+}
+
+
+const ATTRIBUTE_TRANSLATIONS={
+  "تغيير اللغة":"Change Language",
+  "تحميل PDF":"Download PDF",
+  "إغلاق":"Close",
+  "خريطة الإمارات والمدن والمسافات":"Map of the UAE, cities and distances",
+  "خريطة توضيحية للإمارات":"Illustrative map of the UAE",
+  "خريطة السعودية والمدن والمسافات":"Map of Saudi Arabia, cities and distances",
+  "خريطة توضيحية للسعودية":"Illustrative map of Saudi Arabia",
+  "أدوات المساعدة":"Help Tools",
+  "اسأل رحّال عبر واتساب":"Ask Rahhal via WhatsApp",
+  "تحدث مع رحّال الذكي":"Chat with Rahhal AI"
+};
+function translateAttributes(lang){
+  document.querySelectorAll('[aria-label],[title]').forEach(el=>{
+    ['aria-label','title'].forEach(attr=>{
+      if(!el.hasAttribute(attr))return;
+      const key='original_'+attr;
+      if(!el.dataset[key])el.dataset[key]=el.getAttribute(attr);
+      const original=el.dataset[key];
+      el.setAttribute(attr,lang==='en'?(ATTRIBUTE_TRANSLATIONS[original]||SITE_TRANSLATIONS[original]||original):original);
+    });
+  });
+}
+
+function applyLanguage(lang){
+  CURRENT_LANGUAGE=lang;
+  localStorage.setItem("rahhal_language",lang);
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+  document.title=lang==="ar"?"رحّال | خطط رحلتك بذكاء":"Rahhal | Plan Your Trip Smarter";
+  languageLabel.textContent=lang==="ar"?"العربية":"English";
+  document.querySelectorAll(".language-option").forEach(btn=>btn.classList.toggle("active",btn.dataset.lang===lang));
+  translateNodeText(document.body,lang);
+  translateAttributes(lang);
+  updateGeneralWhatsAppLinks();
+  updatePdfLanguage();
+}
+
+languageBtn.onclick=()=>languageMenu.classList.toggle("open");
+document.addEventListener("click",e=>{if(!e.target.closest(".language-wrap"))languageMenu.classList.remove("open")});
+document.querySelectorAll(".language-option").forEach(btn=>btn.onclick=()=>{
+  applyLanguage(btn.dataset.lang);
+  languageMenu.classList.remove("open");
+});
+
+const originalSetCity=setCity;
+setCity=function(key){originalSetCity(key);setTimeout(()=>translateNodeText(document.getElementById("uaePanel"),CURRENT_LANGUAGE),0)};
+const originalSetKsa=setKsa;
+setKsa=function(key){originalSetKsa(key);setTimeout(()=>translateNodeText(document.getElementById("ksaPanel"),CURRENT_LANGUAGE),0)};
+const originalSetMauritius=setMauritius;
+setMauritius=function(key){originalSetMauritius(key);setTimeout(()=>translateNodeText(document.getElementById("mauritiusPanel"),CURRENT_LANGUAGE),0)};
+const originalSetSriLanka=setSriLanka;
+setSriLanka=function(key){originalSetSriLanka(key);setTimeout(()=>translateNodeText(document.getElementById("srilankaPanel"),CURRENT_LANGUAGE),0)};
+const originalCreatePlan=createPlan;
+createPlan=function(){originalCreatePlan();setTimeout(()=>translateNodeText(document.getElementById("planner"),CURRENT_LANGUAGE),0)};
+
+
+
+const $=id=>document.getElementById(id);
+const pdfBtnEl=$("pdfBtn"),pdfModalEl=$("pdfModal"),closePdfModalEl=$("closePdfModal"),downloadFullPdfEl=$("downloadFullPdf"),downloadPlanPdfEl=$("downloadPlanPdf"),pdfLoadingEl=$("pdfLoading"),pdfLoadingTextEl=$("pdfLoadingText");
+
+function updatePdfLanguage(){
+  const en=CURRENT_LANGUAGE==="en";
+  pdfModalTitle.textContent=en?"Download PDF":"تحميل PDF";
+  pdfModalDesc.textContent=en?"Choose what you want to save on your device.":"اختر المحتوى الذي تريد حفظه على جهازك.";
+  fullPdfTitle.textContent=en?"Complete Rahhal Guide":"دليل رحّال كامل";
+  fullPdfDesc.textContent=en?"Save all website sections as a PDF from the print dialog.":"حفظ جميع أقسام الموقع في ملف PDF من نافذة الطباعة.";
+  planPdfTitle.textContent=en?"Trip Plan Only":"خطة الرحلة فقط";
+  planPdfDesc.textContent=en?"Save the itinerary created in the trip planner as a PDF.":"حفظ الخطة التي أنشأتها من مخطط الرحلة كملف PDF.";
+  pdfLoadingTextEl.textContent=en?"Creating your PDF…":"جارٍ إنشاء ملف PDF…";
+  document.querySelector("[data-pdf-label]").textContent="PDF";
+}
+pdfBtnEl.onclick=()=>{updatePdfLanguage();pdfModalEl.classList.add("open")};
+closePdfModalEl.onclick=()=>pdfModalEl.classList.remove("open");
+pdfModalEl.onclick=e=>{if(e.target===pdfModalEl)pdfModalEl.classList.remove("open")};
+
+function safePdfFileName(type){
+  const lang=CURRENT_LANGUAGE==="en"?"EN":"AR";
+  const date=new Date().toISOString().slice(0,10);
+  return type==="plan"?`Rahhal-Trip-Plan-${lang}-${date}.pdf`:`Rahhal-Travel-Guide-${lang}-${date}.pdf`;
+}
+
+function exportElementToPdf(element,type){
+  const wasDark=document.body.classList.contains("dark");
+  const isPlan=type==="plan";
+  try{
+    if(wasDark)document.body.classList.remove("dark");
+    if(isPlan)document.body.classList.add("print-plan-only");
+    pdfLoadingEl.classList.add("show");
+    pdfLoadingTextEl.textContent=CURRENT_LANGUAGE==="en"
+      ?"The print dialog will open; choose Save as PDF."
+      :"ستفتح نافذة الطباعة؛ اختر Save as PDF أو حفظ بتنسيق PDF.";
+    pdfModalEl.classList.remove("open");
+    setTimeout(()=>{
+      window.print();
+      setTimeout(()=>{
+        document.body.classList.remove("print-plan-only");
+        if(wasDark)document.body.classList.add("dark");
+        pdfLoadingEl.classList.remove("show");
+      },400);
+    },250);
+  }catch(error){
+    console.error(error);
+    document.body.classList.remove("print-plan-only");
+    if(wasDark)document.body.classList.add("dark");
+    pdfLoadingEl.classList.remove("show");
+    alert(CURRENT_LANGUAGE==="en"?"Please use Ctrl+P and choose Save as PDF.":"استخدم Ctrl+P ثم اختر حفظ بتنسيق PDF.");
+  }
+}
+downloadFullPdfEl.onclick=()=>exportElementToPdf(document.body,"full");
+downloadPlanPdfEl.onclick=()=>exportElementToPdf(document.getElementById("planner"),"plan");
+
+(function initVisitorCounter(){
+  const el=document.getElementById("visitorCount");
+  const VISITOR_ID_KEY="rahhal_unique_visitor_id";
+
+  function makeVisitorId(){
+    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "v-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2);
+  }
+
+  let visitorId=localStorage.getItem(VISITOR_ID_KEY);
+  if(!visitorId){
+    visitorId=makeVisitorId();
+    localStorage.setItem(VISITOR_ID_KEY,visitorId);
+  }
+
+  fetch("api/visitor-counter.php",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({visitor_id:visitorId}),
+    cache:"no-store"
+  })
+  .then(r=>{
+    if(!r.ok) throw new Error("visitor counter unavailable");
+    return r.json();
+  })
+  .then(data=>{
+    if(!data || !Number.isFinite(Number(data.count))) throw new Error("invalid visitor count");
+    if(el) el.textContent=Number(data.count).toLocaleString("en-US");
+  })
+  .catch(err=>{
+    console.warn("Visitor counter:",err);
+    if(el) el.textContent="—";
+  });
+})();
+
+// الإحصائيات الرئيسية تعمل بشكل مستقل عن تهيئة الخرائط/الكروت؛ حتى لا تتحول إلى أصفار إذا تعطل مكوّن آخر.
+setTimeout(()=>{
+  try{ updateRahhalDynamicStats(); }catch(e){ console.warn("Rahhal stats:",e); }
+  try{ updateHeroDynamicStats(); }catch(e){ console.warn("Hero stats:",e); }
+},0);
+
+setCity("dubai");setKsa("riyadh");setMauritius("portlouis");setSriLanka("colombo");setNetherlands("amsterdam");setBelgium("antwerp");setJapan("nara");updateUaeRoute("main");updateMauritiusRoute("north");
+updateKsaRoute("main");
+updateSrilankaRoute("west");updateNetherlandsRoute("amsterdam");updateBelgiumRoute("antwerp");updateRahhalDynamicStats();updateHeroDynamicStats();createPlan();calcBudget();applyLanguage(CURRENT_LANGUAGE);
+</script>
+</body>
+</html>
