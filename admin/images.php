@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
    $file=$_FILES['photo']??null;
    try{
      if(!in_array($country,$allowed,true))throw new RuntimeException('اختر دولة صحيحة');
-     if($place===''||mb_strlen($place)>180)throw new RuntimeException('اكتب اسم المكان كما يظهر في البطاقة');
+     if($place===''||strlen($place)>360)throw new RuntimeException('اكتب اسم المكان كما يظهر في البطاقة');
      if(!$file||$file['error']!==UPLOAD_ERR_OK||$file['size']>8*1024*1024)throw new RuntimeException('اختر صورة أقل من 8 ميجابايت');
      if(!extension_loaded('gd')||!function_exists('imagewebp'))throw new RuntimeException('يجب تفعيل PHP GD وWebP على الاستضافة');
      $mime=(new finfo(FILEINFO_MIME_TYPE))->file($file['tmp_name']);
