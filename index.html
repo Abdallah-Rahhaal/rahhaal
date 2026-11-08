@@ -1206,7 +1206,7 @@ fetch("/assets/rahhal-image-overrides.json",{cache:"no-store"})
  .then(r=>r.ok?r.json():{})
  .then(data=>{if(data&&typeof data==="object"&&!Array.isArray(data)){
    for(const [name,path] of Object.entries(data)){
-     if(typeof path==="string"&&/^\\/assets\\/uploads\\/[a-z]+\\/[a-f0-9]{24}\\.webp$/.test(path))RAHHAL_UPLOADED_IMAGES[name]=path;
+     if(typeof path==="string"&&path.startsWith("/assets/uploads/")&&path.endsWith(".webp")&&!path.includes(".."))RAHHAL_UPLOADED_IMAGES[name]=path;
    }
    applyRahhalUploadedImages();
  }})
